@@ -753,44 +753,169 @@ const PrototypeScene: React.FC = () => {
 // ── SCENE 6: STEP 3 — PROMPTING FRAMEWORK ────────────────────────────────────
 const Step3Scene: React.FC = () => {
   const f = useCurrentFrame();
+
+  const archScale = spr(f, 22);
+  const archOpacity = fade(f, 22, 18);
+  const arrowOpacity = fade(f, 72, 12);
+
   const templates = [
-    { file: 'PROMPT_FEATURE.md', desc: 'Full-stack feature (Backend + Frontend)', color: C.cyan },
-    { file: 'PROMPT_BACKEND.md', desc: 'Spring Boot endpoint creation', color: C.green },
-    { file: 'PROMPT_FRONTEND.md', desc: 'Angular component generation', color: C.blue },
-    { file: 'PROMPT_BUGFIX.md', desc: 'Bug identification & fix', color: C.red },
+    { file: 'PROMPT_FEATURE.md', desc: 'Full-stack feature (Backend + Frontend)', color: C.cyan, delay: 82 },
+    { file: 'PROMPT_BACKEND.md', desc: 'Spring Boot endpoint creation', color: C.green, delay: 100 },
+    { file: 'PROMPT_FRONTEND.md', desc: 'Angular component generation', color: C.blue, delay: 118 },
+    { file: 'PROMPT_BUGFIX.md', desc: 'Bug identification & fix', color: C.red, delay: 136 },
   ];
+
+  const inputItems = [
+    '📋 EspecificacionFuncional_TeatroReal_v2.md',
+    '📁 DOC_GENERADA/ (Phase 2)',
+    '  → CONTEXTO_BACKEND.md',
+    '  → CONTEXTO_FRONTEND.md',
+    '  → PLAN_IMPLEMENTACION.md',
+  ];
+
+  const outputLines = [
+    '## Project Context',
+    'Teatro Real Management System',
+    'Backend: Java 17 + Spring Boot 3.3',
+    'Frontend: Angular 18.2 + Tailwind',
+    '─────────────────────────────',
+    '## Feature Request',
+    'Module: [ADMIN | TEMPO | TOPS]',
+    'Requirement: [RF-TEMPO-X]',
+    '─────────────────────────────',
+    '## User Story',
+    'As [role] I want [action]',
+    'So that [benefit]',
+    '─────────────────────────────',
+    '## Acceptance Criteria',
+    '- [ ] Verifiable criterion 1',
+    '- [ ] Verifiable criterion 2',
+    '─────────────────────────────',
+    '## Technical Constraints',
+    '- Follow existing architecture',
+    '- Do not break current tests',
+  ];
+
+  const bottomOpacity = fade(f, 162, 20);
+  const bottomScale = interpolate(spr(f, 162), [0, 1], [0.92, 1]);
+  const pulse = interpolate(Math.sin((f - 182) * 0.08), [-1, 1], [0.3, 0.8]);
+  const borderOpacity = f > 182 ? pulse : 0.3;
+
   return (
     <AbsoluteFill style={{ background: C.bg, flexDirection: 'column', display: 'flex' }}>
-      <div style={{ flexShrink: 0, padding: '28px 100px 0' }}><SectionBar>FRAMEWORK SET UP</SectionBar></div>
-      <div style={{ flexShrink: 0, padding: '20px 100px', display: 'flex', alignItems: 'center', gap: 24, opacity: fade(f, 5), transform: `translateX(${interpolate(spr(f, 5), [0, 1], [-40, 0])}px)` }}>
+      {/* Top bar */}
+      <div style={{ flexShrink: 0, padding: '28px 100px 0', opacity: fade(f, 3, 12) }}>
+        <SectionBar>FRAMEWORK SET UP</SectionBar>
+      </div>
+
+      {/* Phase label */}
+      <div style={{ flexShrink: 0, padding: '14px 100px 0', display: 'flex', alignItems: 'center', gap: 20, opacity: fade(f, 8, 14) }}>
         <StepBadge n={3} />
         <div>
+          <div style={{ fontFamily: 'Arial, sans-serif', fontSize: 15, color: C.cyan, fontWeight: 700, letterSpacing: '0.08em' }}>PHASE 3</div>
           <StepTitle>Prompting Framework</StepTitle>
-          <div style={{ fontFamily: 'Arial, sans-serif', fontSize: 18, color: C.textMuted, marginTop: 8 }}>
-            <strong style={{ color: C.white }}>AI Lead</strong> · Build templates that turn requirements into production-ready prompts
-          </div>
         </div>
       </div>
-      <div style={{ flex: 1, padding: '0 100px', display: 'grid', gridTemplateColumns: '1fr 1.4fr', gap: 50, minHeight: 0 }}>
-        <div style={{ display: 'flex', flexDirection: 'column', opacity: fade(f, 12), transform: `translateX(${interpolate(spr(f, 12), [0, 1], [-30, 0])}px)` }}>
-          <div style={{ fontFamily: 'Arial, sans-serif', fontWeight: 700, fontSize: 18, color: C.textMuted, marginBottom: 18 }}>📁 PROMPT_FRAMEWORK/</div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 12, marginBottom: 28 }}>
-            {templates.map((t, i) => (
-              <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 16, padding: '14px 18px', background: C.bgCard, borderLeft: `5px solid ${t.color}`, borderRadius: '0 8px 8px 0', opacity: fade(f, 15 + i * 7), border: `1px solid ${C.border}`, borderLeftWidth: 5, borderLeftColor: t.color }}>
-                <span style={{ fontFamily: 'Consolas, monospace', fontSize: 14, color: t.color, fontWeight: 700, flexShrink: 0 }}>{t.file}</span>
-                <span style={{ fontFamily: 'Arial, sans-serif', fontSize: 14, color: C.textMuted }}>→ {t.desc}</span>
-              </div>
+
+      {/* AI Architect box */}
+      <div style={{ flexShrink: 0, padding: '12px 100px 0', display: 'flex', justifyContent: 'center', opacity: archOpacity, transform: `scale(${interpolate(archScale, [0, 1], [0.6, 1])})` }}>
+        <div style={{ display: 'inline-flex', flexDirection: 'column', alignItems: 'center', gap: 10, background: C.bgCard, border: `2px solid ${C.cyan}`, borderRadius: 14, padding: '18px 36px', boxShadow: '0 0 40px rgba(0,151,207,0.25)' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 18 }}>
+            <div style={{ width: 52, height: 52, borderRadius: '50%', background: C.cyan, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 24, flexShrink: 0, boxShadow: '0 0 16px rgba(0,151,207,0.5)' }}>👤</div>
+            <div style={{ fontFamily: 'Arial Black, Arial, sans-serif', fontWeight: 900, fontSize: 22, color: C.white }}>AI Architect</div>
+            <div style={{ width: 1, height: 32, background: 'rgba(255,255,255,0.15)' }} />
+            {['📋 Reads PRD v2', '⚙️ Structures prompts', '📁 Creates templates'].map((tag, i) => (
+              <div key={i} style={{ fontFamily: 'Arial, sans-serif', fontSize: 12, fontWeight: 600, color: C.cyan, background: 'rgba(0,151,207,0.15)', border: '1px solid rgba(0,151,207,0.4)', padding: '5px 14px', borderRadius: 20 }}>{tag}</div>
             ))}
           </div>
-          <div style={{ fontFamily: 'Arial, sans-serif', fontSize: 17, color: C.textMuted, fontStyle: 'italic', borderLeft: `4px solid ${C.cyan}`, paddingLeft: 16, opacity: fade(f, 36), marginTop: 'auto' }}>
-            Convert client requirements into<br /><strong style={{ color: C.white }}>structured, production-ready prompts</strong>
+          <div style={{ fontFamily: 'Arial, sans-serif', fontSize: 18, color: C.white, lineHeight: 1.7, textAlign: 'center', maxWidth: 880, opacity: fade(f, 40, 25), transform: `translateY(${interpolate(fade(f, 40, 25), [0, 1], [10, 0])}px)` }}>
+            With the validated context and the corrected PRD, builds <strong style={{ color: C.cyan }}>prompt templates</strong> that transform requirements
+            into structured, executable instructions for Axet Plugin.
+            Standardises the work of the <strong style={{ color: C.cyan }}>entire development team</strong>.
           </div>
         </div>
-        <div style={{ display: 'flex', flexDirection: 'column', opacity: fade(f, 22), transform: `translateX(${interpolate(spr(f, 22), [0, 1], [30, 0])}px)` }}>
-          <CodeBlock flex={1} title="PROMPT_FEATURE.md — Teatro Real" lines={['## Contexto del Proyecto', '', 'Sistema de Gestión del Teatro Real', 'Backend: Java 17 + Spring Boot 3.3.0', 'Frontend: Angular 18.2 + TailwindCSS 3.4', '', '## Solicitud de Feature', 'Módulo: [ADMIN | TEMPO | TOPS]', 'Requisito: [RF-TEMPO-X | RF-TOPS-X]', '', '## Historia de Usuario', 'Como [rol] quiero [acción]', 'Para [beneficio]', '', '## Criterios de Aceptación', '- [ ] Criterio verificable 1', '- [ ] Criterio verificable 2', '', '## Restricciones Técnicas', '- Seguir arquitectura existente', '- No romper tests actuales']} />
+      </div>
+
+      {/* Connector */}
+      {(() => {
+        const connOpacity = fade(f, 62, 14);
+        return (
+          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', opacity: connOpacity, minHeight: 0 }}>
+            <div style={{ width: 2, height: 16, background: C.cyan, flexShrink: 0 }} />
+            <div style={{ background: C.cyan, color: C.white, padding: '5px 22px', borderRadius: 20, fontFamily: 'Arial, sans-serif', fontWeight: 700, fontSize: 13, letterSpacing: '0.06em', whiteSpace: 'nowrap', boxShadow: '0 0 16px rgba(0,151,207,0.5)', flexShrink: 0 }}>📁 PROMPT_FRAMEWORK/</div>
+            <div style={{ width: 2, flex: 1, background: C.cyan }} />
+            <div style={{ fontSize: 10, color: C.cyan, lineHeight: 1, flexShrink: 0 }}>▼</div>
+          </div>
+        );
+      })()}
+
+      {/* 3-column flow */}
+      <div style={{ flexShrink: 0, padding: '0 200px 12px', display: 'grid', gridTemplateColumns: '1fr 56px 1fr 56px 1fr', alignItems: 'center' }}>
+
+        {/* Col 1: INPUT */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 8, opacity: fade(f, 72, 15), transform: `translateX(${interpolate(spr(f, 72), [0, 1], [-30, 0])}px)` }}>
+          <div style={{ fontFamily: 'Arial, sans-serif', fontWeight: 700, fontSize: 18, color: C.textMuted, marginBottom: 6 }}>📋 INPUT — PRD v2 &amp; Context</div>
+          <div style={{ background: C.codeBg, borderRadius: 10, border: `1px solid ${C.borderCyan}`, overflow: 'hidden' }}>
+            <div style={{ background: 'rgba(0,151,207,0.20)', color: C.cyan, fontSize: 11, fontFamily: 'Consolas, monospace', fontWeight: 600, padding: '6px 16px', borderBottom: `1px solid ${C.borderCyan}` }}>Validated &amp; corrected</div>
+            <div style={{ padding: '12px 16px', display: 'flex', flexDirection: 'column', gap: 8 }}>
+              {inputItems.map((l, i) => (
+                <div key={i} style={{ fontFamily: 'Consolas, monospace', fontSize: 13, color: l.includes('→') ? C.cyan : 'rgba(255,255,255,0.82)', lineHeight: 1.4 }}>{l}</div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Arrow 1 */}
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: arrowOpacity }}>
+          <div style={{ fontSize: 30, color: C.cyan, fontWeight: 900 }}>→</div>
+        </div>
+
+        {/* Col 2: Templates generated */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+          <div style={{ fontFamily: 'Arial, sans-serif', fontWeight: 700, fontSize: 18, color: C.textMuted, marginBottom: 6 }}>⚙️ Templates Generated</div>
+          {templates.map((t, i) => (
+            <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '11px 16px', background: C.bgCard, borderRadius: 8, borderLeft: `4px solid ${t.color}`, opacity: fade(f, t.delay, 16), transform: `translateY(${interpolate(sprSlow(f, t.delay), [0, 1], [30, 0])}px)` }}>
+              <span style={{ fontFamily: 'Consolas, monospace', fontSize: 13, color: t.color, fontWeight: 700, flexShrink: 0 }}>{t.file}</span>
+              <span style={{ fontFamily: 'Arial, sans-serif', fontSize: 12, color: C.textMuted }}>→ {t.desc}</span>
+            </div>
+          ))}
+        </div>
+
+        {/* Arrow 2 */}
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: arrowOpacity }}>
+          <div style={{ fontSize: 30, color: C.cyan, fontWeight: 900 }}>→</div>
+        </div>
+
+        {/* Col 3: Preview of PROMPT_FEATURE.md */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 8, opacity: fade(f, 148, 15), transform: `translateX(${interpolate(spr(f, 148), [0, 1], [30, 0])}px)` }}>
+          <div style={{ fontFamily: 'Arial, sans-serif', fontWeight: 700, fontSize: 18, color: C.cyan, marginBottom: 6 }}>📄 PROMPT_FEATURE.md</div>
+          <div style={{ background: C.codeBg, borderRadius: 10, border: `1px solid ${C.borderCyan}`, overflow: 'hidden' }}>
+            <div style={{ background: 'rgba(0,151,207,0.20)', color: C.cyan, fontSize: 11, fontFamily: 'Consolas, monospace', fontWeight: 600, padding: '6px 16px', borderBottom: `1px solid ${C.borderCyan}` }}>Template preview</div>
+            <div style={{ padding: '10px 14px', display: 'flex', flexDirection: 'column', gap: 1 }}>
+              {outputLines.map((l, i) => (
+                <div key={i} style={{ fontFamily: 'Consolas, monospace', fontSize: 11, lineHeight: 1.5, color: l.startsWith('##') ? C.cyan : l.startsWith('─') ? 'rgba(255,255,255,0.15)' : l.startsWith('-') ? '#C8B9F9' : 'rgba(255,255,255,0.78)' }}>{l}</div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
-      <div style={{ flexShrink: 0, padding: '16px 100px 24px', display: 'flex', justifyContent: 'flex-end', opacity: fade(f, 5) }}><Logo height={70} /></div>
+
+      {/* Spacer */}
+      <div style={{ flex: 0.6 }} />
+
+      {/* Bottom strip */}
+      <div style={{ flexShrink: 0, padding: '8px 100px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', opacity: bottomOpacity, transform: `scale(${bottomScale})` }}>
+        <div style={{ flex: 1, display: 'flex', justifyContent: 'center' }}>
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: 16, background: 'rgba(0,151,207,0.12)', borderRadius: 12, padding: '16px 32px', border: `2px solid rgba(0,151,207,${borderOpacity})`, boxShadow: `0 0 ${interpolate(borderOpacity, [0.3, 0.8], [8, 28])}px rgba(0,151,207,${borderOpacity * 0.5})` }}>
+            <span style={{ fontSize: 22, flexShrink: 0 }}>💡</span>
+            <div style={{ fontFamily: 'Arial, sans-serif', fontSize: 17, color: C.white, lineHeight: 1.6 }}>
+              <strong style={{ color: C.cyan }}>Standardise the input, improve the output — </strong>
+              consistent prompts drive consistent, higher-quality code across the entire team.
+            </div>
+          </div>
+        </div>
+        <Logo height={60} />
+      </div>
     </AbsoluteFill>
   );
 };

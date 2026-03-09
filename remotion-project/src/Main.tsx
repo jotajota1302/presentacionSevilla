@@ -203,57 +203,54 @@ const Step1Scene: React.FC = () => {
     { icon: '🔍', label: 'Requirements Analyst', color: C.blue, delay: 70,
       file: '01-analista-requisitos.md',
       lines: [
-        '# Role: Senior Analyst · 15+ yrs',
+        'You are a Senior Requirements Analyst',
+        'specialised in software consulting.',
+        'Transform raw input from meetings,',
+        'emails and docs into structured,',
+        'clear and actionable requirements.',
         '─────────────────────────────',
         '## Capabilities:',
-        '· Extract RF (functional reqs)',
-        '· Extract RNF (non-functional)',
+        '· Extract functional requirements (RF)',
+        '· Extract non-functional reqs (RNF)',
         '· Generate User Stories',
-        '  → Como / Quiero / Para format',
-        '· Detect ambiguity &amp; gaps',
+        '  → As [role] I want [X] so that [Y]',
+        '· Detect ambiguity, gaps &amp; conflicts',
         '· MoSCoW prioritization',
-        '· Dependency mapping',
-        '· Full traceability source→req',
-        '· Impact analysis per req',
+        '· Dependency &amp; traceability mapping',
+        '· Impact analysis per requirement',
         '· Identify implicit requirements',
-        '· Detect contradictions in input',
         '─────────────────────────────',
-        '## Output structure:',
-        '· RF-001: title, actor, priority,',
-        '  complexity, source, deps',
-        '· RNF-001: category, metric,',
-        '  validation criteria',
+        '## Output format:',
+        '· RF-001: title · actor · priority',
+        '  · complexity · source · deps',
+        '· RNF-001: category · metric',
+        '  · validation criteria',
         '· HU-001: story + acceptance',
         '  criteria + story points',
-        '· Business rules (RN-001)',
-        '· Epics (EP-001) when needed',
+        '· Business rules RN-001',
         '· Risk &amp; ambiguity report',
-        '· Prioritised question list',
-        '─────────────────────────────',
-        '## Input formats accepted:',
-        '· Meeting transcripts',
-        '· Client emails / briefings',
-        '· Existing tech documents',
-        '· Kickoff briefing notes',
+        '· Prioritised client question list',
         '─────────────────────────────',
         '## Principles:',
-        '· Never assume — always ask',
+        '· Never assume — always flag it',
         '· Quantify: no "fast" or "easy"',
         '· Separate facts from assumptions',
-        '─────────────────────────────',
-        '## Feeds →',
-        '  Estimator · Test Eng · UX',
+        '· Think about the end user always',
       ]},
     { icon: '🎨', label: 'Frontend Expert', color: C.cyan, delay: 110,
       file: '08-experto-frontend.md',
       lines: [
-        '# Role: Senior FE Architect · 12 yrs',
+        'You are a Senior Frontend Expert',
+        'with 12+ years building modern',
+        'web apps. Your specialty is',
+        'scalable, performant, accessible',
+        'component-driven architecture.',
         '─────────────────────────────',
         '## Stack — Teatro Real:',
-        '· Angular 18.2 Standalone',
+        '· Angular 18.2 Standalone Components',
         '· Angular Material 18',
         '· TailwindCSS 3.4',
-        '· Signals (reactive state)',
+        '· Signals (reactive state mgmt)',
         '· TypeScript strict mode',
         '─────────────────────────────',
         '## Modules:',
@@ -262,59 +259,53 @@ const Step1Scene: React.FC = () => {
         '· ADMIN: Roles &amp; permissions',
         '─────────────────────────────',
         '## Capabilities:',
-        '· Component-driven architecture',
-        '· Container / Presentational split',
+        '· Container / Presentational pattern',
         '· Lazy loading + code splitting',
-        '· State: local / server / global',
         '· REST &amp; GraphQL consumption',
         '· Optimistic UI updates',
         '· WCAG 2.1 AA accessibility',
         '─────────────────────────────',
         '## Principles:',
-        '· Small focused components',
+        '· Small, focused components',
         '· Composition over inheritance',
         '· Performance by default',
         '· Type safety everywhere',
-        '· Tests as documentation',
-        '─────────────────────────────',
-        '## Feeds ← Backend (APIs)',
-        '         → Test Engineer',
+        '· Tests as living documentation',
       ]},
     { icon: '⚙️', label: 'Backend Expert', color: C.green, delay: 150,
       file: '09-experto-backend.md',
       lines: [
-        '# Role: Senior BE Architect · 15+ yrs',
+        'You are a Senior Backend Expert',
+        'with 15+ years in distributed',
+        'systems and APIs. You design',
+        'robust, scalable and secure',
+        'server-side architectures.',
         '─────────────────────────────',
         '## Stack — Teatro Real:',
-        '· Java 17',
-        '· Spring Boot 3.3.0',
+        '· Java 17 + Spring Boot 3.3.0',
         '· Spring Data JPA',
         '· PostgreSQL 16',
         '· SpringDoc OpenAPI 2.2',
         '─────────────────────────────',
         '## Architecture:',
-        '· Clean / Hexagonal arch',
+        '· Clean / Hexagonal architecture',
         '· SOLID + DDD patterns',
-        '· Domain → App → Infra layers',
-        '· Entities + Value Objects',
-        '· Domain Events (decoupled)',
+        '· Domain → Application → Infra',
+        '· Value Objects + Domain Events',
         '─────────────────────────────',
         '## Capabilities:',
-        '· REST API design (OpenAPI)',
-        '· JWT + RBAC authorization',
+        '· REST API design (OpenAPI spec)',
+        '· JWT authentication + RBAC',
         '· OWASP security hardening',
         '· Circuit Breaker / Retry',
-        '· Async event-driven flows',
+        '· Async event-driven architecture',
         '· Query optimisation + cache',
-        '· Testcontainers integration',
         '─────────────────────────────',
         '## Principles:',
         '· Fail fast · Defense in depth',
-        '· DRY but no premature abstraction',
-        '· Logs &amp; traceability first',
+        '· No premature abstraction (DRY)',
+        '· Logs &amp; traceability by design',
         '· YAGNI — only what is needed',
-        '─────────────────────────────',
-        '## Feeds → Frontend · Test Eng',
       ]},
   ];
 
@@ -357,7 +348,7 @@ const Step1Scene: React.FC = () => {
       </div>
 
       {/* T-connector: vertical stem → horizontal bar → 3 drops */}
-      <div style={{ flexShrink: 0, padding: '0 100px', position: 'relative', height: 64 }}>
+      <div style={{ flexShrink: 0, padding: '0 50px', position: 'relative', height: 64 }}>
         {/* Stem down from center */}
         <div style={{ position: 'absolute', left: '50%', top: 0, width: 2, background: C.cyan, opacity: arrowsOpacity,
           height: `${interpolate(arrowsOpacity, [0, 1], [0, 20])}px`, transform: 'translateX(-50%)' }} />
@@ -370,13 +361,13 @@ const Step1Scene: React.FC = () => {
         {/* Horizontal bar — grows from center outward */}
         {(() => {
           const barGrow = interpolate(arrowsOpacity, [0.4, 1], [0, 1], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
-          const barW = interpolate(barGrow, [0, 1], [0, 66]); // % of space between card centers
+          const barW = interpolate(barGrow, [0, 1], [0, 59.6]); // card centers span 20.2%→79.8%
           return (
             <div style={{ position: 'absolute', top: 38, left: `${50 - barW / 2}%`, width: `${barW}%`, height: 2, background: C.cyan, opacity: arrowsOpacity * 0.8 }} />
           );
         })()}
-        {/* 3 drop arrows at card positions */}
-        {[16.7, 50, 83.3].map((pos, i) => (
+        {/* 3 drop arrows aligned to card centers */}
+        {[20.2, 50, 79.8].map((pos, i) => (
           <div key={i} style={{ position: 'absolute', top: 38, left: `${pos}%`, transform: 'translateX(-50%)',
             opacity: interpolate(arrowsOpacity, [0.5 + i * 0.1, 1], [0, 1], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' }),
             display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -387,7 +378,7 @@ const Step1Scene: React.FC = () => {
       </div>
 
       {/* Agent cards — 500px height, all equal */}
-      <div style={{ flexShrink: 0, padding: '0 100px', display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gridAutoRows: '500px', gap: 22 }}>
+      <div style={{ flexShrink: 0, padding: '0 50px', display: 'grid', gridTemplateColumns: 'repeat(3, 520px)', gridAutoRows: '430px', gap: 22, justifyContent: 'center' }}>
         {agents.map((a, i) => (
           <div key={i} style={{ display: 'flex', opacity: fade(f, a.delay, 20), transform: `translateY(${interpolate(sprSlow(f, a.delay), [0, 1], [80, 0])}px)` }}>
             <div style={{ border: `2px solid ${a.color}`, borderRadius: 12, overflow: 'hidden', display: 'flex', flexDirection: 'column', width: '100%' }}>
@@ -400,7 +391,7 @@ const Step1Scene: React.FC = () => {
               </div>
               <div style={{ flex: 1, background: C.codeBg, padding: '8px 13px', overflowY: 'hidden' }}>
                 {a.lines.map((l, li) => (
-                  <div key={li} style={{ fontFamily: 'Consolas, monospace', fontSize: 11, lineHeight: 1.42, color: l.startsWith('─') ? 'rgba(255,255,255,0.18)' : l.startsWith('·') || l.startsWith('  ') ? '#C8B9F9' : l.startsWith('#') ? C.cyan : 'rgba(255,255,255,0.85)' }}>{l}</div>
+                  <div key={li} style={{ fontFamily: 'Consolas, monospace', fontSize: 13, lineHeight: 1.48, color: l.startsWith('─') ? 'rgba(255,255,255,0.18)' : l.startsWith('·') || l.startsWith('  →') || l.startsWith('  ·') || l.startsWith('  ') ? '#C8B9F9' : l.startsWith('##') ? C.cyan : l.startsWith('#') ? C.cyan : 'rgba(255,255,255,0.82)' }}>{l}</div>
                 ))}
               </div>
             </div>

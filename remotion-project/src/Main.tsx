@@ -462,6 +462,11 @@ const Step2Scene: React.FC = () => {
   const pulse = interpolate(Math.sin((f - 195) * 0.08), [-1, 1], [0.3, 0.8]);
   const borderOpacity = f > 195 ? pulse : 0.3;
 
+  // Input file cycling — which file is being read by the agents
+  const activeInputFile = f > 90 ? Math.floor((f - 90) / 38) % inputFiles.length : -1;
+  // Agent analyzing pulse
+  const agentPulse = interpolate(Math.sin(f * 0.22), [-1, 1], [0.35, 1]);
+
   return (
     <AbsoluteFill style={{ background: C.bg, flexDirection: 'column', display: 'flex' }}>
       {/* Top bar */}
@@ -519,9 +524,15 @@ const Step2Scene: React.FC = () => {
           <div style={{ background: C.codeBg, borderRadius: 10, border: `1px solid ${C.borderCyan}`, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
             <div style={{ background: 'rgba(0,151,207,0.20)', color: C.cyan, fontSize: 11, fontFamily: 'Consolas, monospace', fontWeight: 600, padding: '6px 16px', borderBottom: `1px solid ${C.borderCyan}`, flexShrink: 0 }}>~/teatro-real/DOC_INICIAL/</div>
             <div style={{ padding: '12px 16px', display: 'flex', flexDirection: 'column', gap: 8 }}>
-              {inputFiles.map((l, i) => (
-                <div key={i} style={{ fontFamily: 'Consolas, monospace', fontSize: 13, color: 'rgba(255,255,255,0.82)', lineHeight: 1.4 }}>{l}</div>
-              ))}
+              {inputFiles.map((l, i) => {
+                const isActive = activeInputFile === i;
+                const filePulse = isActive ? interpolate(Math.sin(f * 0.2), [-1, 1], [0.5, 1]) : 0;
+                return (
+                  <div key={i} style={{ fontFamily: 'Consolas, monospace', fontSize: 13, lineHeight: 1.4, color: isActive ? C.cyan : 'rgba(255,255,255,0.82)', background: isActive ? 'rgba(0,151,207,0.12)' : 'transparent', borderRadius: 4, padding: '1px 4px', margin: '0 -4px', boxShadow: isActive ? `0 0 ${interpolate(filePulse, [0.5, 1], [4, 10])}px rgba(0,151,207,${filePulse * 0.6})` : 'none' }}>
+                    {isActive ? '► ' : '  '}{l}
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>
@@ -539,6 +550,9 @@ const Step2Scene: React.FC = () => {
               <div key={i} style={{ background: a.color, borderRadius: 10, padding: '13px 20px', display: 'flex', alignItems: 'center', gap: 14, opacity: fade(f, a.delay, 18), transform: `translateY(${interpolate(sprSlow(f, a.delay), [0, 1], [40, 0])}px)` }}>
                 <span style={{ fontSize: 24 }}>{a.icon}</span>
                 <span style={{ fontFamily: 'Arial, sans-serif', fontWeight: 700, fontSize: 18, color: C.white }}>{a.label}</span>
+                {f > a.delay + 28 && (
+                  <span style={{ fontFamily: 'Consolas, monospace', fontSize: 12, color: 'rgba(255,255,255,0.9)', opacity: agentPulse, marginLeft: 'auto' }}>⟳ analyzing...</span>
+                )}
               </div>
             ))}
           </div>
@@ -619,6 +633,11 @@ const PrototypeScene: React.FC = () => {
   const pulse = interpolate(Math.sin((f - 182) * 0.08), [-1, 1], [0.3, 0.8]);
   const borderOpacity = f > 182 ? pulse : 0.3;
 
+  // Input file cycling
+  const activeInputFile = f > 90 ? Math.floor((f - 90) / 40) % inputItems.length : -1;
+  // Process card pulsing indicator
+  const processPulse = interpolate(Math.sin(f * 0.22), [-1, 1], [0.35, 1]);
+
   return (
     <AbsoluteFill style={{ background: C.bg, flexDirection: 'column', display: 'flex' }}>
       {/* Top bar — OPTIONAL PHASE (orange) */}
@@ -683,9 +702,16 @@ const PrototypeScene: React.FC = () => {
           <div style={{ background: C.codeBg, borderRadius: 10, border: `1px solid ${C.borderCyan}`, overflow: 'hidden' }}>
             <div style={{ background: 'rgba(0,151,207,0.20)', color: C.cyan, fontSize: 11, fontFamily: 'Consolas, monospace', fontWeight: 600, padding: '6px 16px', borderBottom: `1px solid ${C.borderCyan}` }}>Phase 2 output</div>
             <div style={{ padding: '12px 16px', display: 'flex', flexDirection: 'column', gap: 8 }}>
-              {inputItems.map((l, i) => (
-                <div key={i} style={{ fontFamily: 'Consolas, monospace', fontSize: 13, color: l.includes('→') ? C.cyan : 'rgba(255,255,255,0.82)', lineHeight: 1.4 }}>{l}</div>
-              ))}
+              {inputItems.map((l, i) => {
+                const isActive = activeInputFile === i;
+                const filePulse = isActive ? interpolate(Math.sin(f * 0.2), [-1, 1], [0.5, 1]) : 0;
+                return (
+                  <div key={i} style={{ fontFamily: 'Consolas, monospace', fontSize: 13, color: isActive ? '#fff' : (l.includes('→') ? C.cyan : 'rgba(255,255,255,0.82)'), lineHeight: 1.4, background: isActive ? `rgba(243,156,18,${filePulse * 0.18})` : 'transparent', borderRadius: 4, padding: '2px 6px', display: 'flex', alignItems: 'center', gap: 6 }}>
+                    {isActive && <span style={{ color: C.orange, fontSize: 11, opacity: filePulse, flexShrink: 0 }}>►</span>}
+                    {l}
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>
@@ -698,13 +724,18 @@ const PrototypeScene: React.FC = () => {
         {/* Col 2: Build + Validate */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           <div style={{ fontFamily: 'Arial, sans-serif', fontWeight: 700, fontSize: 18, color: C.textMuted, marginBottom: 6 }}>⚡ Build &amp; Validate</div>
-          {processItems.map((a, i) => (
-            <div key={i} style={{ background: C.bgCard, borderRadius: 12, border: `2px solid ${a.color}`, padding: '20px 18px', textAlign: 'center', opacity: fade(f, a.delay, 18), transform: `translateY(${interpolate(sprSlow(f, a.delay), [0, 1], [40, 0])}px)` }}>
-              <div style={{ fontSize: 44, marginBottom: 10 }}>{a.icon}</div>
-              <div style={{ fontFamily: 'Arial, sans-serif', fontWeight: 700, fontSize: 16, color: a.color, marginBottom: 8 }}>{a.label}</div>
-              <div style={{ fontFamily: 'Arial, sans-serif', fontSize: 13, color: C.textMuted, lineHeight: 1.5 }}>{a.detail}</div>
-            </div>
-          ))}
+          {processItems.map((a, i) => {
+            const cardVisible = f > a.delay + 14;
+            const processLabel = i === 0 ? '⟳ building...' : '⟳ reviewing...';
+            return (
+              <div key={i} style={{ background: C.bgCard, borderRadius: 12, border: `2px solid ${a.color}`, padding: '20px 18px', textAlign: 'center', opacity: fade(f, a.delay, 18), transform: `translateY(${interpolate(sprSlow(f, a.delay), [0, 1], [40, 0])}px)` }}>
+                <div style={{ fontSize: 44, marginBottom: 10 }}>{a.icon}</div>
+                <div style={{ fontFamily: 'Arial, sans-serif', fontWeight: 700, fontSize: 16, color: a.color, marginBottom: 8 }}>{a.label}</div>
+                <div style={{ fontFamily: 'Arial, sans-serif', fontSize: 13, color: C.textMuted, lineHeight: 1.5 }}>{a.detail}</div>
+                {cardVisible && <div style={{ marginTop: 10, fontFamily: 'Consolas, monospace', fontSize: 12, color: a.color, opacity: processPulse }}>{processLabel}</div>}
+              </div>
+            );
+          })}
         </div>
 
         {/* Arrow 2 */}
@@ -954,8 +985,10 @@ const Step4Scene: React.FC = () => {
   const pulse = interpolate(Math.sin((f - 190) * 0.08), [-1, 1], [0.3, 0.8]);
   const borderOpacity = f > 190 ? pulse : 0.3;
 
-  // Jira cycling: one ticket highlighted every 55 frames after they appear
-  const activeTicket = f > 130 ? Math.floor((f - 130) / 55) % jiraItems.length : -1;
+  // Jira sequential: each ticket active for 55 frames, then permanently done — no loop
+  const currentActive = f > 130 ? Math.min(Math.floor((f - 130) / 55), jiraItems.length - 1) : -1;
+  // All tickets done at f = 130 + 4×55 = 350
+  const allDone = f > 130 + jiraItems.length * 55;
   // Dev generating pulse
   const genPulse = interpolate(Math.sin(f * 0.22), [-1, 1], [0.35, 1]);
 
@@ -1015,16 +1048,18 @@ const Step4Scene: React.FC = () => {
           <div style={{ fontFamily: 'Arial, sans-serif', fontWeight: 700, fontSize: 18, color: C.textMuted, marginBottom: 6 }}>🎯 Jira — Sprint Backlog</div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
             {jiraItems.map((j, i) => {
-              const isActive = activeTicket === i;
+              const isDone = f > 130 + (i + 1) * 55;
+              const isActive = !isDone && currentActive === i;
               const activePulse = isActive ? interpolate(Math.sin(f * 0.18), [-1, 1], [0.4, 0.8]) : 0;
               return (
-                <div key={i} style={{ background: isActive ? `rgba(0,151,207,0.14)` : C.bgCard, borderRadius: 8, padding: '10px 14px', borderLeft: `4px solid ${j.color}`, border: `1px solid ${isActive ? j.color : C.border}`, borderLeftWidth: 4, borderLeftColor: j.color, opacity: fade(f, 76 + i * 5), boxShadow: isActive ? `0 0 ${interpolate(activePulse, [0.4, 0.8], [8, 20])}px rgba(0,151,207,${activePulse})` : 'none' }}>
+                <div key={i} style={{ background: isDone ? 'rgba(46,204,113,0.08)' : (isActive ? 'rgba(0,151,207,0.14)' : C.bgCard), borderRadius: 8, padding: '10px 14px', border: `1px solid ${isDone ? 'rgba(46,204,113,0.35)' : (isActive ? j.color : C.border)}`, borderLeftWidth: 4, borderLeftColor: isDone ? C.green : j.color, borderLeftStyle: 'solid', opacity: fade(f, 76 + i * 5), boxShadow: isActive ? `0 0 ${interpolate(activePulse, [0.4, 0.8], [8, 20])}px rgba(0,151,207,${activePulse})` : 'none' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 3 }}>
-                    <span style={{ fontFamily: 'Consolas, monospace', fontSize: 11, color: j.color, fontWeight: 700 }}>{j.ticket}</span>
+                    <span style={{ fontFamily: 'Consolas, monospace', fontSize: 11, color: isDone ? C.green : j.color, fontWeight: 700 }}>{isDone ? '✅' : j.ticket}</span>
                     <span style={{ fontFamily: 'Arial, sans-serif', fontSize: 10, color: C.textDim, background: 'rgba(255,255,255,0.08)', padding: '2px 8px', borderRadius: 10 }}>{j.sprint}</span>
                     {isActive && <span style={{ fontFamily: 'Arial, sans-serif', fontSize: 10, color: C.cyan, fontWeight: 700, opacity: genPulse }}>● in progress</span>}
+                    {isDone && <span style={{ fontFamily: 'Arial, sans-serif', fontSize: 10, color: C.green, fontWeight: 700 }}>✓ done</span>}
                   </div>
-                  <div style={{ fontFamily: 'Arial, sans-serif', fontSize: 13, color: isActive ? C.white : 'rgba(255,255,255,0.82)' }}>{j.label}</div>
+                  <div style={{ fontFamily: 'Arial, sans-serif', fontSize: 13, color: isDone ? 'rgba(46,204,113,0.7)' : (isActive ? C.white : 'rgba(255,255,255,0.82)'), textDecoration: isDone ? 'line-through' : 'none' }}>{j.label}</div>
                 </div>
               );
             })}
@@ -1037,7 +1072,7 @@ const Step4Scene: React.FC = () => {
         </div>
 
         {/* Col 2: Dev team in action */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 10, opacity: fade(f, 82, 15) }}>
           <div style={{ fontFamily: 'Arial, sans-serif', fontWeight: 700, fontSize: 18, color: C.textMuted, marginBottom: 6 }}>👥 Dev Team in Action</div>
           {devs.map((d, i) => (
             <div key={i} style={{ background: C.bgCard, borderRadius: 10, border: `2px solid ${d.color}`, overflow: 'hidden', opacity: fade(f, d.delay, 18), transform: `translateY(${interpolate(sprSlow(f, d.delay), [0, 1], [40, 0])}px)` }}>
@@ -1052,8 +1087,11 @@ const Step4Scene: React.FC = () => {
                     <span style={{ fontSize: 12 }}>⚡</span>
                     <span style={{ fontFamily: 'Consolas, monospace', fontSize: 11, color: C.cyan, fontWeight: 700 }}>{d.tool}</span>
                   </div>
-                  {f > d.delay + 30 && (
+                  {f > d.delay + 30 && !allDone && (
                     <span style={{ fontFamily: 'Consolas, monospace', fontSize: 11, color: C.green, opacity: genPulse }}>⟳ generating...</span>
+                  )}
+                  {allDone && (
+                    <span style={{ fontFamily: 'Consolas, monospace', fontSize: 11, color: 'rgba(255,255,255,0.35)' }}>✓ idle</span>
                   )}
                 </div>
               </div>
@@ -1071,7 +1109,7 @@ const Step4Scene: React.FC = () => {
           <div style={{ fontFamily: 'Arial, sans-serif', fontWeight: 700, fontSize: 18, color: C.textMuted, marginBottom: 6 }}>📊 Sprint Progress</div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
             {sprints.map((s, i) => {
-              const pct = interpolate(f, [144 + i * 12, 250 + i * 12], [0, s.pct], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
+              const pct = interpolate(f, [144 + i * 10, 350], [0, s.pct], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
               const isFilling = pct > 0 && pct < s.pct;
               const barGlow = isFilling ? interpolate(Math.sin(f * 0.25), [-1, 1], [0.4, 0.9]) : 0;
               return (

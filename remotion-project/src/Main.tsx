@@ -923,11 +923,23 @@ const Step3Scene: React.FC = () => {
 // ── SCENE 7: STEP 4 — DEVELOPMENT ────────────────────────────────────────────
 const Step4Scene: React.FC = () => {
   const f = useCurrentFrame();
-  const team = [
-    { role: 'AI Lead', detail: 'Implementation plans & dev tracking', color: C.cyan },
-    { role: 'Front AI Dev', detail: 'Angular 18 · Components · UI', color: C.blue },
-    { role: 'Back AI Dev', detail: 'Spring Boot · REST APIs · JPA', color: C.green },
+
+  const archScale = spr(f, 22);
+  const archOpacity = fade(f, 22, 18);
+  const arrowOpacity = fade(f, 72, 12);
+
+  const jiraItems = [
+    { ticket: 'TR-041', label: 'TEMPO: Activity calendar view', sprint: 'Sprint 2', color: C.green },
+    { ticket: 'TR-067', label: 'TOPS: Technical script editor', sprint: 'Sprint 3', color: C.cyan },
+    { ticket: 'TR-089', label: 'ADMIN: Role & permissions mgmt', sprint: 'Sprint 2', color: C.blue },
+    { ticket: 'TR-112', label: 'Auth: JWT login + RBAC guards', sprint: 'Sprint 1', color: C.green },
   ];
+
+  const devs = [
+    { role: 'Front AI Dev', stack: 'Angular 18 · Components · UI', tool: 'Axet Plugin', color: C.blue, delay: 88 },
+    { role: 'Back AI Dev', stack: 'Spring Boot · REST APIs · JPA', tool: 'Axet Plugin + Codex', color: C.green, delay: 112 },
+  ];
+
   const sprints = [
     { label: 'Sprint 0: Setup', pct: 100, color: C.green },
     { label: 'Sprint 1: Auth + Layout', pct: 100, color: C.green },
@@ -936,56 +948,168 @@ const Step4Scene: React.FC = () => {
     { label: 'Sprint 4: Integrations', pct: 35, color: C.orange },
     { label: 'Sprint 5: Deploy', pct: 30, color: C.orange },
   ];
+
+  const bottomOpacity = fade(f, 170, 20);
+  const bottomScale = interpolate(spr(f, 170), [0, 1], [0.92, 1]);
+  const pulse = interpolate(Math.sin((f - 190) * 0.08), [-1, 1], [0.3, 0.8]);
+  const borderOpacity = f > 190 ? pulse : 0.3;
+
+  // Jira cycling: one ticket highlighted every 55 frames after they appear
+  const activeTicket = f > 130 ? Math.floor((f - 130) / 55) % jiraItems.length : -1;
+  // Dev generating pulse
+  const genPulse = interpolate(Math.sin(f * 0.22), [-1, 1], [0.35, 1]);
+
   return (
     <AbsoluteFill style={{ background: C.bg, flexDirection: 'column', display: 'flex' }}>
-      <div style={{ flexShrink: 0, padding: '28px 100px 0' }}><SectionBar>AI-SUPPORTED DEVELOPMENT STREAMS</SectionBar></div>
-      <div style={{ flexShrink: 0, padding: '20px 100px', display: 'flex', alignItems: 'center', gap: 24, opacity: fade(f, 5) }}>
-        <StepBadge n={4} />
-        <StepTitle>Development</StepTitle>
+      {/* Top bar */}
+      <div style={{ flexShrink: 0, padding: '28px 100px 0', opacity: fade(f, 3, 12) }}>
+        <SectionBar>AI-SUPPORTED DEVELOPMENT STREAMS</SectionBar>
       </div>
-      <div style={{ flex: 1, padding: '0 100px', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 56, minHeight: 0 }}>
-        <div style={{ display: 'flex', flexDirection: 'column', opacity: fade(f, 10) }}>
-          <div style={{ fontFamily: 'Arial, sans-serif', fontWeight: 700, fontSize: 20, color: C.white, marginBottom: 18 }}>👥 The Team</div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
-            {team.map((m, i) => (
-              <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 18, padding: '18px 20px', background: C.bgCard, borderRadius: 10, border: `1px solid ${C.border}`, opacity: fade(f, 13 + i * 8), transform: `translateX(${interpolate(fade(f, 13 + i * 8), [0, 1], [-20, 0])}px)` }}>
-                <div style={{ width: 56, height: 56, borderRadius: '50%', background: m.color, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontSize: 24, flexShrink: 0 }}>👤</div>
-                <div>
-                  <span style={{ background: m.color, color: '#fff', fontSize: 15, fontWeight: 700, fontFamily: 'Arial, sans-serif', padding: '4px 12px', borderRadius: 4 }}>{m.role}</span>
-                  <div style={{ fontFamily: 'Arial, sans-serif', fontSize: 16, color: C.textMuted, marginTop: 6 }}>{m.detail}</div>
-                </div>
-              </div>
+
+      {/* Phase label */}
+      <div style={{ flexShrink: 0, padding: '14px 100px 0', display: 'flex', alignItems: 'center', gap: 20, opacity: fade(f, 8, 14) }}>
+        <StepBadge n={4} />
+        <div>
+          <div style={{ fontFamily: 'Arial, sans-serif', fontSize: 15, color: C.cyan, fontWeight: 700, letterSpacing: '0.08em' }}>PHASE 4</div>
+          <StepTitle>Development</StepTitle>
+        </div>
+      </div>
+
+      {/* AI Lead box */}
+      <div style={{ flexShrink: 0, padding: '12px 100px 0', display: 'flex', justifyContent: 'center', opacity: archOpacity, transform: `scale(${interpolate(archScale, [0, 1], [0.6, 1])})` }}>
+        <div style={{ display: 'inline-flex', flexDirection: 'column', alignItems: 'center', gap: 10, background: C.bgCard, border: `2px solid ${C.cyan}`, borderRadius: 14, padding: '18px 36px', boxShadow: '0 0 40px rgba(0,151,207,0.25)' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 18 }}>
+            <div style={{ width: 52, height: 52, borderRadius: '50%', background: C.cyan, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 24, flexShrink: 0, boxShadow: '0 0 16px rgba(0,151,207,0.5)' }}>👤</div>
+            <div style={{ fontFamily: 'Arial Black, Arial, sans-serif', fontWeight: 900, fontSize: 22, color: C.white }}>AI Lead</div>
+            <div style={{ width: 1, height: 32, background: 'rgba(255,255,255,0.15)' }} />
+            {['📋 Plans sprints', '🎯 Registers in Jira', '👥 Distributes work'].map((tag, i) => (
+              <div key={i} style={{ fontFamily: 'Arial, sans-serif', fontSize: 12, fontWeight: 600, color: C.cyan, background: 'rgba(0,151,207,0.15)', border: '1px solid rgba(0,151,207,0.4)', padding: '5px 14px', borderRadius: 20 }}>{tag}</div>
             ))}
           </div>
-          <div style={{ background: C.bgCard, borderRadius: 10, padding: '16px 20px', border: `1px solid ${C.borderCyan}`, fontFamily: 'Arial, sans-serif', fontSize: 17, color: C.white, opacity: fade(f, 38), marginTop: 20 }}>
-            🛠️ Co-creating code with AI agents using <strong style={{ color: C.cyan }}>Axet Plugin</strong>
+          <div style={{ fontFamily: 'Arial, sans-serif', fontSize: 18, color: C.white, lineHeight: 1.7, textAlign: 'center', maxWidth: 880, opacity: fade(f, 40, 25), transform: `translateY(${interpolate(fade(f, 40, 25), [0, 1], [10, 0])}px)` }}>
+            Plans the implementation, registers tasks in <strong style={{ color: C.cyan }}>Jira</strong> and distributes them across the team.
+            Each developer launches prompts through <strong style={{ color: C.cyan }}>Axet Plugin + Codex</strong>,
+            generating, reviewing and iterating code sprint by sprint.
           </div>
         </div>
-        <div style={{ display: 'flex', flexDirection: 'column', opacity: fade(f, 18) }}>
-          <div style={{ fontFamily: 'Arial, sans-serif', fontWeight: 700, fontSize: 20, color: C.white, marginBottom: 18 }}>📊 Sprint Progress</div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 18, flex: 1 }}>
-            {sprints.map((s, i) => {
-              const pct = interpolate(fade(f, 22 + i * 5), [0, 1], [0, s.pct]);
+      </div>
+
+      {/* Connector */}
+      {(() => {
+        const connOpacity = fade(f, 62, 14);
+        return (
+          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', opacity: connOpacity, minHeight: 0 }}>
+            <div style={{ width: 2, height: 16, background: C.cyan, flexShrink: 0 }} />
+            <div style={{ background: C.cyan, color: C.white, padding: '5px 22px', borderRadius: 20, fontFamily: 'Arial, sans-serif', fontWeight: 700, fontSize: 13, letterSpacing: '0.06em', whiteSpace: 'nowrap', boxShadow: '0 0 16px rgba(0,151,207,0.5)', flexShrink: 0 }}>⚡ Axet Plugin + Codex</div>
+            <div style={{ width: 2, flex: 1, background: C.cyan }} />
+            <div style={{ fontSize: 10, color: C.cyan, lineHeight: 1, flexShrink: 0 }}>▼</div>
+          </div>
+        );
+      })()}
+
+      {/* 3-column flow */}
+      <div style={{ flexShrink: 0, padding: '0 160px 12px', display: 'grid', gridTemplateColumns: '1fr 56px 1fr 56px 1fr', alignItems: 'center' }}>
+
+        {/* Col 1: Jira backlog */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 8, opacity: fade(f, 72, 15), transform: `translateX(${interpolate(spr(f, 72), [0, 1], [-30, 0])}px)` }}>
+          <div style={{ fontFamily: 'Arial, sans-serif', fontWeight: 700, fontSize: 18, color: C.textMuted, marginBottom: 6 }}>🎯 Jira — Sprint Backlog</div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+            {jiraItems.map((j, i) => {
+              const isActive = activeTicket === i;
+              const activePulse = isActive ? interpolate(Math.sin(f * 0.18), [-1, 1], [0.4, 0.8]) : 0;
               return (
-                <div key={i} style={{ opacity: fade(f, 20 + i * 5) }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', fontFamily: 'Arial, sans-serif', fontSize: 17, marginBottom: 6, color: C.textMuted }}>
+                <div key={i} style={{ background: isActive ? `rgba(0,151,207,0.14)` : C.bgCard, borderRadius: 8, padding: '10px 14px', borderLeft: `4px solid ${j.color}`, border: `1px solid ${isActive ? j.color : C.border}`, borderLeftWidth: 4, borderLeftColor: j.color, opacity: fade(f, 76 + i * 5), boxShadow: isActive ? `0 0 ${interpolate(activePulse, [0.4, 0.8], [8, 20])}px rgba(0,151,207,${activePulse})` : 'none' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 3 }}>
+                    <span style={{ fontFamily: 'Consolas, monospace', fontSize: 11, color: j.color, fontWeight: 700 }}>{j.ticket}</span>
+                    <span style={{ fontFamily: 'Arial, sans-serif', fontSize: 10, color: C.textDim, background: 'rgba(255,255,255,0.08)', padding: '2px 8px', borderRadius: 10 }}>{j.sprint}</span>
+                    {isActive && <span style={{ fontFamily: 'Arial, sans-serif', fontSize: 10, color: C.cyan, fontWeight: 700, opacity: genPulse }}>● in progress</span>}
+                  </div>
+                  <div style={{ fontFamily: 'Arial, sans-serif', fontSize: 13, color: isActive ? C.white : 'rgba(255,255,255,0.82)' }}>{j.label}</div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Arrow 1 */}
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: arrowOpacity }}>
+          <div style={{ fontSize: 30, color: C.cyan, fontWeight: 900 }}>→</div>
+        </div>
+
+        {/* Col 2: Dev team in action */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+          <div style={{ fontFamily: 'Arial, sans-serif', fontWeight: 700, fontSize: 18, color: C.textMuted, marginBottom: 6 }}>👥 Dev Team in Action</div>
+          {devs.map((d, i) => (
+            <div key={i} style={{ background: C.bgCard, borderRadius: 10, border: `2px solid ${d.color}`, overflow: 'hidden', opacity: fade(f, d.delay, 18), transform: `translateY(${interpolate(sprSlow(f, d.delay), [0, 1], [40, 0])}px)` }}>
+              <div style={{ background: d.color, padding: '8px 14px', display: 'flex', alignItems: 'center', gap: 10 }}>
+                <span style={{ fontSize: 18 }}>👤</span>
+                <span style={{ fontFamily: 'Arial, sans-serif', fontWeight: 700, fontSize: 15, color: C.white }}>{d.role}</span>
+              </div>
+              <div style={{ padding: '10px 14px' }}>
+                <div style={{ fontFamily: 'Arial, sans-serif', fontSize: 13, color: C.textMuted, marginBottom: 6 }}>{d.stack}</div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                  <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6, background: 'rgba(0,151,207,0.15)', border: '1px solid rgba(0,151,207,0.35)', borderRadius: 14, padding: '3px 12px' }}>
+                    <span style={{ fontSize: 12 }}>⚡</span>
+                    <span style={{ fontFamily: 'Consolas, monospace', fontSize: 11, color: C.cyan, fontWeight: 700 }}>{d.tool}</span>
+                  </div>
+                  {f > d.delay + 30 && (
+                    <span style={{ fontFamily: 'Consolas, monospace', fontSize: 11, color: C.green, opacity: genPulse }}>⟳ generating...</span>
+                  )}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Arrow 2 */}
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: arrowOpacity }}>
+          <div style={{ fontSize: 30, color: C.cyan, fontWeight: 900 }}>→</div>
+        </div>
+
+        {/* Col 3: Sprint progress */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 8, opacity: fade(f, 140, 15), transform: `translateX(${interpolate(spr(f, 140), [0, 1], [30, 0])}px)` }}>
+          <div style={{ fontFamily: 'Arial, sans-serif', fontWeight: 700, fontSize: 18, color: C.textMuted, marginBottom: 6 }}>📊 Sprint Progress</div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+            {sprints.map((s, i) => {
+              const pct = interpolate(f, [144 + i * 12, 250 + i * 12], [0, s.pct], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
+              const isFilling = pct > 0 && pct < s.pct;
+              const barGlow = isFilling ? interpolate(Math.sin(f * 0.25), [-1, 1], [0.4, 0.9]) : 0;
+              return (
+                <div key={i} style={{ opacity: fade(f, 142 + i * 5) }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', fontFamily: 'Arial, sans-serif', fontSize: 13, marginBottom: 4, color: isFilling ? C.white : C.textMuted }}>
                     <span>{s.label}</span>
                     <span style={{ fontWeight: 700, color: s.color }}>{Math.round(pct)}%</span>
                   </div>
-                  <div style={{ height: 14, borderRadius: 7, background: C.bgCard, border: `1px solid ${C.border}` }}>
-                    <div style={{ height: '100%', borderRadius: 7, background: s.color, width: `${pct}%` }} />
+                  <div style={{ height: 10, borderRadius: 5, background: C.bgCard, border: `1px solid ${C.border}` }}>
+                    <div style={{ height: '100%', borderRadius: 5, background: s.color, width: `${pct}%`, boxShadow: isFilling ? `0 0 ${interpolate(barGlow, [0.4, 0.9], [4, 12])}px ${s.color}` : 'none' }} />
                   </div>
                 </div>
               );
             })}
           </div>
-          <div style={{ marginTop: 20, background: C.cyan, borderRadius: 10, padding: '18px 28px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', opacity: fade(f, 52) }}>
-            <div style={{ fontFamily: 'Arial, sans-serif', fontWeight: 700, fontSize: 20, color: C.white }}>Global Progress</div>
-            <div style={{ fontFamily: 'Arial Black, Arial, sans-serif', fontWeight: 900, fontSize: 44, color: C.white }}>~80%</div>
+          <div style={{ marginTop: 8, background: C.cyan, borderRadius: 8, padding: '12px 18px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', opacity: fade(f, 175) }}>
+            <div style={{ fontFamily: 'Arial, sans-serif', fontWeight: 700, fontSize: 15, color: C.white }}>Global Progress</div>
+            <div style={{ fontFamily: 'Arial Black, Arial, sans-serif', fontWeight: 900, fontSize: 32, color: C.white }}>~80%</div>
           </div>
         </div>
       </div>
-      <div style={{ flexShrink: 0, padding: '16px 100px 24px', display: 'flex', justifyContent: 'flex-end', opacity: fade(f, 5) }}><Logo height={70} /></div>
+
+      {/* Spacer */}
+      <div style={{ flex: 0.6 }} />
+
+      {/* Bottom strip */}
+      <div style={{ flexShrink: 0, padding: '8px 100px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', opacity: bottomOpacity, transform: `scale(${bottomScale})` }}>
+        <div style={{ flex: 1, display: 'flex', justifyContent: 'center' }}>
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: 16, background: 'rgba(0,151,207,0.12)', borderRadius: 12, padding: '16px 32px', border: `2px solid rgba(0,151,207,${borderOpacity})`, boxShadow: `0 0 ${interpolate(borderOpacity, [0.3, 0.8], [8, 28])}px rgba(0,151,207,${borderOpacity * 0.5})` }}>
+            <span style={{ fontSize: 22, flexShrink: 0 }}>💡</span>
+            <div style={{ fontFamily: 'Arial, sans-serif', fontSize: 17, color: C.white, lineHeight: 1.6 }}>
+              <strong style={{ color: C.cyan }}>AI doesn't replace developers — </strong>
+              it amplifies them. Each prompt generates a full feature; each sprint delivers working software.
+            </div>
+          </div>
+        </div>
+        <Logo height={60} />
+      </div>
     </AbsoluteFill>
   );
 };

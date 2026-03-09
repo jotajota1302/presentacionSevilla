@@ -22,6 +22,12 @@ npm-debug.log*
 .playwright-mcp/
 *.tmp
 
+# Claude Code internal files
+.claude/
+
+# Agent config (local only)
+.agents/
+
 # Large binary / personal files
 *.pptx
 *.docx

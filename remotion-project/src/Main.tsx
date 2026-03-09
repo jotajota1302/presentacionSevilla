@@ -426,64 +426,163 @@ const Step1Scene: React.FC = () => {
   );
 };
 
-// ── SCENE 4: STEP 2 — CONTEXT ANALYSIS ───────────────────────────────────────
+// ── SCENE 4: STEP 2 — CONTEXT GENERATION ─────────────────────────────────────
 const Step2Scene: React.FC = () => {
   const f = useCurrentFrame();
-  const folders = ['📁 AGENTES/', '📁 DOC_INICIAL/', '📁 DOC_GENERADA/', '📁 PROMPT_FRAMEWORK/', '📁 scripts/', '📁 teatro-real-backend/', '📁 teatro-real-frontend/'];
+
+  const archScale = spr(f, 22);
+  const archOpacity = fade(f, 22, 18);
+  const arrowOpacity = fade(f, 72, 12);
+
+  const phaseAgents = [
+    { icon: '🔍', label: 'Requirements Analyst', color: C.blue, delay: 82 },
+    { icon: '⚙️', label: 'Backend Expert', color: C.green, delay: 110 },
+    { icon: '🎨', label: 'Frontend Expert', color: C.cyan, delay: 138 },
+  ];
+
+  const inputFiles = [
+    '📄 TR-Requisitos Generales v1.2.docx',
+    '📊 TEMPO - Temporada 2025-2026.xlsx',
+    '📊 CALENDARIO 2025.xlsx',
+    '📝 Contexto TEATRO REAL Gestión Interna.docx',
+    '📝 Guion Regiduria CARMEN.docx',
+    '📋 Estado_Implementacion_TEMPO.md',
+    '📋 TR_Matriz_Requerimientos.md',
+  ];
+
+  const outputFiles = [
+    { file: 'PLAN_IMPLEMENTACION_COMPLETO.md', label: 'Full implementation plan' },
+    { file: 'GUIA_ESTILOS_TEATRO.md', label: 'UI & style guide' },
+    { file: 'CONTEXTO_BACKEND.md', label: 'Backend context for agents' },
+    { file: 'CONTEXTO_FRONTEND.md', label: 'Frontend context for agents' },
+  ];
+
+  const bottomOpacity = fade(f, 175, 20);
+  const bottomScale = interpolate(spr(f, 175), [0, 1], [0.92, 1]);
+  const pulse = interpolate(Math.sin((f - 195) * 0.08), [-1, 1], [0.3, 0.8]);
+  const borderOpacity = f > 195 ? pulse : 0.3;
+
   return (
     <AbsoluteFill style={{ background: C.bg, flexDirection: 'column', display: 'flex' }}>
-      <div style={{ flexShrink: 0, padding: '28px 100px 0' }}><SectionBar>AI STRATEGY AND GOVERNANCE</SectionBar></div>
-      <div style={{ flexShrink: 0, padding: '20px 100px', display: 'flex', alignItems: 'center', gap: 24, opacity: fade(f, 5), transform: `translateX(${interpolate(spr(f, 5), [0, 1], [-40, 0])}px)` }}>
+      {/* Top bar */}
+      <div style={{ flexShrink: 0, padding: '28px 100px 0', opacity: fade(f, 3, 12) }}>
+        <SectionBar>AI STRATEGY AND GOVERNANCE</SectionBar>
+      </div>
+
+      {/* Phase label */}
+      <div style={{ flexShrink: 0, padding: '14px 100px 0', display: 'flex', alignItems: 'center', gap: 20, opacity: fade(f, 8, 14) }}>
         <StepBadge n={2} />
         <div>
-          <StepTitle>Context Analysis</StepTitle>
-          <div style={{ fontFamily: 'Arial, sans-serif', fontSize: 18, color: C.textMuted, marginTop: 8 }}>
-            <strong style={{ color: C.white }}>AI Architect</strong> · Use agents to extract and structure all client knowledge
+          <div style={{ fontFamily: 'Arial, sans-serif', fontSize: 15, color: C.cyan, fontWeight: 700, letterSpacing: '0.08em' }}>PHASE 2</div>
+          <StepTitle>Context Generation</StepTitle>
+        </div>
+      </div>
+
+      {/* AI Architect box — same style as Phase 1 */}
+      <div style={{ flexShrink: 0, padding: '12px 100px 0', display: 'flex', justifyContent: 'center', opacity: archOpacity, transform: `scale(${interpolate(archScale, [0, 1], [0.6, 1])})` }}>
+        <div style={{ display: 'inline-flex', flexDirection: 'column', alignItems: 'center', gap: 10, background: C.bgCard, border: `2px solid ${C.cyan}`, borderRadius: 14, padding: '18px 36px', boxShadow: `0 0 40px rgba(0,151,207,0.25)` }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 18 }}>
+            <div style={{ width: 52, height: 52, borderRadius: '50%', background: C.cyan, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 24, flexShrink: 0, boxShadow: `0 0 16px rgba(0,151,207,0.5)` }}>👤</div>
+            <div style={{ fontFamily: 'Arial Black, Arial, sans-serif', fontWeight: 900, fontSize: 22, color: C.white }}>AI Architect</div>
+            <div style={{ width: 1, height: 32, background: 'rgba(255,255,255,0.15)' }} />
+            {['📂 Loads docs', '🤖 Runs agents', '📋 Generates context'].map((tag, i) => (
+              <div key={i} style={{ fontFamily: 'Arial, sans-serif', fontSize: 12, fontWeight: 600, color: C.cyan, background: 'rgba(0,151,207,0.15)', border: `1px solid rgba(0,151,207,0.4)`, padding: '5px 14px', borderRadius: 20 }}>{tag}</div>
+            ))}
+          </div>
+          <div style={{ fontFamily: 'Arial, sans-serif', fontSize: 18, color: C.white, lineHeight: 1.7, textAlign: 'center', maxWidth: 880, opacity: fade(f, 40, 25), transform: `translateY(${interpolate(fade(f, 40, 25), [0, 1], [10, 0])}px)` }}>
+            With the <strong style={{ color: C.cyan }}>agents from Phase 1</strong>, feeds them all client documentation.
+            Each agent processes it from a different perspective — business, backend, frontend —
+            producing a <strong style={{ color: C.cyan }}>structured context repository</strong> before any code is written.
           </div>
         </div>
       </div>
-      <div style={{ flex: 1, padding: '0 100px', display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 28, minHeight: 0 }}>
-        {/* Col 1 */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 12, opacity: fade(f, 10), transform: `translateY(${interpolate(spr(f, 10), [0, 1], [30, 0])}px)` }}>
-          <div style={{ fontFamily: 'Arial, sans-serif', fontWeight: 700, fontSize: 17, color: C.textMuted }}>📥 INPUT — DOC_INICIAL</div>
-          <CodeBlock flex={1} title="~/teatro-real/DOC_INICIAL/" lines={['📄 TR-Requisitos Generales v1.2.docx', '📊 TEMPO - Temporada 2025-2026.xlsx', '📊 CALENDARIO 2025.xlsx', '📝 Contexto TEATRO REAL Gestión', '    Interna del Teatro.docx', '📝 Guion Regiduria CARMEN.docx', '📋 Estado_Implementacion_TEMPO.md', '📋 TR_Matriz_Requerimientos.md']} />
-          <div style={{ fontFamily: 'Arial, sans-serif', fontSize: 15, color: C.textMuted, fontStyle: 'italic' }}>Capture functional knowledge,<br />extract technical assets</div>
-        </div>
-        {/* Col 2 */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 12, opacity: fade(f, 20), transform: `translateY(${interpolate(spr(f, 20), [0, 1], [30, 0])}px)` }}>
-          <div style={{ fontFamily: 'Arial, sans-serif', fontWeight: 700, fontSize: 17, color: C.textMuted }}>⚙️ PROCESS — Axet Plugin</div>
-          <div style={{ flex: 1, background: C.bgCard, borderRadius: 10, padding: '18px 20px', border: `2px solid ${C.cyan}`, display: 'flex', flexDirection: 'column', gap: 4 }}>
-            <div style={{ fontFamily: 'Consolas, monospace', fontSize: 16, color: C.cyan, marginBottom: 8, fontWeight: 700 }}>~/teatro-real/</div>
-            {folders.map((l, i) => (
-              <div key={i} style={{ fontFamily: 'Consolas, monospace', fontSize: 15, color: C.textMuted, lineHeight: 1.8, opacity: fade(f, 22 + i * 3) }}>{l}</div>
-            ))}
+
+      {/* Connector: AI Architect ──⚡ aXet Plugin──▼ Agents */}
+      {(() => {
+        const connOpacity = fade(f, 62, 14);
+        return (
+          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', opacity: connOpacity, minHeight: 0 }}>
+            <div style={{ width: 2, height: 16, background: C.cyan, flexShrink: 0 }} />
+            <div style={{ background: C.cyan, color: C.white, padding: '5px 22px', borderRadius: 20, fontFamily: 'Arial, sans-serif', fontWeight: 700, fontSize: 13, letterSpacing: '0.06em', whiteSpace: 'nowrap', boxShadow: '0 0 16px rgba(0,151,207,0.5)', flexShrink: 0 }}>⚡ aXet Plugin</div>
+            <div style={{ width: 2, flex: 1, background: C.cyan }} />
+            <div style={{ fontSize: 10, color: C.cyan, lineHeight: 1, flexShrink: 0 }}>▼</div>
           </div>
-          <div style={{ background: C.cyan, color: C.white, textAlign: 'center', padding: '10px 0', borderRadius: 6, fontFamily: 'Arial, sans-serif', fontWeight: 700, fontSize: 16, opacity: fade(f, 44) }}>aXet .plugin + CONTEXT</div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 4, opacity: fade(f, 36) }}>
-            {[['🔍 Requirements Analyst', 'extracts business requirements'], ['⚙️ Backend Expert', 'details Java 17 + Spring Boot impl.'], ['🎨 Frontend Expert', 'details Angular 18 impl.']].map(([role, desc], i) => (
-              <div key={i} style={{ fontFamily: 'Arial, sans-serif', fontSize: 13, color: C.textMuted }}>
-                <strong style={{ color: C.white }}>{role}</strong> → {desc}
+        );
+      })()}
+
+      {/* 3-column flow: INPUT → AGENTS → OUTPUT */}
+      <div style={{ flexShrink: 0, padding: '0 200px 12px', display: 'grid', gridTemplateColumns: '1fr 56px 1fr 56px 1fr', alignItems: 'center' }}>
+
+        {/* Col 1: INPUT */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 8, opacity: fade(f, 62, 15), transform: `translateX(${interpolate(spr(f, 62), [0, 1], [-30, 0])}px)` }}>
+          <div style={{ fontFamily: 'Arial, sans-serif', fontWeight: 700, fontSize: 18, color: C.textMuted, marginBottom: 6 }}>📥 INPUT — DOC_INICIAL</div>
+          <div style={{ background: C.codeBg, borderRadius: 10, border: `1px solid ${C.borderCyan}`, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+            <div style={{ background: 'rgba(0,151,207,0.20)', color: C.cyan, fontSize: 11, fontFamily: 'Consolas, monospace', fontWeight: 600, padding: '6px 16px', borderBottom: `1px solid ${C.borderCyan}`, flexShrink: 0 }}>~/teatro-real/DOC_INICIAL/</div>
+            <div style={{ padding: '12px 16px', display: 'flex', flexDirection: 'column', gap: 8 }}>
+              {inputFiles.map((l, i) => (
+                <div key={i} style={{ fontFamily: 'Consolas, monospace', fontSize: 13, color: 'rgba(255,255,255,0.82)', lineHeight: 1.4 }}>{l}</div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Arrow 1 */}
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: arrowOpacity }}>
+          <div style={{ fontSize: 30, color: C.cyan, fontWeight: 900 }}>→</div>
+        </div>
+
+        {/* Col 2: AGENTS */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+          <div style={{ fontFamily: 'Arial, sans-serif', fontWeight: 700, fontSize: 18, color: C.textMuted, marginBottom: 6 }}>🤖 Phase 1 Agents</div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+            {phaseAgents.map((a, i) => (
+              <div key={i} style={{ background: a.color, borderRadius: 10, padding: '13px 20px', display: 'flex', alignItems: 'center', gap: 14, opacity: fade(f, a.delay, 18), transform: `translateY(${interpolate(sprSlow(f, a.delay), [0, 1], [40, 0])}px)` }}>
+                <span style={{ fontSize: 24 }}>{a.icon}</span>
+                <span style={{ fontFamily: 'Arial, sans-serif', fontWeight: 700, fontSize: 18, color: C.white }}>{a.label}</span>
               </div>
             ))}
           </div>
         </div>
-        {/* Col 3 */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 12, opacity: fade(f, 34), transform: `translateY(${interpolate(spr(f, 34), [0, 1], [30, 0])}px)` }}>
-          <div style={{ fontFamily: 'Arial, sans-serif', fontWeight: 700, fontSize: 17, color: C.green }}>📤 OUTPUT — DOC_GENERADA</div>
-          <div style={{ flex: 1, background: C.codeBg, borderRadius: 10, border: `1px solid ${C.borderCyan}`, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
-            <div style={{ background: 'rgba(0,151,207,0.20)', color: C.cyan, fontSize: 13, fontFamily: 'Consolas, monospace', fontWeight: 600, padding: '7px 18px', borderBottom: `1px solid ${C.borderCyan}`, flexShrink: 0 }}>~/teatro-real/DOC_GENERADA/</div>
-            <div style={{ flex: 1, padding: '16px 20px', display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: 16 }}>
-              {['→ PLAN_IMPLEMENTACION_COMPLETO.md', '→ GUIA_ESTILOS_TEATRO.md', '→ CONTEXTO_BACKEND.md', '→ CONTEXTO_FRONTEND.md'].map((l, i) => (
-                <div key={i} style={{ fontFamily: 'Consolas, monospace', fontSize: 17, color: C.green, fontWeight: 600 }}>{l}</div>
+
+        {/* Arrow 2 */}
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: arrowOpacity }}>
+          <div style={{ fontSize: 30, color: C.cyan, fontWeight: 900 }}>→</div>
+        </div>
+
+        {/* Col 3: OUTPUT */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 8, opacity: fade(f, 150, 15), transform: `translateX(${interpolate(spr(f, 150), [0, 1], [30, 0])}px)` }}>
+          <div style={{ fontFamily: 'Arial, sans-serif', fontWeight: 700, fontSize: 18, color: C.green, marginBottom: 6 }}>📤 OUTPUT — DOC_GENERADA</div>
+          <div style={{ background: C.codeBg, borderRadius: 10, border: `1px solid ${C.borderCyan}`, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+            <div style={{ background: 'rgba(0,151,207,0.20)', color: C.cyan, fontSize: 11, fontFamily: 'Consolas, monospace', fontWeight: 600, padding: '6px 16px', borderBottom: `1px solid ${C.borderCyan}`, flexShrink: 0 }}>~/teatro-real/DOC_GENERADA/</div>
+            <div style={{ padding: '12px 16px', display: 'flex', flexDirection: 'column', gap: 14 }}>
+              {outputFiles.map((o, i) => (
+                <div key={i} style={{ opacity: fade(f, 155 + i * 5) }}>
+                  <div style={{ fontFamily: 'Consolas, monospace', fontSize: 13, color: C.green, fontWeight: 600 }}>→ {o.file}</div>
+                  <div style={{ fontFamily: 'Arial, sans-serif', fontSize: 11.5, color: C.textDim, marginTop: 3 }}>{o.label}</div>
+                </div>
               ))}
             </div>
           </div>
-          <div style={{ fontFamily: 'Arial, sans-serif', fontSize: 15, color: C.green, fontStyle: 'italic', fontWeight: 600 }}>
-            ✓ Context ready — agents have full project knowledge
-          </div>
+          <div style={{ fontFamily: 'Arial, sans-serif', fontSize: 14, color: C.green, fontStyle: 'italic', fontWeight: 600 }}>✓ Context ready — agents have full project knowledge</div>
         </div>
       </div>
-      <div style={{ flexShrink: 0, padding: '16px 100px 24px', display: 'flex', justifyContent: 'flex-end', opacity: fade(f, 5) }}><Logo height={70} /></div>
+
+      {/* Spacer — pushes grid up by taking space below it */}
+      <div style={{ flex: 0.6 }} />
+
+      {/* Bottom strip — pulsing insight + logo */}
+      <div style={{ flexShrink: 0, padding: '8px 100px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', opacity: bottomOpacity, transform: `scale(${bottomScale})` }}>
+        <div style={{ flex: 1, display: 'flex', justifyContent: 'center' }}>
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: 16, background: 'rgba(0,151,207,0.12)', borderRadius: 12, padding: '16px 32px', border: `2px solid rgba(0,151,207,${borderOpacity})`, boxShadow: `0 0 ${interpolate(borderOpacity, [0.3, 0.8], [8, 28])}px rgba(0,151,207,${borderOpacity * 0.5})` }}>
+            <span style={{ fontSize: 22, flexShrink: 0 }}>💡</span>
+            <div style={{ fontFamily: 'Arial, sans-serif', fontSize: 17, color: C.white, lineHeight: 1.6 }}>
+              <strong style={{ color: C.cyan }}>No production code yet — </strong>
+              agents read, translate and structure knowledge. The project is fully understood before writing a single line of code.
+            </div>
+          </div>
+        </div>
+        <Logo height={60} />
+      </div>
     </AbsoluteFill>
   );
 };

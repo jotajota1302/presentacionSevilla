@@ -1,0 +1,22 @@
+{
+  "name": "remotion-project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "render": "remotion render src/Root.tsx NativeAI ../native-ai-video.mp4",
+    "preview": "remotion preview src/Root.tsx"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@remotion/cli": "^4.0.434",
+    "@remotion/renderer": "^4.0.434",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "remotion": "^4.0.434",
+    "typescript": "^5.9.3"
+  }
+}

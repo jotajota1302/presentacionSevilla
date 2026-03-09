@@ -1,0 +1,30 @@
+# Dependencies
+node_modules/
+remotion-project/node_modules/
+
+# Build output
+dist/
+remotion-project/dist/
+*.mp4
+
+# OS / Editor
+.DS_Store
+Thumbs.db
+desktop.ini
+*.lnk
+
+# Logs
+*.log
+npm-debug.log*
+
+# Temp / cache
+.cache/
+.playwright-mcp/
+*.tmp
+
+# Large binary / personal files
+*.pptx
+*.docx
+*.png
+*.jpg
+*.jpeg

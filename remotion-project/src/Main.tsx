@@ -1155,49 +1155,223 @@ const Step4Scene: React.FC = () => {
 // ── SCENE 8: STEP 5 — QUALITY ASSURANCE ──────────────────────────────────────
 const Step5Scene: React.FC = () => {
   const f = useCurrentFrame();
-  const steps = [
-    { n: '1', icon: '📝', label: 'MR Created', detail: 'Front AI Dev / Back AI Dev\nopens the merge request', color: C.blue },
-    { n: '2', icon: '👁️', label: 'Human Review', detail: 'MR Validator reviews code\n& integrates to development', color: C.cyan },
-    { n: '3', icon: '🧪', label: 'Test Pass', detail: 'Tests run on the\ndevelopment branch', color: '#9B59B6' },
-    { n: '4', icon: '✅', label: 'Ready to Deploy', detail: 'Validation passed —\ncleared for deployment', color: C.green },
+
+  const archScale = spr(f, 22);
+  const archOpacity = fade(f, 22, 18);
+  const arrowOpacity = fade(f, 72, 12);
+
+  const mrItems = [
+    { ticket: 'TR-041', label: 'TEMPO: Activity calendar view', color: C.green },
+    { ticket: 'TR-067', label: 'TOPS: Technical script editor', color: C.cyan },
+    { ticket: 'TR-089', label: 'ADMIN: Role & permissions mgmt', color: C.blue },
+    { ticket: 'TR-112', label: 'Auth: JWT login + RBAC guards', color: C.green },
   ];
+
+  const reviewers = [
+    { role: 'MR Validator', action: 'Code review & test validation', tool: 'GitLab MR Review', color: '#9B59B6', delay: 88 },
+    { role: 'AI Lead', action: 'Final approval & branch merge', tool: 'GitLab + Branch mgmt', color: C.cyan, delay: 112 },
+  ];
+
+  const bottomOpacity = fade(f, 162, 20);
+  const bottomScale = interpolate(spr(f, 162), [0, 1], [0.92, 1]);
+  const pulse = interpolate(Math.sin((f - 182) * 0.08), [-1, 1], [0.3, 0.8]);
+  const borderOpacity = f > 182 ? pulse : 0.3;
+
+  // MR sequential: each MR active for 55 frames, then permanently merged — no loop
+  const currentMR = f > 90 ? Math.min(Math.floor((f - 90) / 55), mrItems.length - 1) : -1;
+  const allDone = f > 90 + mrItems.length * 55; // f > 310
+  const reviewPulse = interpolate(Math.sin(f * 0.22), [-1, 1], [0.35, 1]);
+  // Actor box border pulses while reviews are in progress
+  const actorBorderPulse = !allDone && f > 22 ? interpolate(Math.sin(f * 0.15), [-1, 1], [0.4, 0.9]) : 0.3;
+  // Build bar: each merged MR contributes 25%, animates in as it merges
+  let buildPct = 0;
+  for (let i = 0; i < mrItems.length; i++) {
+    const start = 90 + (i + 1) * 55;
+    buildPct += interpolate(f, [start, start + 20], [0, 25], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
+  }
+  const buildFilling = buildPct > 0 && buildPct < 100;
+  const barGlow = buildFilling ? interpolate(Math.sin(f * 0.25), [-1, 1], [0.4, 0.9]) : 0;
+
   return (
     <AbsoluteFill style={{ background: C.bg, flexDirection: 'column', display: 'flex' }}>
-      <div style={{ flexShrink: 0, padding: '28px 100px 0' }}><SectionBar>AI-SUPPORTED DEVELOPMENT STREAMS</SectionBar></div>
-      <div style={{ flexShrink: 0, padding: '20px 100px', display: 'flex', alignItems: 'center', gap: 24, opacity: fade(f, 5) }}>
+      {/* Top bar */}
+      <div style={{ flexShrink: 0, padding: '28px 100px 0', opacity: fade(f, 3, 12) }}>
+        <SectionBar>AI-SUPPORTED DEVELOPMENT STREAMS</SectionBar>
+      </div>
+
+      {/* Phase label */}
+      <div style={{ flexShrink: 0, padding: '14px 100px 0', display: 'flex', alignItems: 'center', gap: 20, opacity: fade(f, 8, 14) }}>
         <StepBadge n={5} />
         <div>
+          <div style={{ fontFamily: 'Arial, sans-serif', fontSize: 15, color: C.cyan, fontWeight: 700, letterSpacing: '0.08em' }}>PHASE 5</div>
           <StepTitle>Quality Assurance</StepTitle>
-          <div style={{ fontFamily: 'Arial, sans-serif', fontSize: 18, color: C.textMuted, marginTop: 8 }}>
-            <strong style={{ color: C.white }}>MR Validator + AI Architect</strong> · Human validation before every merge
+        </div>
+      </div>
+
+      {/* Actors box */}
+      <div style={{ flexShrink: 0, padding: '12px 100px 0', display: 'flex', justifyContent: 'center', opacity: archOpacity, transform: `scale(${interpolate(archScale, [0, 1], [0.6, 1])})` }}>
+        <div style={{ display: 'inline-flex', flexDirection: 'column', alignItems: 'center', gap: 10, background: C.bgCard, border: `2px solid rgba(0,151,207,${actorBorderPulse})`, borderRadius: 14, padding: '18px 36px', boxShadow: `0 0 ${interpolate(actorBorderPulse, [0.3, 0.9], [20, 50])}px rgba(0,151,207,${actorBorderPulse * 0.4})` }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 24 }}>
+            {/* AI Lead */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+              <div style={{ width: 52, height: 52, borderRadius: '50%', background: C.cyan, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 24, boxShadow: '0 0 16px rgba(0,151,207,0.5)' }}>👤</div>
+              <div>
+                <div style={{ fontFamily: 'Arial Black, Arial, sans-serif', fontWeight: 900, fontSize: 20, color: C.white }}>AI Lead</div>
+                <div style={{ display: 'flex', gap: 6, marginTop: 4 }}>
+                  {['✅ Approves MRs', '🔀 Manages branches'].map((tag, ti) => (
+                    <div key={ti} style={{ fontFamily: 'Arial, sans-serif', fontSize: 11, fontWeight: 600, color: C.cyan, background: 'rgba(0,151,207,0.15)', border: '1px solid rgba(0,151,207,0.4)', padding: '3px 10px', borderRadius: 20 }}>{tag}</div>
+                  ))}
+                </div>
+              </div>
+            </div>
+            <div style={{ width: 1, height: 48, background: 'rgba(255,255,255,0.15)' }} />
+            {/* MR Validator */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+              <div style={{ width: 52, height: 52, borderRadius: '50%', background: '#9B59B6', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 24, boxShadow: '0 0 16px rgba(155,89,182,0.5)' }}>👤</div>
+              <div>
+                <div style={{ fontFamily: 'Arial Black, Arial, sans-serif', fontWeight: 900, fontSize: 20, color: C.white }}>MR Validator</div>
+                <div style={{ display: 'flex', gap: 6, marginTop: 4 }}>
+                  {['👁️ Code review', '🧪 Validates tests'].map((tag, ti) => (
+                    <div key={ti} style={{ fontFamily: 'Arial, sans-serif', fontSize: 11, fontWeight: 600, color: '#9B59B6', background: 'rgba(155,89,182,0.15)', border: '1px solid rgba(155,89,182,0.4)', padding: '3px 10px', borderRadius: 20 }}>{tag}</div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div style={{ fontFamily: 'Arial, sans-serif', fontSize: 17, color: C.white, lineHeight: 1.7, textAlign: 'center', maxWidth: 880, opacity: fade(f, 40, 25), transform: `translateY(${interpolate(fade(f, 40, 25), [0, 1], [10, 0])}px)` }}>
+            Every AI-generated feature goes through <strong style={{ color: '#9B59B6' }}>human review</strong> before merging.
+            The <strong style={{ color: C.cyan }}>AI Lead</strong> oversees quality and branch integration — no automatic merges.
           </div>
         </div>
       </div>
-      <div style={{ flex: 1, padding: '0 80px', display: 'flex', alignItems: 'center', gap: 0 }}>
-        {steps.map((s, i) => (
-          <React.Fragment key={i}>
-            <div style={{ flex: 1, opacity: fade(f, 14 + i * 10), transform: `translateY(${interpolate(spr(f, 14 + i * 10), [0, 1], [40, 0])}px)` }}>
-              <div style={{ background: C.bgCard, borderRadius: 16, border: `2px solid ${s.color}`, padding: '32px 20px', textAlign: 'center' }}>
-                <div style={{ width: 60, height: 60, borderRadius: '50%', background: s.color, color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 900, fontSize: 24, fontFamily: 'Arial, sans-serif', margin: '0 auto 16px' }}>{s.n}</div>
-                <div style={{ fontSize: 44, marginBottom: 14 }}>{s.icon}</div>
-                <div style={{ fontFamily: 'Arial, sans-serif', fontWeight: 700, fontSize: 20, color: s.color, marginBottom: 14 }}>{s.label}</div>
-                <div style={{ fontFamily: 'Arial, sans-serif', fontSize: 16, color: C.textMuted, whiteSpace: 'pre-line', lineHeight: 1.6 }}>{s.detail}</div>
+
+      {/* Connector */}
+      {(() => {
+        const connOpacity = fade(f, 62, 14);
+        return (
+          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', opacity: connOpacity, minHeight: 0 }}>
+            <div style={{ width: 2, height: 16, background: C.cyan, flexShrink: 0 }} />
+            <div style={{ background: C.cyan, color: C.white, padding: '5px 22px', borderRadius: 20, fontFamily: 'Arial, sans-serif', fontWeight: 700, fontSize: 13, letterSpacing: '0.06em', whiteSpace: 'nowrap', boxShadow: '0 0 16px rgba(0,151,207,0.5)', flexShrink: 0 }}>🔍 GitLab MR Review</div>
+            <div style={{ width: 2, flex: 1, background: C.cyan }} />
+            <div style={{ fontSize: 10, color: C.cyan, lineHeight: 1, flexShrink: 0 }}>▼</div>
+          </div>
+        );
+      })()}
+
+      {/* 3-column flow */}
+      <div style={{ flexShrink: 0, padding: '0 160px 12px', display: 'grid', gridTemplateColumns: '1fr 56px 1fr 56px 1fr', alignItems: 'center' }}>
+
+        {/* Col 1: Open MRs */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 8, opacity: fade(f, 72, 15), transform: `translateX(${interpolate(spr(f, 72), [0, 1], [-30, 0])}px)` }}>
+          <div style={{ fontFamily: 'Arial, sans-serif', fontWeight: 700, fontSize: 18, color: C.textMuted, marginBottom: 6 }}>📋 INPUT — Open MRs</div>
+          <div style={{ background: C.codeBg, borderRadius: 10, border: `1px solid ${C.borderCyan}`, overflow: 'hidden' }}>
+            <div style={{ background: 'rgba(0,151,207,0.20)', color: C.cyan, fontSize: 11, fontFamily: 'Consolas, monospace', fontWeight: 600, padding: '6px 16px', borderBottom: `1px solid ${C.borderCyan}` }}>merge requests queue</div>
+            <div style={{ padding: '12px 16px', display: 'flex', flexDirection: 'column', gap: 8 }}>
+              {mrItems.map((mr, i) => {
+                const isMerged = f > 90 + (i + 1) * 55;
+                const isActive = !isMerged && currentMR === i;
+                const mrPulse = isActive ? interpolate(Math.sin(f * 0.18), [-1, 1], [0.4, 0.8]) : 0;
+                return (
+                  <div key={i} style={{ background: isMerged ? 'rgba(46,204,113,0.08)' : (isActive ? 'rgba(0,151,207,0.14)' : 'transparent'), borderRadius: 6, padding: '6px 8px', border: `1px solid ${isMerged ? 'rgba(46,204,113,0.3)' : (isActive ? mr.color : 'transparent')}`, opacity: fade(f, 76 + i * 5), boxShadow: isActive ? `0 0 ${interpolate(mrPulse, [0.4, 0.8], [6, 16])}px rgba(0,151,207,${mrPulse})` : 'none', display: 'flex', alignItems: 'center', gap: 8 }}>
+                    {isActive && <span style={{ color: C.orange, fontSize: 11, opacity: reviewPulse, flexShrink: 0 }}>►</span>}
+                    <span style={{ fontFamily: 'Consolas, monospace', fontSize: 10, color: isMerged ? C.green : mr.color, fontWeight: 700, flexShrink: 0 }}>{isMerged ? '✅' : mr.ticket}</span>
+                    <span style={{ fontFamily: 'Consolas, monospace', fontSize: 12, color: isMerged ? 'rgba(46,204,113,0.7)' : (isActive ? C.white : 'rgba(255,255,255,0.75)'), textDecoration: isMerged ? 'line-through' : 'none', flex: 1 }}>{mr.label}</span>
+                    {isActive && <span style={{ fontFamily: 'Arial, sans-serif', fontSize: 10, color: C.cyan, fontWeight: 700, opacity: reviewPulse, flexShrink: 0 }}>● reviewing</span>}
+                    {isMerged && <span style={{ fontFamily: 'Arial, sans-serif', fontSize: 10, color: C.green, fontWeight: 700, flexShrink: 0 }}>✓ merged</span>}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+
+        {/* Arrow 1 */}
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: arrowOpacity }}>
+          <div style={{ fontSize: 30, color: C.cyan, fontWeight: 900 }}>→</div>
+        </div>
+
+        {/* Col 2: Review in Action */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 10, opacity: fade(f, 82, 15) }}>
+          <div style={{ fontFamily: 'Arial, sans-serif', fontWeight: 700, fontSize: 18, color: C.textMuted, marginBottom: 6 }}>👥 Review in Action</div>
+          {reviewers.map((r, i) => {
+            const cardVisible = f > r.delay + 14;
+            const actionLabel = i === 0 ? '⟳ reviewing...' : '⟳ approving...';
+            return (
+              <div key={i} style={{ background: C.bgCard, borderRadius: 10, border: `2px solid ${r.color}`, overflow: 'hidden', opacity: fade(f, r.delay, 18), transform: `translateY(${interpolate(sprSlow(f, r.delay), [0, 1], [40, 0])}px)` }}>
+                <div style={{ background: r.color, padding: '8px 14px', display: 'flex', alignItems: 'center', gap: 10 }}>
+                  <span style={{ fontSize: 18 }}>👤</span>
+                  <span style={{ fontFamily: 'Arial, sans-serif', fontWeight: 700, fontSize: 15, color: C.white }}>{r.role}</span>
+                </div>
+                <div style={{ padding: '10px 14px' }}>
+                  <div style={{ fontFamily: 'Arial, sans-serif', fontSize: 13, color: C.textMuted, marginBottom: 6 }}>{r.action}</div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                    <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6, background: 'rgba(0,151,207,0.15)', border: '1px solid rgba(0,151,207,0.35)', borderRadius: 14, padding: '3px 12px' }}>
+                      <span style={{ fontSize: 12 }}>🔍</span>
+                      <span style={{ fontFamily: 'Consolas, monospace', fontSize: 11, color: C.cyan, fontWeight: 700 }}>{r.tool}</span>
+                    </div>
+                    {cardVisible && !allDone && <span style={{ fontFamily: 'Consolas, monospace', fontSize: 11, color: r.color, opacity: reviewPulse }}>{actionLabel}</span>}
+                    {allDone && <span style={{ fontFamily: 'Consolas, monospace', fontSize: 11, color: 'rgba(255,255,255,0.35)' }}>✓ idle</span>}
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Arrow 2 */}
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: arrowOpacity }}>
+          <div style={{ fontSize: 30, color: C.cyan, fontWeight: 900 }}>→</div>
+        </div>
+
+        {/* Col 3: Development branch */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 8, opacity: fade(f, 140, 15), transform: `translateX(${interpolate(spr(f, 140), [0, 1], [30, 0])}px)` }}>
+          <div style={{ fontFamily: 'Arial, sans-serif', fontWeight: 700, fontSize: 18, color: C.green, marginBottom: 6 }}>✅ OUTPUT — /development</div>
+          <div style={{ background: C.codeBg, borderRadius: 10, border: '1px solid rgba(46,204,113,0.3)', overflow: 'hidden' }}>
+            <div style={{ background: 'rgba(46,204,113,0.18)', color: C.green, fontSize: 11, fontFamily: 'Consolas, monospace', fontWeight: 600, padding: '6px 16px', borderBottom: '1px solid rgba(46,204,113,0.3)' }}>integration branch</div>
+            <div style={{ padding: '12px 16px', display: 'flex', flexDirection: 'column', gap: 8 }}>
+              {mrItems.map((mr, i) => (
+                <div key={i} style={{ fontFamily: 'Consolas, monospace', fontSize: 12, color: C.green, opacity: fade(f, 90 + (i + 1) * 55, 12), display: 'flex', alignItems: 'center', gap: 8 }}>
+                  <span style={{ flexShrink: 0 }}>↳ merge</span>
+                  <span style={{ color: mr.color, fontWeight: 700 }}>{mr.ticket}</span>
+                  <span style={{ color: 'rgba(255,255,255,0.45)', fontSize: 11 }}>→ dev</span>
+                </div>
+              ))}
+              <div style={{ marginTop: 4, paddingTop: 8, borderTop: '1px solid rgba(46,204,113,0.2)', display: 'flex', flexDirection: 'column', gap: 8, opacity: fade(f, 140, 15) }}>
+                <div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', fontFamily: 'Consolas, monospace', fontSize: 11, marginBottom: 4, color: buildFilling ? C.white : C.textMuted }}>
+                    <span>build health</span>
+                    <span style={{ fontWeight: 700, color: buildPct === 100 ? C.green : C.cyan }}>{Math.round(buildPct)}%</span>
+                  </div>
+                  <div style={{ height: 8, borderRadius: 4, background: C.bgCard, border: `1px solid ${C.border}` }}>
+                    <div style={{ height: '100%', borderRadius: 4, background: buildPct === 100 ? C.green : C.cyan, width: `${buildPct}%`, boxShadow: buildFilling ? `0 0 ${interpolate(barGlow, [0.4, 0.9], [4, 14])}px ${C.cyan}` : 'none' }} />
+                  </div>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 6, opacity: fade(f, 315, 15) }}>
+                  <div style={{ fontFamily: 'Consolas, monospace', fontSize: 12, color: C.green }}>🔒 build: passing</div>
+                  <div style={{ fontFamily: 'Consolas, monospace', fontSize: 12, color: C.cyan }}>📊 coverage: 87%</div>
+                </div>
               </div>
             </div>
-            {i < steps.length - 1 && (
-              <div style={{ width: 44, textAlign: 'center', opacity: fade(f, 20 + i * 10), flexShrink: 0 }}>
-                <div style={{ fontSize: 32, color: C.cyan, fontWeight: 900 }}>→</div>
-              </div>
-            )}
-          </React.Fragment>
-        ))}
-      </div>
-      <div style={{ flexShrink: 0, padding: '20px 100px 28px', opacity: fade(f, 46) }}>
-        <div style={{ background: C.bgCard, border: `1px solid ${C.borderCyan}`, borderRadius: 10, padding: '16px 36px', textAlign: 'center', fontFamily: 'Arial, sans-serif', fontWeight: 700, fontSize: 20, color: C.white }}>
-          🔒 No automatic merges — human validation before every integration
+          </div>
         </div>
       </div>
-      <div style={{ flexShrink: 0, padding: '0 100px 20px', display: 'flex', justifyContent: 'flex-end', opacity: fade(f, 5) }}><Logo height={70} /></div>
+
+      {/* Spacer */}
+      <div style={{ flex: 0.6 }} />
+
+      {/* Bottom strip */}
+      <div style={{ flexShrink: 0, padding: '8px 100px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', opacity: bottomOpacity, transform: `scale(${bottomScale})` }}>
+        <div style={{ flex: 1, display: 'flex', justifyContent: 'center' }}>
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: 16, background: 'rgba(0,151,207,0.12)', borderRadius: 12, padding: '16px 32px', border: `2px solid rgba(0,151,207,${borderOpacity})`, boxShadow: `0 0 ${interpolate(borderOpacity, [0.3, 0.8], [8, 28])}px rgba(0,151,207,${borderOpacity * 0.5})` }}>
+            <span style={{ fontSize: 22, flexShrink: 0 }}>💡</span>
+            <div style={{ fontFamily: 'Arial, sans-serif', fontSize: 17, color: C.white, lineHeight: 1.6 }}>
+              <strong style={{ color: C.cyan }}>No automatic merges — </strong>
+              human eyes on every AI-generated line of code before it reaches the branch.
+            </div>
+          </div>
+        </div>
+        <Logo height={60} />
+      </div>
     </AbsoluteFill>
   );
 };

@@ -1376,48 +1376,190 @@ const Step5Scene: React.FC = () => {
   );
 };
 
-// ── SCENE 9: STEP 6 — AI MODEL TUNING ────────────────────────────────────────
+// ── SCENE 9: STEP 6 — ITERATIVE REFINEMENT ───────────────────────────────────
 const Step6Scene: React.FC = () => {
   const f = useCurrentFrame();
+
+  const archScale = spr(f, 22);
+  const archOpacity = fade(f, 22, 18);
+
   const issues = [
-    { problem: 'Missing business context', fix: '→ Update EspecificacionFuncional.md' },
-    { problem: 'Agent not following patterns', fix: '→ Update CONTEXTO_BACKEND.md' },
-    { problem: 'Incomplete prompt template', fix: '→ Improve PROMPT_FEATURE.md' },
-    { problem: 'Wrong agent behavior', fix: '→ Adjust system prompt in AGENTES/' },
+    { label: 'Code not following patterns', from: 'QA phase' },
+    { label: 'Missing business context', from: 'Code gen' },
+    { label: 'Imprecise prompt output', from: 'Dev phase' },
   ];
+
+  const harnessUpdates = [
+    { icon: '📄', file: 'CONTEXTO_BACKEND.md', color: C.blue },
+    { icon: '📋', file: 'PROMPT_FEATURE.md', color: C.orange },
+    { icon: '🤖', file: 'AGENTES/planner.md', color: '#9B59B6' },
+  ];
+
+  const STEP_DUR = 35;
+  const stepProgress = f > 90 ? Math.floor((f - 90) / STEP_DUR) : -1;
+  const cycleStep = stepProgress >= 0 ? stepProgress % 3 : -1;
+  const cycleNum = stepProgress >= 0 ? Math.floor(stepProgress / 3) : 0;
+  const activeIdx = Math.min(cycleNum, issues.length - 1);
+  const nodePulse = interpolate(Math.sin(f * 0.25), [-1, 1], [0.35, 1]);
+  const isApplied = (i: number) => f > 90 + (i * 3 + 3) * STEP_DUR;
+
+  const bottomOpacity = fade(f, 285, 20);
+  const bottomScale = interpolate(spr(f, 285), [0, 1], [0.92, 1]);
+  const bottomPulse = interpolate(Math.sin((f - 300) * 0.08), [-1, 1], [0.3, 0.8]);
+  const borderOpacity = f > 300 ? bottomPulse : 0.3;
+
   return (
-    <AbsoluteFill style={{ background: C.bg, display: 'flex' }}>
-      <CyanSidebar />
-      <div style={{ flex: 1, marginRight: 160, padding: '36px 100px', display: 'flex', flexDirection: 'column' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 24, marginBottom: 28, flexShrink: 0, opacity: fade(f, 5), transform: `translateX(${interpolate(spr(f, 5), [0, 1], [-30, 0])}px)` }}>
-          <StepBadge n={6} />
-          <div>
-            <StepTitle>AI Model Tuning</StepTitle>
-            <div style={{ fontFamily: 'Arial, sans-serif', fontSize: 18, color: C.textMuted, marginTop: 8 }}>
-              <strong style={{ color: C.white }}>AI Lead</strong> · Iteratively improve the Harness across all phases
-            </div>
+    <AbsoluteFill style={{ background: C.bg, flexDirection: 'column', display: 'flex' }}>
+      {/* Top bar */}
+      <div style={{ flexShrink: 0, padding: '28px 100px 0', opacity: fade(f, 3, 12) }}>
+        <SectionBar>AI-SUPPORTED DEVELOPMENT STREAMS</SectionBar>
+      </div>
+
+      {/* Phase label */}
+      <div style={{ flexShrink: 0, padding: '14px 100px 0', display: 'flex', alignItems: 'center', gap: 20, opacity: fade(f, 8, 14) }}>
+        <StepBadge n={6} />
+        <div>
+          <div style={{ fontFamily: 'Arial, sans-serif', fontSize: 15, color: C.cyan, fontWeight: 700, letterSpacing: '0.08em' }}>PHASE 6</div>
+          <StepTitle>Iterative Refinement</StepTitle>
+        </div>
+      </div>
+
+      {/* AI Lead actor box */}
+      <div style={{ flexShrink: 0, padding: '12px 100px 0', display: 'flex', justifyContent: 'center', opacity: archOpacity, transform: `scale(${interpolate(archScale, [0, 1], [0.6, 1])})` }}>
+        <div style={{ display: 'inline-flex', flexDirection: 'column', alignItems: 'center', gap: 10, background: C.bgCard, border: `2px solid ${C.cyan}`, borderRadius: 14, padding: '18px 36px', boxShadow: '0 0 40px rgba(0,151,207,0.25)' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 18 }}>
+            <div style={{ width: 52, height: 52, borderRadius: '50%', background: C.cyan, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 24, flexShrink: 0, boxShadow: '0 0 16px rgba(0,151,207,0.5)' }}>👤</div>
+            <div style={{ fontFamily: 'Arial Black, Arial, sans-serif', fontWeight: 900, fontSize: 22, color: C.white }}>AI Lead</div>
+            <div style={{ width: 1, height: 32, background: 'rgba(255,255,255,0.15)' }} />
+            {['🔄 Reviews all phases', '📝 Updates Harness', '⚡ Improves precision'].map((tag, i) => (
+              <div key={i} style={{ fontFamily: 'Arial, sans-serif', fontSize: 12, fontWeight: 600, color: C.cyan, background: 'rgba(0,151,207,0.15)', border: '1px solid rgba(0,151,207,0.4)', padding: '5px 14px', borderRadius: 20 }}>{tag}</div>
+            ))}
+          </div>
+          <div style={{ fontFamily: 'Arial, sans-serif', fontSize: 17, color: C.white, lineHeight: 1.7, textAlign: 'center', maxWidth: 880, opacity: fade(f, 40, 25), transform: `translateY(${interpolate(fade(f, 40, 25), [0, 1], [10, 0])}px)` }}>
+            When something doesn't work in generation or QA, the AI Lead identifies the root cause
+            and updates the <strong style={{ color: C.cyan }}>Harness</strong> — context, prompts or agent definitions.
           </div>
         </div>
-        <div style={{ flex: 1, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 44, minHeight: 0 }}>
-          <div style={{ display: 'flex', flexDirection: 'column', opacity: fade(f, 12) }}>
-            <div style={{ fontFamily: 'Arial, sans-serif', fontWeight: 700, fontSize: 20, color: C.white, marginBottom: 18 }}>🔄 Feedback Loop</div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 12, flex: 1 }}>
-              {issues.map((r, i) => (
-                <div key={i} style={{ flex: 1, padding: '16px 18px', background: C.bgCard, borderRadius: 8, border: `1px solid ${C.border}`, display: 'flex', flexDirection: 'column', justifyContent: 'center', opacity: fade(f, 15 + i * 6) }}>
-                  <div style={{ fontSize: 16, color: C.red }}>⚠ {r.problem}</div>
-                  <div style={{ fontSize: 16, color: C.green, fontWeight: 700, marginTop: 6 }}>{r.fix}</div>
+      </div>
+
+      {/* Iterative cycle diagram */}
+      <div style={{ flexShrink: 0, padding: '20px 120px 0', opacity: fade(f, 62, 15) }}>
+        <div style={{ display: 'flex', alignItems: 'stretch', gap: 0 }}>
+
+          {/* Node 1 — Issue Detected */}
+          {(() => {
+            const isActive = cycleStep === 0;
+            const glow = isActive ? nodePulse : 0.2;
+            return (
+              <div style={{ flex: 1, background: C.bgCard, borderRadius: 12, border: `2px solid rgba(231,76,60,${glow})`, padding: '16px 18px', boxShadow: isActive ? `0 0 22px rgba(231,76,60,${glow * 0.55})` : 'none' }}>
+                <div style={{ fontFamily: 'Arial, sans-serif', fontWeight: 700, fontSize: 14, color: '#E74C3C', marginBottom: 10, display: 'flex', alignItems: 'center', gap: 8 }}>
+                  ⚠️ Issue Detected
+                  {isActive && <span style={{ fontFamily: 'Consolas, monospace', fontSize: 11, color: '#E74C3C', opacity: nodePulse }}>⟳ scanning...</span>}
                 </div>
-              ))}
-            </div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+                  {issues.map((issue, i) => {
+                    if (f <= 90 + i * 3 * STEP_DUR) return null;
+                    const isCurrent = isActive && i === activeIdx;
+                    const resolved = isApplied(i);
+                    return (
+                      <div key={i} style={{ fontFamily: 'Arial, sans-serif', fontSize: 13, color: resolved ? 'rgba(46,204,113,0.6)' : (isCurrent ? C.white : 'rgba(255,255,255,0.4)'), background: isCurrent ? 'rgba(231,76,60,0.15)' : 'transparent', borderRadius: 6, padding: '4px 8px', display: 'flex', alignItems: 'center', gap: 8, opacity: fade(f, 90 + i * 3 * STEP_DUR, 12), textDecoration: resolved ? 'line-through' : 'none' }}>
+                        {isCurrent && <span style={{ color: '#E74C3C', fontSize: 11, opacity: nodePulse, flexShrink: 0 }}>►</span>}
+                        {resolved && <span style={{ fontSize: 11, flexShrink: 0 }}>✓</span>}
+                        ⚠️ {issue.label}
+                        <span style={{ fontFamily: 'Consolas, monospace', fontSize: 10, color: 'rgba(255,255,255,0.28)', marginLeft: 'auto', flexShrink: 0 }}>{issue.from}</span>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            );
+          })()}
+
+          {/* Arrow 1 */}
+          <div style={{ width: 44, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+            <div style={{ fontSize: 26, color: cycleStep === 1 ? C.cyan : 'rgba(255,255,255,0.15)', fontWeight: 900 }}>→</div>
           </div>
-          <div style={{ display: 'flex', flexDirection: 'column', opacity: fade(f, 20) }}>
-            <div style={{ fontFamily: 'Arial, sans-serif', fontWeight: 700, fontSize: 20, color: C.white, marginBottom: 18 }}>📈 Continuous Enhancement</div>
-            <CodeBlock flex={1} lines={['// Enhance prompts', '// Improve agent behaviors', '// Refine dev patterns', '', 'Harness.update({', '  agentes: review(),', '  contexto: enrich(),', '  prompts: refine(),', '  patterns: optimize()', '});', '', '// Result:', '// Better code, fewer iterations', '// Higher standards adherence']} />
-            <div style={{ marginTop: 14, fontFamily: 'Arial, sans-serif', fontSize: 16, color: C.textMuted, fontStyle: 'italic', borderLeft: `4px solid ${C.cyan}`, paddingLeft: 14, opacity: fade(f, 44) }}>
-              The Harness gets smarter with every sprint
+
+          {/* Node 2 — AI Lead Analyzes */}
+          {(() => {
+            const isActive = cycleStep === 1;
+            const glow = isActive ? nodePulse : 0.2;
+            return (
+              <div style={{ flex: 1, background: C.bgCard, borderRadius: 12, border: `2px solid rgba(0,151,207,${glow})`, padding: '16px 18px', boxShadow: isActive ? `0 0 26px rgba(0,151,207,${glow * 0.55})` : 'none' }}>
+                <div style={{ fontFamily: 'Arial, sans-serif', fontWeight: 700, fontSize: 14, color: C.cyan, marginBottom: 10, display: 'flex', alignItems: 'center', gap: 8 }}>
+                  🔍 AI Lead analyzes
+                  {isActive && <span style={{ fontFamily: 'Consolas, monospace', fontSize: 11, color: C.cyan, opacity: nodePulse }}>⟳ analyzing...</span>}
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 7 }}>
+                  {['Context completeness', 'Prompt structure & clarity', 'Agent behavior & scope'].map((item, i) => (
+                    <div key={i} style={{ fontFamily: 'Arial, sans-serif', fontSize: 13, color: isActive ? 'rgba(255,255,255,0.85)' : 'rgba(255,255,255,0.32)', display: 'flex', gap: 8, padding: '3px 0' }}>
+                      <span style={{ color: C.cyan, opacity: isActive ? 1 : 0.3 }}>·</span>{item}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            );
+          })()}
+
+          {/* Arrow 2 */}
+          <div style={{ width: 44, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+            <div style={{ fontSize: 26, color: cycleStep === 2 ? C.green : 'rgba(255,255,255,0.15)', fontWeight: 900 }}>→</div>
+          </div>
+
+          {/* Node 3 — Harness Updated */}
+          {(() => {
+            const isActive = cycleStep === 2;
+            const glow = isActive ? nodePulse : 0.2;
+            return (
+              <div style={{ flex: 1, background: C.bgCard, borderRadius: 12, border: `2px solid rgba(46,204,113,${glow})`, padding: '16px 18px', boxShadow: isActive ? `0 0 22px rgba(46,204,113,${glow * 0.55})` : 'none' }}>
+                <div style={{ fontFamily: 'Arial, sans-serif', fontWeight: 700, fontSize: 14, color: C.green, marginBottom: 10, display: 'flex', alignItems: 'center', gap: 8 }}>
+                  🔄 Harness updated
+                  {isActive && <span style={{ fontFamily: 'Consolas, monospace', fontSize: 11, color: C.green, opacity: nodePulse }}>⟳ updating...</span>}
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+                  {harnessUpdates.map((upd, i) => {
+                    const showFrame = 90 + (i * 3 + 2) * STEP_DUR;
+                    if (f <= showFrame - 5) return null;
+                    const isCurrent = isActive && i === activeIdx;
+                    const applied = isApplied(i);
+                    return (
+                      <div key={i} style={{ fontFamily: 'Consolas, monospace', fontSize: 12, color: applied ? 'rgba(46,204,113,0.75)' : (isCurrent ? '#fff' : 'rgba(255,255,255,0.38)'), background: isCurrent ? 'rgba(46,204,113,0.12)' : 'transparent', borderRadius: 6, padding: '5px 8px', display: 'flex', alignItems: 'center', gap: 8, opacity: fade(f, showFrame, 12) }}>
+                        {isCurrent && <span style={{ color: C.green, fontSize: 11, opacity: nodePulse, flexShrink: 0 }}>►</span>}
+                        <span style={{ fontSize: 14, flexShrink: 0 }}>{upd.icon}</span>
+                        <span style={{ flex: 1 }}>{upd.file}</span>
+                        <span style={{ fontSize: 10, color: applied ? C.green : C.orange, fontWeight: 700, flexShrink: 0 }}>{applied ? `✓ v${i + 2}` : '⟳ saving...'}</span>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            );
+          })()}
+        </div>
+
+        {/* Feedback loop arrow */}
+        <div style={{ display: 'flex', alignItems: 'center', paddingTop: 12, opacity: fade(f, 130, 20) }}>
+          <div style={{ flex: 1, height: 2, background: 'rgba(0,151,207,0.3)', marginLeft: 50 }} />
+          <div style={{ fontFamily: 'Arial, sans-serif', fontSize: 13, color: C.cyan, fontWeight: 600, padding: '6px 20px', background: 'rgba(0,151,207,0.1)', borderRadius: 20, whiteSpace: 'nowrap', border: '1px solid rgba(0,151,207,0.3)' }}>↺ better next iteration</div>
+          <div style={{ flex: 1, height: 2, background: 'rgba(0,151,207,0.3)', marginRight: 50 }} />
+        </div>
+      </div>
+
+      {/* Spacer */}
+      <div style={{ flex: 1 }} />
+
+      {/* Bottom strip */}
+      <div style={{ flexShrink: 0, padding: '8px 100px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', opacity: bottomOpacity, transform: `scale(${bottomScale})` }}>
+        <div style={{ flex: 1, display: 'flex', justifyContent: 'center' }}>
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: 16, background: 'rgba(0,151,207,0.12)', borderRadius: 12, padding: '16px 32px', border: `2px solid rgba(0,151,207,${borderOpacity})`, boxShadow: `0 0 ${interpolate(borderOpacity, [0.3, 0.8], [8, 28])}px rgba(0,151,207,${borderOpacity * 0.5})` }}>
+            <span style={{ fontSize: 22, flexShrink: 0 }}>💡</span>
+            <div style={{ fontFamily: 'Arial, sans-serif', fontSize: 17, color: C.white, lineHeight: 1.6 }}>
+              <strong style={{ color: C.cyan }}>The Harness improves with every sprint — </strong>
+              each refinement makes the next generation more precise.
             </div>
           </div>
         </div>
+        <Logo height={60} />
       </div>
     </AbsoluteFill>
   );

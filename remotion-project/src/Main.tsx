@@ -507,7 +507,7 @@ const Step2Scene: React.FC = () => {
         const connOpacity = fade(f, 62, 14);
         return (
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', opacity: connOpacity, minHeight: 0 }}>
-            <div style={{ width: 2, height: 16, background: C.cyan, flexShrink: 0 }} />
+            <div style={{ width: 2, flex: 1, background: C.cyan }} />
             <div style={{ background: C.cyan, color: C.white, padding: '5px 22px', borderRadius: 20, fontFamily: 'Arial, sans-serif', fontWeight: 700, fontSize: 13, letterSpacing: '0.06em', whiteSpace: 'nowrap', boxShadow: '0 0 16px rgba(0,151,207,0.5)', flexShrink: 0 }}>⚡ aXet Plugin</div>
             <div style={{ width: 2, flex: 1, background: C.cyan }} />
             <div style={{ fontSize: 10, color: C.cyan, lineHeight: 1, flexShrink: 0 }}>▼</div>
@@ -685,7 +685,7 @@ const PrototypeScene: React.FC = () => {
         const connOpacity = fade(f, 62, 14);
         return (
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', opacity: connOpacity, minHeight: 0 }}>
-            <div style={{ width: 2, height: 16, background: C.orange, flexShrink: 0 }} />
+            <div style={{ width: 2, flex: 1, background: C.orange }} />
             <div style={{ background: C.orange, color: C.white, padding: '5px 22px', borderRadius: 20, fontFamily: 'Arial, sans-serif', fontWeight: 700, fontSize: 13, letterSpacing: '0.06em', whiteSpace: 'nowrap', boxShadow: '0 0 16px rgba(243,156,18,0.5)', flexShrink: 0 }}>⚡ React + Supabase</div>
             <div style={{ width: 2, flex: 1, background: C.orange }} />
             <div style={{ fontSize: 10, color: C.orange, lineHeight: 1, flexShrink: 0 }}>▼</div>
@@ -872,7 +872,7 @@ const Step3Scene: React.FC = () => {
         const connOpacity = fade(f, 62, 14);
         return (
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', opacity: connOpacity, minHeight: 0 }}>
-            <div style={{ width: 2, height: 16, background: C.cyan, flexShrink: 0 }} />
+            <div style={{ width: 2, flex: 1, background: C.cyan }} />
             <div style={{ background: C.cyan, color: C.white, padding: '5px 22px', borderRadius: 20, fontFamily: 'Arial, sans-serif', fontWeight: 700, fontSize: 13, letterSpacing: '0.06em', whiteSpace: 'nowrap', boxShadow: '0 0 16px rgba(0,151,207,0.5)', flexShrink: 0 }}>📁 PROMPT_FRAMEWORK/</div>
             <div style={{ width: 2, flex: 1, background: C.cyan }} />
             <div style={{ fontSize: 10, color: C.cyan, lineHeight: 1, flexShrink: 0 }}>▼</div>
@@ -1032,7 +1032,7 @@ const Step4Scene: React.FC = () => {
         const connOpacity = fade(f, 62, 14);
         return (
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', opacity: connOpacity, minHeight: 0 }}>
-            <div style={{ width: 2, height: 16, background: C.cyan, flexShrink: 0 }} />
+            <div style={{ width: 2, flex: 1, background: C.cyan }} />
             <div style={{ background: C.cyan, color: C.white, padding: '5px 22px', borderRadius: 20, fontFamily: 'Arial, sans-serif', fontWeight: 700, fontSize: 13, letterSpacing: '0.06em', whiteSpace: 'nowrap', boxShadow: '0 0 16px rgba(0,151,207,0.5)', flexShrink: 0 }}>⚡ Axet Plugin + Codex</div>
             <div style={{ width: 2, flex: 1, background: C.cyan }} />
             <div style={{ fontSize: 10, color: C.cyan, lineHeight: 1, flexShrink: 0 }}>▼</div>
@@ -1250,7 +1250,7 @@ const Step5Scene: React.FC = () => {
         const connOpacity = fade(f, 62, 14);
         return (
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', opacity: connOpacity, minHeight: 0 }}>
-            <div style={{ width: 2, height: 16, background: C.cyan, flexShrink: 0 }} />
+            <div style={{ width: 2, flex: 1, background: C.cyan }} />
             <div style={{ background: C.cyan, color: C.white, padding: '5px 22px', borderRadius: 20, fontFamily: 'Arial, sans-serif', fontWeight: 700, fontSize: 13, letterSpacing: '0.06em', whiteSpace: 'nowrap', boxShadow: '0 0 16px rgba(0,151,207,0.5)', flexShrink: 0 }}>🔍 GitLab MR Review</div>
             <div style={{ width: 2, flex: 1, background: C.cyan }} />
             <div style={{ fontSize: 10, color: C.cyan, lineHeight: 1, flexShrink: 0 }}>▼</div>
@@ -1390,9 +1390,9 @@ const Step6Scene: React.FC = () => {
   ];
 
   const harnessUpdates = [
-    { icon: '📄', file: 'CONTEXTO_BACKEND.md', color: C.blue },
-    { icon: '📋', file: 'PROMPT_FEATURE.md', color: C.orange },
-    { icon: '🤖', file: 'AGENTES/planner.md', color: '#9B59B6' },
+    { icon: '📄', file: 'CONTEXTO_BACKEND.md' },
+    { icon: '📋', file: 'PROMPT_FEATURE.md' },
+    { icon: '🤖', file: 'AGENTES/planner.md' },
   ];
 
   const STEP_DUR = 35;
@@ -1402,6 +1402,11 @@ const Step6Scene: React.FC = () => {
   const activeIdx = Math.min(cycleNum, issues.length - 1);
   const nodePulse = interpolate(Math.sin(f * 0.25), [-1, 1], [0.35, 1]);
   const isApplied = (i: number) => f > 90 + (i * 3 + 3) * STEP_DUR;
+  const loopPulse = interpolate(Math.sin(f * 0.18), [-1, 1], [0.25, 0.75]);
+  const flowPulse = interpolate(Math.sin(f * 0.28), [-1, 1], [0.2, 0.6]);
+  // Continuous rotation — 1 turn every ~6s for badge, slow for feedback arrow
+  const spinDeg = (f * 2) % 360;
+  const spinSlowDeg = (f * 0.9) % 360;
 
   const bottomOpacity = fade(f, 285, 20);
   const bottomScale = interpolate(spr(f, 285), [0, 1], [0.92, 1]);
@@ -1436,117 +1441,129 @@ const Step6Scene: React.FC = () => {
             ))}
           </div>
           <div style={{ fontFamily: 'Arial, sans-serif', fontSize: 17, color: C.white, lineHeight: 1.7, textAlign: 'center', maxWidth: 880, opacity: fade(f, 40, 25), transform: `translateY(${interpolate(fade(f, 40, 25), [0, 1], [10, 0])}px)` }}>
-            When something doesn't work in generation or QA, the AI Lead identifies the root cause
-            and updates the <strong style={{ color: C.cyan }}>Harness</strong> — context, prompts or agent definitions.
+            The AI Lead <strong style={{ color: C.cyan }}>iteratively reviews all phases</strong> to improve precision and efficiency.
+            When something doesn't work in generation or QA, it updates the <strong style={{ color: C.cyan }}>Harness</strong>: context, prompts or agent definitions.
           </div>
         </div>
       </div>
 
-      {/* Iterative cycle diagram */}
-      <div style={{ flexShrink: 0, padding: '20px 120px 0', opacity: fade(f, 62, 15) }}>
-        <div style={{ display: 'flex', alignItems: 'stretch', gap: 0 }}>
-
-          {/* Node 1 — Issue Detected */}
-          {(() => {
-            const isActive = cycleStep === 0;
-            const glow = isActive ? nodePulse : 0.2;
-            return (
-              <div style={{ flex: 1, background: C.bgCard, borderRadius: 12, border: `2px solid rgba(231,76,60,${glow})`, padding: '16px 18px', boxShadow: isActive ? `0 0 22px rgba(231,76,60,${glow * 0.55})` : 'none' }}>
-                <div style={{ fontFamily: 'Arial, sans-serif', fontWeight: 700, fontSize: 14, color: '#E74C3C', marginBottom: 10, display: 'flex', alignItems: 'center', gap: 8 }}>
-                  ⚠️ Issue Detected
-                  {isActive && <span style={{ fontFamily: 'Consolas, monospace', fontSize: 11, color: '#E74C3C', opacity: nodePulse }}>⟳ scanning...</span>}
-                </div>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-                  {issues.map((issue, i) => {
-                    if (f <= 90 + i * 3 * STEP_DUR) return null;
-                    const isCurrent = isActive && i === activeIdx;
-                    const resolved = isApplied(i);
-                    return (
-                      <div key={i} style={{ fontFamily: 'Arial, sans-serif', fontSize: 13, color: resolved ? 'rgba(46,204,113,0.6)' : (isCurrent ? C.white : 'rgba(255,255,255,0.4)'), background: isCurrent ? 'rgba(231,76,60,0.15)' : 'transparent', borderRadius: 6, padding: '4px 8px', display: 'flex', alignItems: 'center', gap: 8, opacity: fade(f, 90 + i * 3 * STEP_DUR, 12), textDecoration: resolved ? 'line-through' : 'none' }}>
-                        {isCurrent && <span style={{ color: '#E74C3C', fontSize: 11, opacity: nodePulse, flexShrink: 0 }}>►</span>}
-                        {resolved && <span style={{ fontSize: 11, flexShrink: 0 }}>✓</span>}
-                        ⚠️ {issue.label}
-                        <span style={{ fontFamily: 'Consolas, monospace', fontSize: 10, color: 'rgba(255,255,255,0.28)', marginLeft: 'auto', flexShrink: 0 }}>{issue.from}</span>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-            );
-          })()}
-
-          {/* Arrow 1 */}
-          <div style={{ width: 44, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-            <div style={{ fontSize: 26, color: cycleStep === 1 ? C.cyan : 'rgba(255,255,255,0.15)', fontWeight: 900 }}>→</div>
+      {/* Connector: actor → cycle diagram */}
+      {(() => {
+        const connOpacity = fade(f, 62, 14);
+        return (
+          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', opacity: connOpacity, minHeight: 0 }}>
+            <div style={{ width: 2, flex: 1, background: C.cyan }} />
+            {/* Large spinning icon outside and above the badge */}
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6, flexShrink: 0 }}>
+              <span style={{ display: 'inline-block', transform: `rotate(${spinDeg}deg)`, fontSize: 44, lineHeight: 1, filter: 'drop-shadow(0 0 10px rgba(0,151,207,0.8))' }}>↻</span>
+              <div style={{ background: C.cyan, color: C.white, padding: '5px 22px', borderRadius: 20, fontFamily: 'Arial, sans-serif', fontWeight: 700, fontSize: 13, letterSpacing: '0.06em', whiteSpace: 'nowrap', boxShadow: '0 0 16px rgba(0,151,207,0.5)' }}>Continuous Refinement</div>
+            </div>
+            <div style={{ width: 2, flex: 1, background: C.cyan }} />
+            <div style={{ fontSize: 10, color: C.cyan, lineHeight: 1, flexShrink: 0 }}>▼</div>
           </div>
+        );
+      })()}
 
-          {/* Node 2 — AI Lead Analyzes */}
-          {(() => {
-            const isActive = cycleStep === 1;
-            const glow = isActive ? nodePulse : 0.2;
-            return (
-              <div style={{ flex: 1, background: C.bgCard, borderRadius: 12, border: `2px solid rgba(0,151,207,${glow})`, padding: '16px 18px', boxShadow: isActive ? `0 0 26px rgba(0,151,207,${glow * 0.55})` : 'none' }}>
-                <div style={{ fontFamily: 'Arial, sans-serif', fontWeight: 700, fontSize: 14, color: C.cyan, marginBottom: 10, display: 'flex', alignItems: 'center', gap: 8 }}>
-                  🔍 AI Lead analyzes
-                  {isActive && <span style={{ fontFamily: 'Consolas, monospace', fontSize: 11, color: C.cyan, opacity: nodePulse }}>⟳ analyzing...</span>}
-                </div>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 7 }}>
-                  {['Context completeness', 'Prompt structure & clarity', 'Agent behavior & scope'].map((item, i) => (
-                    <div key={i} style={{ fontFamily: 'Arial, sans-serif', fontSize: 13, color: isActive ? 'rgba(255,255,255,0.85)' : 'rgba(255,255,255,0.32)', display: 'flex', gap: 8, padding: '3px 0' }}>
-                      <span style={{ color: C.cyan, opacity: isActive ? 1 : 0.3 }}>·</span>{item}
-                    </div>
-                  ))}
-                </div>
+      {/* 3 cycle nodes — natural height, not stretched */}
+      <div style={{ flexShrink: 0, padding: '0 120px 0', display: 'flex', alignItems: 'stretch', gap: 0, opacity: fade(f, 72, 15) }}>
+
+        {/* Node 1 — Issue Detected */}
+        {(() => {
+          const isActive = cycleStep === 0;
+          const glow = isActive ? nodePulse : 0.2;
+          return (
+            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', background: C.bgCard, borderRadius: 12, border: `2px solid rgba(231,76,60,${glow})`, padding: '14px 16px', boxShadow: isActive ? `0 0 20px rgba(231,76,60,${glow * 0.5})` : 'none' }}>
+              <div style={{ fontFamily: 'Arial, sans-serif', fontWeight: 700, fontSize: 13, color: '#E74C3C', marginBottom: 10, display: 'flex', alignItems: 'center', gap: 8, flexShrink: 0 }}>
+                ⚠️ Issue Detected
+                {isActive && <span style={{ fontFamily: 'Consolas, monospace', fontSize: 10, color: '#E74C3C', opacity: nodePulse }}>⟳ scanning...</span>}
               </div>
-            );
-          })()}
+              {issues.map((issue, i) => {
+                const reached = f > 90 + i * 3 * STEP_DUR;
+                const isCurrent = isActive && i === activeIdx;
+                const resolved = isApplied(i);
+                return (
+                  <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 8, fontFamily: 'Arial, sans-serif', fontSize: 13, borderRadius: 7, padding: '9px 10px', marginBottom: i < issues.length - 1 ? 6 : 0, background: isCurrent ? 'rgba(231,76,60,0.15)' : 'transparent', border: isCurrent ? '1px solid rgba(231,76,60,0.3)' : '1px solid transparent', color: resolved ? 'rgba(46,204,113,0.7)' : (isCurrent ? C.white : (reached ? 'rgba(255,255,255,0.5)' : 'rgba(255,255,255,0.18)')), textDecoration: resolved ? 'line-through' : 'none' }}>
+                    {isCurrent && <span style={{ color: '#E74C3C', fontSize: 11, opacity: nodePulse, flexShrink: 0 }}>►</span>}
+                    {resolved && <span style={{ fontSize: 11, color: C.green, flexShrink: 0 }}>✓</span>}
+                    <span style={{ flex: 1 }}>⚠️ {issue.label}</span>
+                    <span style={{ fontFamily: 'Consolas, monospace', fontSize: 9, color: 'rgba(255,255,255,0.22)', flexShrink: 0 }}>{issue.from}</span>
+                  </div>
+                );
+              })}
+            </div>
+          );
+        })()}
 
-          {/* Arrow 2 */}
-          <div style={{ width: 44, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-            <div style={{ fontSize: 26, color: cycleStep === 2 ? C.green : 'rgba(255,255,255,0.15)', fontWeight: 900 }}>→</div>
-          </div>
-
-          {/* Node 3 — Harness Updated */}
-          {(() => {
-            const isActive = cycleStep === 2;
-            const glow = isActive ? nodePulse : 0.2;
-            return (
-              <div style={{ flex: 1, background: C.bgCard, borderRadius: 12, border: `2px solid rgba(46,204,113,${glow})`, padding: '16px 18px', boxShadow: isActive ? `0 0 22px rgba(46,204,113,${glow * 0.55})` : 'none' }}>
-                <div style={{ fontFamily: 'Arial, sans-serif', fontWeight: 700, fontSize: 14, color: C.green, marginBottom: 10, display: 'flex', alignItems: 'center', gap: 8 }}>
-                  🔄 Harness updated
-                  {isActive && <span style={{ fontFamily: 'Consolas, monospace', fontSize: 11, color: C.green, opacity: nodePulse }}>⟳ updating...</span>}
-                </div>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-                  {harnessUpdates.map((upd, i) => {
-                    const showFrame = 90 + (i * 3 + 2) * STEP_DUR;
-                    if (f <= showFrame - 5) return null;
-                    const isCurrent = isActive && i === activeIdx;
-                    const applied = isApplied(i);
-                    return (
-                      <div key={i} style={{ fontFamily: 'Consolas, monospace', fontSize: 12, color: applied ? 'rgba(46,204,113,0.75)' : (isCurrent ? '#fff' : 'rgba(255,255,255,0.38)'), background: isCurrent ? 'rgba(46,204,113,0.12)' : 'transparent', borderRadius: 6, padding: '5px 8px', display: 'flex', alignItems: 'center', gap: 8, opacity: fade(f, showFrame, 12) }}>
-                        {isCurrent && <span style={{ color: C.green, fontSize: 11, opacity: nodePulse, flexShrink: 0 }}>►</span>}
-                        <span style={{ fontSize: 14, flexShrink: 0 }}>{upd.icon}</span>
-                        <span style={{ flex: 1 }}>{upd.file}</span>
-                        <span style={{ fontSize: 10, color: applied ? C.green : C.orange, fontWeight: 700, flexShrink: 0 }}>{applied ? `✓ v${i + 2}` : '⟳ saving...'}</span>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-            );
-          })()}
+        {/* Arrow 1 */}
+        <div style={{ width: 44, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+          <div style={{ fontSize: 26, color: cycleStep === 1 ? C.cyan : 'rgba(255,255,255,0.15)', fontWeight: 900 }}>→</div>
         </div>
 
-        {/* Feedback loop arrow */}
-        <div style={{ display: 'flex', alignItems: 'center', paddingTop: 12, opacity: fade(f, 130, 20) }}>
-          <div style={{ flex: 1, height: 2, background: 'rgba(0,151,207,0.3)', marginLeft: 50 }} />
-          <div style={{ fontFamily: 'Arial, sans-serif', fontSize: 13, color: C.cyan, fontWeight: 600, padding: '6px 20px', background: 'rgba(0,151,207,0.1)', borderRadius: 20, whiteSpace: 'nowrap', border: '1px solid rgba(0,151,207,0.3)' }}>↺ better next iteration</div>
-          <div style={{ flex: 1, height: 2, background: 'rgba(0,151,207,0.3)', marginRight: 50 }} />
+        {/* Node 2 — AI Lead Analyzes */}
+        {(() => {
+          const isActive = cycleStep === 1;
+          const glow = isActive ? nodePulse : 0.2;
+          return (
+            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', background: C.bgCard, borderRadius: 12, border: `2px solid rgba(0,151,207,${glow})`, padding: '14px 16px', boxShadow: isActive ? `0 0 24px rgba(0,151,207,${glow * 0.5})` : 'none' }}>
+              <div style={{ fontFamily: 'Arial, sans-serif', fontWeight: 700, fontSize: 13, color: C.cyan, marginBottom: 10, display: 'flex', alignItems: 'center', gap: 8, flexShrink: 0 }}>
+                🔍 AI Lead analyzes
+                {isActive && <span style={{ fontFamily: 'Consolas, monospace', fontSize: 10, color: C.cyan, opacity: nodePulse }}>⟳ analyzing...</span>}
+              </div>
+              {['Context completeness', 'Prompt structure & clarity', 'Agent behavior & scope'].map((item, i) => (
+                <div key={i} style={{ display: 'flex', alignItems: 'center', fontFamily: 'Arial, sans-serif', fontSize: 13, color: isActive ? 'rgba(255,255,255,0.88)' : 'rgba(255,255,255,0.28)', padding: '9px 10px', marginBottom: i < 2 ? 6 : 0, borderLeft: `3px solid rgba(0,151,207,${isActive ? nodePulse * 0.8 : 0.12})`, paddingLeft: 12 }}>
+                  {item}
+                </div>
+              ))}
+            </div>
+          );
+        })()}
+
+        {/* Arrow 2 */}
+        <div style={{ width: 44, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+          <div style={{ fontSize: 26, color: cycleStep === 2 ? C.green : 'rgba(255,255,255,0.15)', fontWeight: 900 }}>→</div>
         </div>
+
+        {/* Node 3 — Harness Updated */}
+        {(() => {
+          const isActive = cycleStep === 2;
+          const glow = isActive ? nodePulse : 0.2;
+          return (
+            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', background: C.bgCard, borderRadius: 12, border: `2px solid rgba(46,204,113,${glow})`, padding: '14px 16px', boxShadow: isActive ? `0 0 20px rgba(46,204,113,${glow * 0.5})` : 'none' }}>
+              <div style={{ fontFamily: 'Arial, sans-serif', fontWeight: 700, fontSize: 13, color: C.green, marginBottom: 10, display: 'flex', alignItems: 'center', gap: 8, flexShrink: 0 }}>
+                🔄 Harness updated
+                {isActive && <span style={{ fontFamily: 'Consolas, monospace', fontSize: 10, color: C.green, opacity: nodePulse }}>⟳ updating...</span>}
+              </div>
+              {harnessUpdates.map((upd, i) => {
+                const showFrame = 90 + (i * 3 + 2) * STEP_DUR;
+                const visible = f > showFrame - 5;
+                const isCurrent = isActive && i === activeIdx;
+                const applied = isApplied(i);
+                return (
+                  <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 8, fontFamily: 'Consolas, monospace', fontSize: 12, borderRadius: 7, padding: '9px 10px', marginBottom: i < harnessUpdates.length - 1 ? 6 : 0, background: isCurrent ? 'rgba(46,204,113,0.12)' : 'transparent', border: isCurrent ? '1px solid rgba(46,204,113,0.28)' : '1px solid transparent', color: applied ? 'rgba(46,204,113,0.8)' : (isCurrent ? '#fff' : (visible ? 'rgba(255,255,255,0.45)' : 'rgba(255,255,255,0.18)')) }}>
+                    {isCurrent && <span style={{ color: C.green, fontSize: 11, opacity: nodePulse, flexShrink: 0 }}>►</span>}
+                    <span style={{ fontSize: 15, flexShrink: 0 }}>{upd.icon}</span>
+                    <span style={{ flex: 1 }}>{upd.file}</span>
+                    <span style={{ fontSize: 10, color: applied ? C.green : (visible ? C.orange : 'rgba(255,255,255,0.18)'), fontWeight: 700, flexShrink: 0 }}>{applied ? `✓ v${i + 2}` : (visible ? '⟳' : '·')}</span>
+                  </div>
+                );
+              })}
+            </div>
+          );
+        })()}
+      </div>
+
+      {/* Feedback loop arrow — pulses continuously */}
+      <div style={{ flexShrink: 0, display: 'flex', alignItems: 'center', padding: '14px 120px 0', opacity: fade(f, 130, 20) }}>
+        <div style={{ flex: 1, height: 2, background: `rgba(0,151,207,${flowPulse})`, boxShadow: `0 0 ${interpolate(flowPulse, [0.2, 0.6], [2, 8])}px rgba(0,151,207,0.5)` }} />
+        <div style={{ fontFamily: 'Arial, sans-serif', fontSize: 13, color: C.cyan, fontWeight: 700, padding: '6px 20px', background: `rgba(0,151,207,${loopPulse * 0.18})`, borderRadius: 20, whiteSpace: 'nowrap', border: `1px solid rgba(0,151,207,${loopPulse})`, boxShadow: `0 0 ${interpolate(loopPulse, [0.25, 0.75], [4, 16])}px rgba(0,151,207,0.35)`, display: 'flex', alignItems: 'center', gap: 8 }}>
+          <span style={{ display: 'inline-block', transform: `rotate(${spinSlowDeg}deg)`, fontSize: 15, lineHeight: 1 }}>↺</span>
+          better next iteration
+        </div>
+        <div style={{ flex: 1, height: 2, background: `rgba(0,151,207,${flowPulse})`, boxShadow: `0 0 ${interpolate(flowPulse, [0.2, 0.6], [2, 8])}px rgba(0,151,207,0.5)` }} />
       </div>
 
       {/* Spacer */}
-      <div style={{ flex: 1 }} />
+      <div style={{ flex: 0.6 }} />
 
       {/* Bottom strip */}
       <div style={{ flexShrink: 0, padding: '8px 100px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', opacity: bottomOpacity, transform: `scale(${bottomScale})` }}>
@@ -1554,8 +1571,8 @@ const Step6Scene: React.FC = () => {
           <div style={{ display: 'inline-flex', alignItems: 'center', gap: 16, background: 'rgba(0,151,207,0.12)', borderRadius: 12, padding: '16px 32px', border: `2px solid rgba(0,151,207,${borderOpacity})`, boxShadow: `0 0 ${interpolate(borderOpacity, [0.3, 0.8], [8, 28])}px rgba(0,151,207,${borderOpacity * 0.5})` }}>
             <span style={{ fontSize: 22, flexShrink: 0 }}>💡</span>
             <div style={{ fontFamily: 'Arial, sans-serif', fontSize: 17, color: C.white, lineHeight: 1.6 }}>
-              <strong style={{ color: C.cyan }}>The Harness improves with every sprint — </strong>
-              each refinement makes the next generation more precise.
+              <strong style={{ color: C.cyan }}>Actualizar el contexto en cada iteración es fundamental — </strong>
+              facilita desarrollos futuros y mantiene el Harness preciso y actualizado.
             </div>
           </div>
         </div>

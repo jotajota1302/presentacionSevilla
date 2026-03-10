@@ -22,6 +22,13 @@ npm-debug.log*
 .playwright-mcp/
 *.tmp
 
+# Skills
+skills-lock.json
+
+# Leftover scripts
+rewrite.js
+replacescene*.js
+
 # Claude Code internal files
 .claude/
 

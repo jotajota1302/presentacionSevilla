@@ -5,7 +5,7 @@ import Main from './Main';
 const RemotionRoot = () => (
   <>
     <Composition
-      id="NativeAI"
+      id="NativeAI-EN"
       component={Main}
       durationInFrames={3990}
       fps={30}

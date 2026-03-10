@@ -7,7 +7,7 @@ const RemotionRoot = () => (
     <Composition
       id="NativeAI-EN"
       component={Main}
-      durationInFrames={3990}
+      durationInFrames={4680}
       fps={30}
       width={1920}
       height={1080}
@@ -16,7 +16,7 @@ const RemotionRoot = () => (
     <Composition
       id="NativeAI-ES"
       component={Main}
-      durationInFrames={3990}
+      durationInFrames={4680}
       fps={30}
       width={1920}
       height={1080}

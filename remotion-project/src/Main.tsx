@@ -144,12 +144,40 @@ const T = {
       { text: 'UX reviewed with client', icon: '👁️' },
       { text: 'Delivery approved by client', icon: '✅' },
     ],
-    s7Bottom: <><strong style={{ color: '#E74C3C' }}>Human review is mandatory — </strong>AI-generated code and features must be validated before final delivery to the client.</>,
+    s7Bottom: <><strong style={{ color: C.cyan }}>Human in the Loop — </strong>every AI Native delivery includes a mandatory human quality gate: the Outcome Validator ensures what ships is correct, complete, and client-approved.</>,
     // Scene 11
     closingSectionBar: 'AI NATIVE METHODOLOGY · RESULTS',
     closingSubtitle: 'AI Native Methodology · NTT DATA EMEAL',
     closingMetricLabels: ['Faster than traditional development','Prototype delivered to client','Completion at project handoff','Prior stack knowledge required'],
     closingScreenshotDescs: ['Calendar & Activity Management','Technical Script Editor','Real-time Display System'],
+    s1ActorTags: ['📄 Reads PRD', '🧠 Designs agents', '📁 Creates .md specs'],
+    s2ActorTags: ['📂 Loads docs', '🤖 Runs agents', '📋 Generates context'],
+    s3ActorTags: ['📋 Reads PRD v2', '⚙️ Structures prompts', '📁 Creates templates'],
+    s4ActorTags: ['📋 Plans sprints', '🎯 Registers in Jira', '👥 Distributes work'],
+    s2InputHeader: '~/teatro-real/DOC_INICIAL/',
+    s2OutputHeader: '~/teatro-real/DOC_GENERADA/',
+    s2OutputLabels: ['Full implementation plan', 'UI & style guide', 'Backend context for agents', 'Frontend context for agents'],
+    s2AnalyzingLabel: '⟳ analyzing...',
+    s3InputHeader: '📋 INPUT — PRD v2 & Context',
+    s3InputSubHeader: 'Validated & corrected',
+    s4GeneratingLabel: '⟳ generating...',
+    s4IdleLabel: '✓ idle',
+    s4InProgressLabel: '● in progress',
+    s4DoneLabel: '✓ done',
+    s4GlobalProgress: 'Global Progress',
+    s5ReviewingLabel: '⟳ reviewing...',
+    s5ApprovingLabel: '⟳ approving...',
+    s5MergedLabel: '✓ merged',
+    s5IdleLabel: '✓ idle',
+    s5ReviewingStatus: '● reviewing',
+    s5MRQueueLabel: 'merge requests queue',
+    s5BuildHealthLabel: 'build health',
+    s5BuildPassingLabel: '🔒 build: passing',
+    s5CoverageLabel: '📊 coverage: 87%',
+    s6FeedbackLabel: 'better next iteration',
+    s7ModuleDescs: ['Calendar · Activities · Logistics · Digital Signage', 'Technical Script Editor · TOPs · Pasadas', 'Users · Roles (4) · Departments · Permissions'],
+    s7MVPLiveLabel: '🌐 MVP Live',
+    s11SubtitleText: 'AI Native Methodology · NTT DATA EMEAL',
     closingQuote: <><strong style={{ color: C.cyan }}>"AI doesn't replace the team. It empowers it."</strong><span style={{ color: C.textMuted }}> — when used with methodology.</span></>,
   },
   es: {
@@ -261,12 +289,40 @@ const T = {
       { text: 'UX revisada con el cliente', icon: '👁️' },
       { text: 'Entrega aprobada por el cliente', icon: '✅' },
     ],
-    s7Bottom: <><strong style={{ color: '#E74C3C' }}>La revisión humana es obligatoria — </strong>el código y funcionalidades generadas por IA deben validarse antes de la entrega final al cliente.</>,
+    s7Bottom: <><strong style={{ color: C.cyan }}>Human in the Loop — </strong>toda entrega AI Native incluye una validación humana obligatoria: el Outcome Validator garantiza que lo que se entrega es correcto, completo y aprobado por el cliente.</>,
     // Scene 11
     closingSectionBar: 'METODOLOGÍA AI NATIVE · RESULTADOS',
     closingSubtitle: 'Metodología AI Native · NTT DATA EMEAL',
     closingMetricLabels: ['Más rápido que el desarrollo tradicional','Prototipo entregado al cliente','Completitud en la entrega del proyecto','Conocimiento previo del stack requerido'],
     closingScreenshotDescs: ['Gestión de Calendario y Actividades','Editor de Guiones Técnicos','Sistema de Cartelería Digital'],
+    s1ActorTags: ['📄 Lee el PRD', '🧠 Diseña agentes', '📁 Crea specs .md'],
+    s2ActorTags: ['📂 Carga documentos', '🤖 Ejecuta agentes', '📋 Genera contexto'],
+    s3ActorTags: ['📋 Lee el PRD v2', '⚙️ Estructura prompts', '📁 Crea plantillas'],
+    s4ActorTags: ['📋 Planifica sprints', '🎯 Registra en Jira', '👥 Distribuye trabajo'],
+    s2InputHeader: '~/teatro-real/DOC_INICIAL/',
+    s2OutputHeader: '~/teatro-real/DOC_GENERADA/',
+    s2OutputLabels: ['Plan de implementación completo', 'Guía de estilos UI', 'Contexto de backend para agentes', 'Contexto de frontend para agentes'],
+    s2AnalyzingLabel: '⟳ analizando...',
+    s3InputHeader: '📋 INPUT — PRD v2 y Contexto',
+    s3InputSubHeader: 'Validado y corregido',
+    s4GeneratingLabel: '⟳ generando...',
+    s4IdleLabel: '✓ disponible',
+    s4InProgressLabel: '● en progreso',
+    s4DoneLabel: '✓ hecho',
+    s4GlobalProgress: 'Progreso Global',
+    s5ReviewingLabel: '⟳ revisando...',
+    s5ApprovingLabel: '⟳ aprobando...',
+    s5MergedLabel: '✓ fusionado',
+    s5IdleLabel: '✓ disponible',
+    s5ReviewingStatus: '● revisando',
+    s5MRQueueLabel: 'cola de merge requests',
+    s5BuildHealthLabel: 'estado del build',
+    s5BuildPassingLabel: '🔒 build: correcto',
+    s5CoverageLabel: '📊 cobertura: 87%',
+    s6FeedbackLabel: 'mejor siguiente iteración',
+    s7ModuleDescs: ['Calendario · Actividades · Logística · Cartelería Digital', 'Editor de Guiones Técnicos · TOPs · Pasadas', 'Usuarios · Roles (4) · Departamentos · Permisos'],
+    s7MVPLiveLabel: '🌐 MVP en producción',
+    s11SubtitleText: 'Metodología AI Native · NTT DATA EMEAL',
     closingQuote: <><strong style={{ color: C.cyan }}>"La IA no reemplaza al equipo. Lo potencia."</strong><span style={{ color: C.textMuted }}> — cuando se usa con metodología.</span></>,
   },
 } as const;
@@ -379,14 +435,11 @@ const ChallengeScene: React.FC<{ lang: Lang }> = ({ lang }) => {
   const after = T[lang].challengeAfter as readonly string[];
   return (
     <AbsoluteFill style={{ background: C.bg, flexDirection: 'column', display: 'flex' }}>
-      {/* Header */}
-      <div style={{ background: C.bgCard, padding: '20px 100px', display: 'flex', alignItems: 'center', flexShrink: 0, borderBottom: `1px solid ${C.border}` }}>
-        <div style={{ fontFamily: 'Arial Black, Arial, sans-serif', fontWeight: 900, fontSize: 34, color: C.white }}>Teatro Real de Madrid</div>
-      </div>
       {/* Before / Arrow / After — vertically centered */}
-      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '20px 80px', gap: 32 }}>
-        {/* Context narrative — centered above columns */}
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '20px 80px', gap: 24 }}>
+        {/* Title + narrative — centered block */}
         <div style={{ opacity: fade(f, 3), textAlign: 'center', padding: '0 80px' }}>
+          <div style={{ fontFamily: 'Arial Black, Arial, sans-serif', fontWeight: 900, fontSize: 42, color: C.white, marginBottom: 18, letterSpacing: '0.01em' }}>Teatro Real de Madrid</div>
           <div style={{ fontFamily: 'Arial, sans-serif', fontSize: 24, color: C.textMuted, lineHeight: 1.6 }}>
             {T[lang].challengeNarrative1}
           </div>
@@ -574,7 +627,7 @@ const Step1Scene: React.FC<{ lang: Lang }> = ({ lang }) => {
             <div style={{ width: 52, height: 52, borderRadius: '50%', background: C.cyan, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 24, flexShrink: 0, boxShadow: `0 0 16px rgba(0,151,207,0.5)` }}>👤</div>
             <div style={{ fontFamily: 'Arial Black, Arial, sans-serif', fontWeight: 900, fontSize: 22, color: C.white }}>AI Architect</div>
             <div style={{ width: 1, height: 32, background: 'rgba(255,255,255,0.15)' }} />
-            {['📄 Reads PRD', '🧠 Designs agents', '📁 Creates .md specs'].map((tag, i) => (
+            {(T[lang].s1ActorTags as string[]).map((tag, i) => (
               <div key={i} style={{ fontFamily: 'Arial, sans-serif', fontSize: 12, fontWeight: 600, color: C.cyan, background: 'rgba(0,151,207,0.15)', border: `1px solid rgba(0,151,207,0.4)`, padding: '5px 14px', borderRadius: 20 }}>{tag}</div>
             ))}
           </div>
@@ -687,10 +740,10 @@ const Step2Scene: React.FC<{ lang: Lang }> = ({ lang }) => {
   ];
 
   const outputFiles = [
-    { file: 'PLAN_IMPLEMENTACION_COMPLETO.md', label: 'Full implementation plan' },
-    { file: 'GUIA_ESTILOS_TEATRO.md', label: 'UI & style guide' },
-    { file: 'CONTEXTO_BACKEND.md', label: 'Backend context for agents' },
-    { file: 'CONTEXTO_FRONTEND.md', label: 'Frontend context for agents' },
+    { file: 'PLAN_IMPLEMENTACION_COMPLETO.md', label: T[lang].s2OutputLabels[0] },
+    { file: 'GUIA_ESTILOS_TEATRO.md', label: T[lang].s2OutputLabels[1] },
+    { file: 'CONTEXTO_BACKEND.md', label: T[lang].s2OutputLabels[2] },
+    { file: 'CONTEXTO_FRONTEND.md', label: T[lang].s2OutputLabels[3] },
   ];
 
   const bottomOpacity = fade(f, 175, 20);
@@ -726,7 +779,7 @@ const Step2Scene: React.FC<{ lang: Lang }> = ({ lang }) => {
             <div style={{ width: 52, height: 52, borderRadius: '50%', background: C.cyan, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 24, flexShrink: 0, boxShadow: `0 0 16px rgba(0,151,207,0.5)` }}>👤</div>
             <div style={{ fontFamily: 'Arial Black, Arial, sans-serif', fontWeight: 900, fontSize: 22, color: C.white }}>AI Architect</div>
             <div style={{ width: 1, height: 32, background: 'rgba(255,255,255,0.15)' }} />
-            {['📂 Loads docs', '🤖 Runs agents', '📋 Generates context'].map((tag, i) => (
+            {(T[lang].s2ActorTags as string[]).map((tag, i) => (
               <div key={i} style={{ fontFamily: 'Arial, sans-serif', fontSize: 12, fontWeight: 600, color: C.cyan, background: 'rgba(0,151,207,0.15)', border: `1px solid rgba(0,151,207,0.4)`, padding: '5px 14px', borderRadius: 20 }}>{tag}</div>
             ))}
           </div>
@@ -756,7 +809,7 @@ const Step2Scene: React.FC<{ lang: Lang }> = ({ lang }) => {
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8, opacity: fade(f, 62, 15), transform: `translateX(${interpolate(spr(f, 62), [0, 1], [-30, 0])}px)` }}>
           <div style={{ fontFamily: 'Arial, sans-serif', fontWeight: 700, fontSize: 18, color: C.textMuted, marginBottom: 6 }}>{T[lang].s2Col1Header}</div>
           <div style={{ background: C.codeBg, borderRadius: 10, border: `1px solid ${C.borderCyan}`, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
-            <div style={{ background: 'rgba(0,151,207,0.20)', color: C.cyan, fontSize: 11, fontFamily: 'Consolas, monospace', fontWeight: 600, padding: '6px 16px', borderBottom: `1px solid ${C.borderCyan}`, flexShrink: 0 }}>~/teatro-real/DOC_INICIAL/</div>
+            <div style={{ background: 'rgba(0,151,207,0.20)', color: C.cyan, fontSize: 11, fontFamily: 'Consolas, monospace', fontWeight: 600, padding: '6px 16px', borderBottom: `1px solid ${C.borderCyan}`, flexShrink: 0 }}>{T[lang].s2InputHeader}</div>
             <div style={{ padding: '12px 16px', display: 'flex', flexDirection: 'column', gap: 8 }}>
               {inputFiles.map((l, i) => {
                 const isActive = activeInputFile === i;
@@ -777,7 +830,7 @@ const Step2Scene: React.FC<{ lang: Lang }> = ({ lang }) => {
         </div>
 
         {/* Col 2: AGENTS */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 8, opacity: fade(f, 72, 15) }}>
           <div style={{ fontFamily: 'Arial, sans-serif', fontWeight: 700, fontSize: 18, color: C.textMuted, marginBottom: 6 }}>{T[lang].s2Col2Header}</div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
             {phaseAgents.map((a, i) => (
@@ -785,7 +838,7 @@ const Step2Scene: React.FC<{ lang: Lang }> = ({ lang }) => {
                 <span style={{ fontSize: 24 }}>{a.icon}</span>
                 <span style={{ fontFamily: 'Arial, sans-serif', fontWeight: 700, fontSize: 18, color: C.white }}>{a.label}</span>
                 {f > a.delay + 28 && (
-                  <span style={{ fontFamily: 'Consolas, monospace', fontSize: 12, color: 'rgba(255,255,255,0.9)', opacity: agentPulse, marginLeft: 'auto' }}>⟳ analyzing...</span>
+                  <span style={{ fontFamily: 'Consolas, monospace', fontSize: 12, color: 'rgba(255,255,255,0.9)', opacity: agentPulse, marginLeft: 'auto' }}>{T[lang].s2AnalyzingLabel}</span>
                 )}
               </div>
             ))}
@@ -801,7 +854,7 @@ const Step2Scene: React.FC<{ lang: Lang }> = ({ lang }) => {
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8, opacity: fade(f, 150, 15), transform: `translateX(${interpolate(spr(f, 150), [0, 1], [30, 0])}px)` }}>
           <div style={{ fontFamily: 'Arial, sans-serif', fontWeight: 700, fontSize: 18, color: C.green, marginBottom: 6 }}>{T[lang].s2Col3Header}</div>
           <div style={{ background: C.codeBg, borderRadius: 10, border: `1px solid ${C.borderCyan}`, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
-            <div style={{ background: 'rgba(0,151,207,0.20)', color: C.cyan, fontSize: 11, fontFamily: 'Consolas, monospace', fontWeight: 600, padding: '6px 16px', borderBottom: `1px solid ${C.borderCyan}`, flexShrink: 0 }}>~/teatro-real/DOC_GENERADA/</div>
+            <div style={{ background: 'rgba(0,151,207,0.20)', color: C.cyan, fontSize: 11, fontFamily: 'Consolas, monospace', fontWeight: 600, padding: '6px 16px', borderBottom: `1px solid ${C.borderCyan}`, flexShrink: 0 }}>{T[lang].s2OutputHeader}</div>
             <div style={{ padding: '12px 16px', display: 'flex', flexDirection: 'column', gap: 14 }}>
               {outputFiles.map((o, i) => (
                 <div key={i} style={{ opacity: fade(f, 155 + i * 5) }}>
@@ -953,7 +1006,7 @@ const PrototypeScene: React.FC<{ lang: Lang }> = ({ lang }) => {
         </div>
 
         {/* Col 2: Build + Validate */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 10, opacity: fade(f, 90, 15) }}>
           <div style={{ fontFamily: 'Arial, sans-serif', fontWeight: 700, fontSize: 18, color: C.textMuted, marginBottom: 6 }}>{T[lang].s5Col2Header}</div>
           {processItems.map((a, i) => {
             const cardVisible = f > a.delay + 14;
@@ -1085,7 +1138,7 @@ const Step3Scene: React.FC<{ lang: Lang }> = ({ lang }) => {
             <div style={{ width: 52, height: 52, borderRadius: '50%', background: C.cyan, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 24, flexShrink: 0, boxShadow: '0 0 16px rgba(0,151,207,0.5)' }}>👤</div>
             <div style={{ fontFamily: 'Arial Black, Arial, sans-serif', fontWeight: 900, fontSize: 22, color: C.white }}>AI Architect</div>
             <div style={{ width: 1, height: 32, background: 'rgba(255,255,255,0.15)' }} />
-            {['📋 Reads PRD v2', '⚙️ Structures prompts', '📁 Creates templates'].map((tag, i) => (
+            {(T[lang].s3ActorTags as string[]).map((tag, i) => (
               <div key={i} style={{ fontFamily: 'Arial, sans-serif', fontSize: 12, fontWeight: 600, color: C.cyan, background: 'rgba(0,151,207,0.15)', border: '1px solid rgba(0,151,207,0.4)', padding: '5px 14px', borderRadius: 20 }}>{tag}</div>
             ))}
           </div>
@@ -1113,9 +1166,9 @@ const Step3Scene: React.FC<{ lang: Lang }> = ({ lang }) => {
 
         {/* Col 1: INPUT */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8, opacity: fade(f, 72, 15), transform: `translateX(${interpolate(spr(f, 72), [0, 1], [-30, 0])}px)` }}>
-          <div style={{ fontFamily: 'Arial, sans-serif', fontWeight: 700, fontSize: 18, color: C.textMuted, marginBottom: 6 }}>📋 INPUT — PRD v2 &amp; Context</div>
+          <div style={{ fontFamily: 'Arial, sans-serif', fontWeight: 700, fontSize: 18, color: C.textMuted, marginBottom: 6 }}>{T[lang].s3InputHeader}</div>
           <div style={{ background: C.codeBg, borderRadius: 10, border: `1px solid ${C.borderCyan}`, overflow: 'hidden' }}>
-            <div style={{ background: 'rgba(0,151,207,0.20)', color: C.cyan, fontSize: 11, fontFamily: 'Consolas, monospace', fontWeight: 600, padding: '6px 16px', borderBottom: `1px solid ${C.borderCyan}` }}>Validated &amp; corrected</div>
+            <div style={{ background: 'rgba(0,151,207,0.20)', color: C.cyan, fontSize: 11, fontFamily: 'Consolas, monospace', fontWeight: 600, padding: '6px 16px', borderBottom: `1px solid ${C.borderCyan}` }}>{T[lang].s3InputSubHeader}</div>
             <div style={{ padding: '12px 16px', display: 'flex', flexDirection: 'column', gap: 8 }}>
               {inputItems.map((l, i) => (
                 <div key={i} style={{ fontFamily: 'Consolas, monospace', fontSize: 13, color: l.includes('→') ? C.cyan : 'rgba(255,255,255,0.82)', lineHeight: 1.4 }}>{l}</div>
@@ -1130,7 +1183,7 @@ const Step3Scene: React.FC<{ lang: Lang }> = ({ lang }) => {
         </div>
 
         {/* Col 2: Templates generated */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 8, opacity: fade(f, 72, 15) }}>
           <div style={{ fontFamily: 'Arial, sans-serif', fontWeight: 700, fontSize: 18, color: C.textMuted, marginBottom: 6 }}>{T[lang].s3Col2Header}</div>
           {templates.map((t, i) => (
             <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '11px 16px', background: C.bgCard, borderRadius: 8, borderLeft: `4px solid ${t.color}`, opacity: fade(f, t.delay, 16), transform: `translateY(${interpolate(sprSlow(f, t.delay), [0, 1], [30, 0])}px)` }}>
@@ -1242,7 +1295,7 @@ const Step4Scene: React.FC<{ lang: Lang }> = ({ lang }) => {
             <div style={{ width: 52, height: 52, borderRadius: '50%', background: C.cyan, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 24, flexShrink: 0, boxShadow: '0 0 16px rgba(0,151,207,0.5)' }}>👤</div>
             <div style={{ fontFamily: 'Arial Black, Arial, sans-serif', fontWeight: 900, fontSize: 22, color: C.white }}>AI Lead</div>
             <div style={{ width: 1, height: 32, background: 'rgba(255,255,255,0.15)' }} />
-            {['📋 Plans sprints', '🎯 Registers in Jira', '👥 Distributes work'].map((tag, i) => (
+            {(T[lang].s4ActorTags as string[]).map((tag, i) => (
               <div key={i} style={{ fontFamily: 'Arial, sans-serif', fontSize: 12, fontWeight: 600, color: C.cyan, background: 'rgba(0,151,207,0.15)', border: '1px solid rgba(0,151,207,0.4)', padding: '5px 14px', borderRadius: 20 }}>{tag}</div>
             ))}
           </div>
@@ -1281,8 +1334,8 @@ const Step4Scene: React.FC<{ lang: Lang }> = ({ lang }) => {
                   <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 3 }}>
                     <span style={{ fontFamily: 'Consolas, monospace', fontSize: 11, color: isDone ? C.green : j.color, fontWeight: 700 }}>{isDone ? '✅' : j.ticket}</span>
                     <span style={{ fontFamily: 'Arial, sans-serif', fontSize: 10, color: C.textDim, background: 'rgba(255,255,255,0.08)', padding: '2px 8px', borderRadius: 10 }}>{j.sprint}</span>
-                    {isActive && <span style={{ fontFamily: 'Arial, sans-serif', fontSize: 10, color: C.cyan, fontWeight: 700, opacity: genPulse }}>● in progress</span>}
-                    {isDone && <span style={{ fontFamily: 'Arial, sans-serif', fontSize: 10, color: C.green, fontWeight: 700 }}>✓ done</span>}
+                    {isActive && <span style={{ fontFamily: 'Arial, sans-serif', fontSize: 10, color: C.cyan, fontWeight: 700, opacity: genPulse }}>{T[lang].s4InProgressLabel}</span>}
+                    {isDone && <span style={{ fontFamily: 'Arial, sans-serif', fontSize: 10, color: C.green, fontWeight: 700 }}>{T[lang].s4DoneLabel}</span>}
                   </div>
                   <div style={{ fontFamily: 'Arial, sans-serif', fontSize: 13, color: isDone ? 'rgba(46,204,113,0.7)' : (isActive ? C.white : 'rgba(255,255,255,0.82)'), textDecoration: isDone ? 'line-through' : 'none' }}>{j.label}</div>
                 </div>
@@ -1313,10 +1366,10 @@ const Step4Scene: React.FC<{ lang: Lang }> = ({ lang }) => {
                     <span style={{ fontFamily: 'Consolas, monospace', fontSize: 11, color: C.cyan, fontWeight: 700 }}>{d.tool}</span>
                   </div>
                   {f > d.delay + 30 && !allDone && (
-                    <span style={{ fontFamily: 'Consolas, monospace', fontSize: 11, color: C.green, opacity: genPulse }}>⟳ generating...</span>
+                    <span style={{ fontFamily: 'Consolas, monospace', fontSize: 11, color: C.green, opacity: genPulse }}>{T[lang].s4GeneratingLabel}</span>
                   )}
                   {allDone && (
-                    <span style={{ fontFamily: 'Consolas, monospace', fontSize: 11, color: 'rgba(255,255,255,0.35)' }}>✓ idle</span>
+                    <span style={{ fontFamily: 'Consolas, monospace', fontSize: 11, color: 'rgba(255,255,255,0.35)' }}>{T[lang].s4IdleLabel}</span>
                   )}
                 </div>
               </div>
@@ -1488,7 +1541,7 @@ const Step5Scene: React.FC<{ lang: Lang }> = ({ lang }) => {
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8, opacity: fade(f, 72, 15), transform: `translateX(${interpolate(spr(f, 72), [0, 1], [-30, 0])}px)` }}>
           <div style={{ fontFamily: 'Arial, sans-serif', fontWeight: 700, fontSize: 18, color: C.textMuted, marginBottom: 6 }}>{T[lang].s5bCol1Header}</div>
           <div style={{ background: C.codeBg, borderRadius: 10, border: `1px solid ${C.borderCyan}`, overflow: 'hidden' }}>
-            <div style={{ background: 'rgba(0,151,207,0.20)', color: C.cyan, fontSize: 11, fontFamily: 'Consolas, monospace', fontWeight: 600, padding: '6px 16px', borderBottom: `1px solid ${C.borderCyan}` }}>merge requests queue</div>
+            <div style={{ background: 'rgba(0,151,207,0.20)', color: C.cyan, fontSize: 11, fontFamily: 'Consolas, monospace', fontWeight: 600, padding: '6px 16px', borderBottom: `1px solid ${C.borderCyan}` }}>{T[lang].s5MRQueueLabel}</div>
             <div style={{ padding: '12px 16px', display: 'flex', flexDirection: 'column', gap: 8 }}>
               {mrItems.map((mr, i) => {
                 const isMerged = f > 90 + (i + 1) * 55;
@@ -1499,8 +1552,8 @@ const Step5Scene: React.FC<{ lang: Lang }> = ({ lang }) => {
                     {isActive && <span style={{ color: C.orange, fontSize: 11, opacity: reviewPulse, flexShrink: 0 }}>►</span>}
                     <span style={{ fontFamily: 'Consolas, monospace', fontSize: 10, color: isMerged ? C.green : mr.color, fontWeight: 700, flexShrink: 0 }}>{isMerged ? '✅' : mr.ticket}</span>
                     <span style={{ fontFamily: 'Consolas, monospace', fontSize: 12, color: isMerged ? 'rgba(46,204,113,0.7)' : (isActive ? C.white : 'rgba(255,255,255,0.75)'), textDecoration: isMerged ? 'line-through' : 'none', flex: 1 }}>{mr.label}</span>
-                    {isActive && <span style={{ fontFamily: 'Arial, sans-serif', fontSize: 10, color: C.cyan, fontWeight: 700, opacity: reviewPulse, flexShrink: 0 }}>● reviewing</span>}
-                    {isMerged && <span style={{ fontFamily: 'Arial, sans-serif', fontSize: 10, color: C.green, fontWeight: 700, flexShrink: 0 }}>✓ merged</span>}
+                    {isActive && <span style={{ fontFamily: 'Arial, sans-serif', fontSize: 10, color: C.cyan, fontWeight: 700, opacity: reviewPulse, flexShrink: 0 }}>{T[lang].s5ReviewingStatus}</span>}
+                    {isMerged && <span style={{ fontFamily: 'Arial, sans-serif', fontSize: 10, color: C.green, fontWeight: 700, flexShrink: 0 }}>{T[lang].s5MergedLabel}</span>}
                   </div>
                 );
               })}
@@ -1518,7 +1571,7 @@ const Step5Scene: React.FC<{ lang: Lang }> = ({ lang }) => {
           <div style={{ fontFamily: 'Arial, sans-serif', fontWeight: 700, fontSize: 18, color: C.textMuted, marginBottom: 6 }}>{T[lang].s5bCol2Header}</div>
           {reviewers.map((r, i) => {
             const cardVisible = f > r.delay + 14;
-            const actionLabel = i === 0 ? '⟳ reviewing...' : '⟳ approving...';
+            const actionLabel = i === 0 ? T[lang].s5ReviewingLabel : T[lang].s5ApprovingLabel;
             return (
               <div key={i} style={{ background: C.bgCard, borderRadius: 10, border: `2px solid ${r.color}`, overflow: 'hidden', opacity: fade(f, r.delay, 18), transform: `translateY(${interpolate(sprSlow(f, r.delay), [0, 1], [40, 0])}px)` }}>
                 <div style={{ background: r.color, padding: '8px 14px', display: 'flex', alignItems: 'center', gap: 10 }}>
@@ -1533,7 +1586,7 @@ const Step5Scene: React.FC<{ lang: Lang }> = ({ lang }) => {
                       <span style={{ fontFamily: 'Consolas, monospace', fontSize: 11, color: C.cyan, fontWeight: 700 }}>{r.tool}</span>
                     </div>
                     {cardVisible && !allDone && <span style={{ fontFamily: 'Consolas, monospace', fontSize: 11, color: r.color, opacity: reviewPulse }}>{actionLabel}</span>}
-                    {allDone && <span style={{ fontFamily: 'Consolas, monospace', fontSize: 11, color: 'rgba(255,255,255,0.35)' }}>✓ idle</span>}
+                    {allDone && <span style={{ fontFamily: 'Consolas, monospace', fontSize: 11, color: 'rgba(255,255,255,0.35)' }}>{T[lang].s5IdleLabel}</span>}
                   </div>
                 </div>
               </div>
@@ -1562,7 +1615,7 @@ const Step5Scene: React.FC<{ lang: Lang }> = ({ lang }) => {
               <div style={{ marginTop: 4, paddingTop: 8, borderTop: '1px solid rgba(46,204,113,0.2)', display: 'flex', flexDirection: 'column', gap: 8, opacity: fade(f, 140, 15) }}>
                 <div>
                   <div style={{ display: 'flex', justifyContent: 'space-between', fontFamily: 'Consolas, monospace', fontSize: 11, marginBottom: 4, color: buildFilling ? C.white : C.textMuted }}>
-                    <span>build health</span>
+                    <span>{T[lang].s5BuildHealthLabel}</span>
                     <span style={{ fontWeight: 700, color: buildPct === 100 ? C.green : C.cyan }}>{Math.round(buildPct)}%</span>
                   </div>
                   <div style={{ height: 8, borderRadius: 4, background: C.bgCard, border: `1px solid ${C.border}` }}>
@@ -1570,8 +1623,8 @@ const Step5Scene: React.FC<{ lang: Lang }> = ({ lang }) => {
                   </div>
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 6, opacity: fade(f, 315, 15) }}>
-                  <div style={{ fontFamily: 'Consolas, monospace', fontSize: 12, color: C.green }}>🔒 build: passing</div>
-                  <div style={{ fontFamily: 'Consolas, monospace', fontSize: 12, color: C.cyan }}>📊 coverage: 87%</div>
+                  <div style={{ fontFamily: 'Consolas, monospace', fontSize: 12, color: C.green }}>{T[lang].s5BuildPassingLabel}</div>
+                  <div style={{ fontFamily: 'Consolas, monospace', fontSize: 12, color: C.cyan }}>{T[lang].s5CoverageLabel}</div>
                 </div>
               </div>
             </div>
@@ -1810,9 +1863,9 @@ const Step7Scene: React.FC<{ lang: Lang }> = ({ lang }) => {
   const archOpacity = fade(f, 22, 18);
 
   const deliveredItems = [
-    { name: 'TEMPO', desc: 'Calendar · Activities · Logistics · Digital Signage', color: C.green },
-    { name: 'TOPS', desc: 'Technical Script Editor · TOPs · Pasadas', color: C.cyan },
-    { name: 'ADMIN', desc: 'Users · Roles (4) · Departments · Permissions', color: C.blue },
+    { name: 'TEMPO', desc: T[lang].s7ModuleDescs[0], color: C.green },
+    { name: 'TOPS', desc: T[lang].s7ModuleDescs[1], color: C.cyan },
+    { name: 'ADMIN', desc: T[lang].s7ModuleDescs[2], color: C.blue },
   ];
 
   const checklistItems = T[lang].s7ChecklistItems as { text: string; icon: string }[];
@@ -1905,7 +1958,7 @@ const Step7Scene: React.FC<{ lang: Lang }> = ({ lang }) => {
             );
           })}
           <div style={{ padding: '9px 12px', background: C.codeBg, borderRadius: 8, border: '1px solid rgba(0,151,207,0.3)', opacity: allDelivered ? 1 : 0.2, marginTop: 2 }}>
-            <div style={{ fontFamily: 'Arial, sans-serif', fontSize: 11, color: C.textDim, marginBottom: 2 }}>🌐 MVP Live</div>
+            <div style={{ fontFamily: 'Arial, sans-serif', fontSize: 11, color: C.textDim, marginBottom: 2 }}>{T[lang].s7MVPLiveLabel}</div>
             <div style={{ fontFamily: 'Consolas, monospace', fontSize: 13, color: C.cyan }}>teatro-real-app.vercel.app</div>
           </div>
         </div>
@@ -2070,16 +2123,16 @@ export default function Main({ lang = 'en' }: { lang?: Lang }) {
   return (
     <AbsoluteFill>
       <Sequence from={0}    durationInFrames={150}><TitleScene lang={lang} /></Sequence>
-      <Sequence from={150}  durationInFrames={240}><ChallengeScene lang={lang} /></Sequence>
-      <Sequence from={390}  durationInFrames={360}><Step1Scene lang={lang} /></Sequence>
-      <Sequence from={750}  durationInFrames={360}><Step2Scene lang={lang} /></Sequence>
-      <Sequence from={1110} durationInFrames={330}><PrototypeScene lang={lang} /></Sequence>
-      <Sequence from={1440} durationInFrames={330}><Step3Scene lang={lang} /></Sequence>
-      <Sequence from={1770} durationInFrames={510}><Step4Scene lang={lang} /></Sequence>
-      <Sequence from={2280} durationInFrames={420}><Step5Scene lang={lang} /></Sequence>
-      <Sequence from={2700} durationInFrames={390}><Step6Scene lang={lang} /></Sequence>
-      <Sequence from={3090} durationInFrames={510}><Step7Scene lang={lang} /></Sequence>
-      <Sequence from={3600} durationInFrames={390}><ClosingScene lang={lang} /></Sequence>
+      <Sequence from={150}  durationInFrames={300}><ChallengeScene lang={lang} /></Sequence>
+      <Sequence from={450}  durationInFrames={450}><Step1Scene lang={lang} /></Sequence>
+      <Sequence from={900}  durationInFrames={450}><Step2Scene lang={lang} /></Sequence>
+      <Sequence from={1350} durationInFrames={420}><PrototypeScene lang={lang} /></Sequence>
+      <Sequence from={1770} durationInFrames={420}><Step3Scene lang={lang} /></Sequence>
+      <Sequence from={2190} durationInFrames={600}><Step4Scene lang={lang} /></Sequence>
+      <Sequence from={2790} durationInFrames={480}><Step5Scene lang={lang} /></Sequence>
+      <Sequence from={3270} durationInFrames={450}><Step6Scene lang={lang} /></Sequence>
+      <Sequence from={3720} durationInFrames={570}><Step7Scene lang={lang} /></Sequence>
+      <Sequence from={4290} durationInFrames={390}><ClosingScene lang={lang} /></Sequence>
     </AbsoluteFill>
   );
 }

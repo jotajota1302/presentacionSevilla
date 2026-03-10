@@ -1455,7 +1455,7 @@ const Step6Scene: React.FC = () => {
             <div style={{ width: 2, flex: 1, background: C.cyan }} />
             {/* Large spinning icon outside and above the badge */}
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6, flexShrink: 0 }}>
-              <span style={{ display: 'inline-block', transform: `rotate(${spinDeg}deg)`, fontSize: 44, lineHeight: 1, filter: 'drop-shadow(0 0 10px rgba(0,151,207,0.8))' }}>↻</span>
+              <span style={{ display: 'inline-block', transform: `rotate(${spinDeg}deg)`, fontSize: 44, lineHeight: 1, color: C.white, filter: 'drop-shadow(0 0 10px rgba(0,151,207,0.8))' }}>↻</span>
               <div style={{ background: C.cyan, color: C.white, padding: '5px 22px', borderRadius: 20, fontFamily: 'Arial, sans-serif', fontWeight: 700, fontSize: 13, letterSpacing: '0.06em', whiteSpace: 'nowrap', boxShadow: '0 0 16px rgba(0,151,207,0.5)' }}>Continuous Refinement</div>
             </div>
             <div style={{ width: 2, flex: 1, background: C.cyan }} />
@@ -1585,61 +1585,185 @@ const Step6Scene: React.FC = () => {
 // ── SCENE 10: STEP 7 — FINAL DELIVERY ────────────────────────────────────────
 const Step7Scene: React.FC = () => {
   const f = useCurrentFrame();
-  const modules = [
-    { name: 'TEMPO', desc: 'Calendar · Activities · Logistics · Digital Signage', status: '✅ 100%', color: C.green },
-    { name: 'TOPS', desc: 'Technical Script Editor · TOPs · Pasadas', status: '✅ 95%', color: C.cyan },
-    { name: 'ADMIN', desc: 'Users · Roles (4) · Departments · Permissions', status: '✅ 100%', color: C.blue },
+
+  const archScale = spr(f, 22);
+  const archOpacity = fade(f, 22, 18);
+
+  const deliveredItems = [
+    { name: 'TEMPO', desc: 'Calendar · Activities · Logistics · Digital Signage', color: C.green },
+    { name: 'TOPS', desc: 'Technical Script Editor · TOPs · Pasadas', color: C.cyan },
+    { name: 'ADMIN', desc: 'Users · Roles (4) · Departments · Permissions', color: C.blue },
   ];
+
+  const checklistItems = [
+    { text: 'Functional requirements covered', icon: '📋' },
+    { text: 'Technical solution complete', icon: '🔧' },
+    { text: 'Test coverage validated', icon: '🧪' },
+    { text: 'UX reviewed with client', icon: '👁️' },
+    { text: 'Delivery approved by client', icon: '✅' },
+  ];
+
+  // Sequential delivery: 3 modules, 55 frames each starting at f=90
+  const currentDelivery = f > 90 ? Math.min(Math.floor((f - 90) / 55), deliveredItems.length - 1) : -1;
+  const allDelivered = f > 90 + deliveredItems.length * 55; // f > 255
+
+  // Sequential checklist: 5 items, 30 frames each starting at f=120
+  const currentCheck = f > 120 ? Math.min(Math.floor((f - 120) / 30), checklistItems.length - 1) : -1;
+  const allChecked = f > 120 + checklistItems.length * 30; // f > 270
+
+  // Alert appears after checklist progresses
+  const alertOpacity = fade(f, 270, 20);
+  const alertPulse = f > 270 ? interpolate(Math.sin(f * 0.12), [-1, 1], [0.4, 1.0]) : 0;
+
+  // Actor border pulses while validating
+  const actorBorderPulse = !allDelivered && f > 22 ? interpolate(Math.sin(f * 0.15), [-1, 1], [0.4, 0.9]) : 0.3;
+
+  const bottomOpacity = fade(f, 390, 20);
+
   return (
-    <AbsoluteFill style={{ background: C.bg, display: 'flex' }}>
-      <CyanSidebar />
-      <div style={{ flex: 1, marginRight: 160, padding: '36px 100px', display: 'flex', flexDirection: 'column' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 24, marginBottom: 32, flexShrink: 0, opacity: fade(f, 5), transform: `translateX(${interpolate(spr(f, 5), [0, 1], [-30, 0])}px)` }}>
-          <StepBadge n={7} />
-          <div>
-            <StepTitle>Final Delivery</StepTitle>
-            <div style={{ fontFamily: 'Arial, sans-serif', fontSize: 18, color: C.textMuted, marginTop: 8 }}>
-              <strong style={{ color: C.white }}>Outcome Validator + AI Architect</strong> · Final review of technical solution &amp; requirement coverage
+    <AbsoluteFill style={{ background: C.bg, flexDirection: 'column', display: 'flex' }}>
+      {/* Top bar */}
+      <div style={{ flexShrink: 0, padding: '28px 100px 0', opacity: fade(f, 3, 12) }}>
+        <SectionBar>AI-SUPPORTED DEVELOPMENT STREAMS</SectionBar>
+      </div>
+
+      {/* Phase label */}
+      <div style={{ flexShrink: 0, padding: '14px 100px 0', display: 'flex', alignItems: 'center', gap: 20, opacity: fade(f, 8, 14) }}>
+        <StepBadge n={7} />
+        <div>
+          <div style={{ fontFamily: 'Arial, sans-serif', fontSize: 15, color: C.orange, fontWeight: 700, letterSpacing: '0.08em' }}>PHASE 7</div>
+          <StepTitle>Final Delivery</StepTitle>
+        </div>
+      </div>
+
+      {/* Actor box */}
+      <div style={{ flexShrink: 0, padding: '12px 100px 0', display: 'flex', justifyContent: 'center', opacity: archOpacity, transform: `scale(${interpolate(archScale, [0, 1], [0.6, 1])})` }}>
+        <div style={{ display: 'inline-flex', flexDirection: 'column', alignItems: 'center', gap: 10, background: C.bgCard, border: `2px solid rgba(243,156,18,${actorBorderPulse})`, borderRadius: 14, padding: '18px 36px', boxShadow: `0 0 ${interpolate(actorBorderPulse, [0.3, 0.9], [20, 50])}px rgba(243,156,18,${actorBorderPulse * 0.4})` }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+            <div style={{ width: 52, height: 52, borderRadius: '50%', background: C.orange, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 24, boxShadow: '0 0 16px rgba(243,156,18,0.5)' }}>👔</div>
+            <div>
+              <div style={{ fontFamily: 'Arial Black, Arial, sans-serif', fontWeight: 900, fontSize: 20, color: C.white }}>Outcome Validator</div>
+              <div style={{ display: 'flex', gap: 6, marginTop: 4 }}>
+                {['✅ Validates requirements', '🔍 Reviews functionality', '📋 Accepts delivery'].map((tag, ti) => (
+                  <div key={ti} style={{ fontFamily: 'Arial, sans-serif', fontSize: 11, fontWeight: 600, color: C.orange, background: 'rgba(243,156,18,0.15)', border: '1px solid rgba(243,156,18,0.4)', padding: '3px 10px', borderRadius: 20 }}>{tag}</div>
+                ))}
+              </div>
             </div>
           </div>
+          <div style={{ fontFamily: 'Arial, sans-serif', fontSize: 17, color: C.white, lineHeight: 1.7, textAlign: 'center', maxWidth: 880, opacity: fade(f, 40, 25), transform: `translateY(${interpolate(fade(f, 40, 25), [0, 1], [10, 0])}px)` }}>
+            Final review of the delivered system: <strong style={{ color: C.orange }}>complete technical solution</strong> and requirements coverage.
+            Validates that the system <strong style={{ color: C.white }}>delivers what was promised to the client</strong>.
+          </div>
         </div>
-        <div style={{ flex: 1, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 56, minHeight: 0 }}>
-          <div style={{ display: 'flex', flexDirection: 'column', opacity: fade(f, 10) }}>
-            <div style={{ fontFamily: 'Arial, sans-serif', fontWeight: 700, fontSize: 20, color: C.white, marginBottom: 18 }}>🔍 Validation Roles</div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-              {[{ role: 'Outcome Validator', detail: 'Manager · Business requirements coverage', icon: '👔' }, { role: 'AI Architect', detail: 'Technical solution & architecture review', icon: '👷' }].map((v, i) => (
-                <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 18, padding: '22px 22px', background: C.bgCard, borderRadius: 10, border: `2px solid ${C.cyan}`, opacity: fade(f, 12 + i * 10) }}>
-                  <span style={{ fontSize: 40 }}>{v.icon}</span>
-                  <div>
-                    <span style={{ background: C.cyan, color: C.white, fontSize: 15, fontWeight: 700, fontFamily: 'Arial, sans-serif', padding: '4px 14px', borderRadius: 4 }}>{v.role}</span>
-                    <div style={{ fontFamily: 'Arial, sans-serif', fontSize: 15, color: C.textMuted, marginTop: 8 }}>{v.detail}</div>
-                  </div>
+      </div>
+
+      {/* Connector */}
+      {(() => {
+        const connOpacity = fade(f, 62, 14);
+        return (
+          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', opacity: connOpacity, minHeight: 0 }}>
+            <div style={{ width: 2, flex: 1, background: C.orange }} />
+            <div style={{ background: C.orange, color: C.white, padding: '5px 22px', borderRadius: 20, fontFamily: 'Arial, sans-serif', fontWeight: 700, fontSize: 13, letterSpacing: '0.06em', whiteSpace: 'nowrap', boxShadow: '0 0 16px rgba(243,156,18,0.5)', flexShrink: 0 }}>📋 Final Delivery Review</div>
+            <div style={{ width: 2, flex: 1, background: C.orange }} />
+            <div style={{ fontSize: 10, color: C.orange, lineHeight: 1, flexShrink: 0 }}>▼</div>
+          </div>
+        );
+      })()}
+
+      {/* 3-column flow */}
+      <div style={{ flexShrink: 0, padding: '0 100px 0', display: 'grid', gridTemplateColumns: '1fr 48px 1fr 48px 1fr', alignItems: 'start' }}>
+
+        {/* Col 1: Delivered System */}
+        <div style={{ opacity: fade(f, 68), display: 'flex', flexDirection: 'column', gap: 7 }}>
+          <div style={{ fontFamily: 'Arial, sans-serif', fontWeight: 700, fontSize: 15, color: C.green, marginBottom: 5, letterSpacing: '0.04em' }}>🚀 Delivered System</div>
+          {deliveredItems.map((m, i) => {
+            const isDone = f > 90 + (i + 1) * 55;
+            const isActive = currentDelivery === i && !isDone;
+            return (
+              <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '9px 12px', background: C.bgCard, borderRadius: 8, border: `1px solid ${isDone ? m.color + '88' : isActive ? m.color + '55' : 'rgba(255,255,255,0.07)'}`, opacity: isDone ? 1 : isActive ? 0.95 : 0.45 }}>
+                <span style={{ fontSize: 13, color: isDone ? C.green : isActive ? C.orange : C.textDim, flexShrink: 0 }}>
+                  {isDone ? '✅' : isActive ? '►' : '○'}
+                </span>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{ fontFamily: 'Arial, sans-serif', fontWeight: 700, fontSize: 14, color: isDone ? C.white : isActive ? C.white : C.textDim }}>{m.name}</div>
+                  <div style={{ fontFamily: 'Arial, sans-serif', fontSize: 11, color: isDone ? C.textMuted : C.textDim, marginTop: 1 }}>{m.desc}</div>
+                </div>
+              </div>
+            );
+          })}
+          <div style={{ padding: '9px 12px', background: C.codeBg, borderRadius: 8, border: '1px solid rgba(0,151,207,0.3)', opacity: allDelivered ? 1 : 0.2, marginTop: 2 }}>
+            <div style={{ fontFamily: 'Arial, sans-serif', fontSize: 11, color: C.textDim, marginBottom: 2 }}>🌐 MVP Live</div>
+            <div style={{ fontFamily: 'Consolas, monospace', fontSize: 13, color: C.cyan }}>teatro-real-app.vercel.app</div>
+          </div>
+        </div>
+
+        {/* Arrow 1 */}
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', paddingTop: 36 }}>
+          <div style={{ fontFamily: 'Arial, sans-serif', fontSize: 20, color: C.orange, opacity: allDelivered ? 1 : 0.25 }}>→</div>
+        </div>
+
+        {/* Col 2: Validation Checklist */}
+        <div style={{ opacity: fade(f, 80), display: 'flex', flexDirection: 'column', gap: 7 }}>
+          <div style={{ fontFamily: 'Arial, sans-serif', fontWeight: 700, fontSize: 15, color: C.orange, marginBottom: 5, letterSpacing: '0.04em' }}>🔍 Validation Checklist</div>
+          {checklistItems.map((item, i) => {
+            const isDone = f > 120 + (i + 1) * 30;
+            const isActive = currentCheck === i && !isDone;
+            return (
+              <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '9px 12px', background: C.bgCard, borderRadius: 8, border: `1px solid ${isDone ? 'rgba(243,156,18,0.35)' : isActive ? 'rgba(243,156,18,0.18)' : 'rgba(255,255,255,0.06)'}`, opacity: isDone ? 1 : isActive ? 0.9 : 0.4 }}>
+                <span style={{ fontSize: 14, flexShrink: 0 }}>{item.icon}</span>
+                <div style={{ fontFamily: 'Arial, sans-serif', fontSize: 13, color: isDone ? C.white : isActive ? C.textMuted : C.textDim, flex: 1 }}>{item.text}</div>
+                <span style={{ fontSize: 12, color: isDone ? C.green : isActive ? C.orange : C.textDim, flexShrink: 0 }}>{isDone ? '✓' : isActive ? '⟳' : ''}</span>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Arrow 2 */}
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', paddingTop: 36 }}>
+          <div style={{ fontFamily: 'Arial, sans-serif', fontSize: 20, color: C.red, opacity: allChecked ? 1 : 0.25 }}>→</div>
+        </div>
+
+        {/* Col 3: Human Review Alert */}
+        <div style={{ opacity: alertOpacity, transform: `translateY(${interpolate(alertOpacity, [0, 1], [20, 0])}px)`, display: 'flex', flexDirection: 'column', gap: 7 }}>
+          <div style={{ fontFamily: 'Arial, sans-serif', fontWeight: 700, fontSize: 15, color: C.red, marginBottom: 5, letterSpacing: '0.04em' }}>⚠️ Human Review</div>
+          <div style={{ padding: '16px 16px', background: `rgba(231,76,60,${interpolate(alertPulse, [0.4, 1.0], [0.07, 0.14])})`, borderRadius: 12, border: `2px solid rgba(231,76,60,${alertPulse})`, boxShadow: `0 0 ${interpolate(alertPulse, [0.4, 1.0], [6, 26])}px rgba(231,76,60,${alertPulse * 0.4})`, display: 'flex', flexDirection: 'column', gap: 10 }}>
+            <div style={{ display: 'flex', alignItems: 'flex-start', gap: 10 }}>
+              <span style={{ fontSize: 26, lineHeight: 1, flexShrink: 0 }}>⚠️</span>
+              <div style={{ fontFamily: 'Arial Black, Arial, sans-serif', fontWeight: 900, fontSize: 16, color: C.white, lineHeight: 1.4 }}>
+                Human review is <span style={{ color: '#E74C3C' }}>MANDATORY</span>
+              </div>
+            </div>
+            <div style={{ fontFamily: 'Arial, sans-serif', fontSize: 13, color: C.textMuted, lineHeight: 1.6, borderTop: '1px solid rgba(231,76,60,0.3)', paddingTop: 8 }}>
+              AI-generated code and features <strong style={{ color: C.white }}>must be reviewed by a human</strong> before final delivery to the client.
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
+              {['Never assume AI-generated code is correct', 'Validate every feature with real use cases', 'Outcome Validator is the last line of defence'].map((point, pi) => (
+                <div key={pi} style={{ display: 'flex', alignItems: 'flex-start', gap: 7, fontFamily: 'Arial, sans-serif', fontSize: 12, color: C.textMuted }}>
+                  <span style={{ color: C.red, flexShrink: 0, marginTop: 1 }}>•</span>
+                  {point}
                 </div>
               ))}
             </div>
-            <div style={{ fontFamily: 'Arial, sans-serif', fontSize: 17, color: C.textMuted, fontStyle: 'italic', borderLeft: `4px solid ${C.cyan}`, paddingLeft: 16, marginTop: 28, opacity: fade(f, 32) }}>
-              "Final review of the outcome including<br />technical solution and requirement coverage."
-            </div>
           </div>
-          <div style={{ display: 'flex', flexDirection: 'column', opacity: fade(f, 22) }}>
-            <div style={{ fontFamily: 'Arial, sans-serif', fontWeight: 700, fontSize: 20, color: C.green, marginBottom: 18 }}>🚀 Delivered System</div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 14, flex: 1 }}>
-              {modules.map((m, i) => (
-                <div key={i} style={{ flex: 1, display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '20px 22px', background: C.bgCard, borderRadius: 10, border: `1px solid ${m.color}44`, opacity: fade(f, 25 + i * 7) }}>
-                  <div>
-                    <div style={{ fontFamily: 'Arial, sans-serif', fontWeight: 700, fontSize: 18, color: C.white }}>{m.name}</div>
-                    <div style={{ fontFamily: 'Arial, sans-serif', fontSize: 14, color: C.textMuted, marginTop: 4 }}>{m.desc}</div>
-                  </div>
-                  <div style={{ fontFamily: 'Arial, sans-serif', fontWeight: 700, fontSize: 16, color: m.color }}>{m.status}</div>
-                </div>
-              ))}
-            </div>
-            <div style={{ background: C.bgCard, borderRadius: 10, padding: '18px 22px', opacity: fade(f, 46), marginTop: 16, border: `1px solid ${C.borderCyan}` }}>
-              <div style={{ fontFamily: 'Arial, sans-serif', fontSize: 15, color: C.textMuted, marginBottom: 6 }}>🌐 MVP Live at</div>
-              <div style={{ fontFamily: 'Consolas, monospace', fontSize: 18, color: C.cyan }}>teatro-real-app.vercel.app</div>
+        </div>
+
+      </div>
+
+      {/* Spacer */}
+      <div style={{ flex: 0.7 }} />
+
+      {/* Bottom strip */}
+      <div style={{ flexShrink: 0, padding: '8px 100px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', opacity: bottomOpacity }}>
+        <div style={{ flex: 1, display: 'flex', justifyContent: 'center' }}>
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: 16, background: 'rgba(231,76,60,0.10)', borderRadius: 12, padding: '14px 28px', border: `2px solid rgba(231,76,60,${alertPulse || 0.4})`, boxShadow: `0 0 ${interpolate(alertPulse || 0.4, [0.4, 1.0], [6, 22])}px rgba(231,76,60,${(alertPulse || 0.4) * 0.4})` }}>
+            <span style={{ fontSize: 20, flexShrink: 0 }}>⚠️</span>
+            <div style={{ fontFamily: 'Arial, sans-serif', fontSize: 16, color: C.white, lineHeight: 1.5 }}>
+              <strong style={{ color: '#E74C3C' }}>Human review is mandatory — </strong>
+              AI-generated code and features must be validated before final delivery to the client.
             </div>
           </div>
         </div>
+        <Logo height={60} />
       </div>
     </AbsoluteFill>
   );
@@ -1648,37 +1772,83 @@ const Step7Scene: React.FC = () => {
 // ── SCENE 11: CLOSING ─────────────────────────────────────────────────────────
 const ClosingScene: React.FC = () => {
   const f = useCurrentFrame();
+
+  const screenshots = [
+    { file: 'tempo.png', label: 'TEMPO', desc: 'Calendar & Activity Management', color: C.cyan, delay: 25 },
+    { file: 'tops.png', label: 'TOPS', desc: 'Technical Script Editor', color: C.blue, delay: 40 },
+    { file: 'carteleria.png', label: 'Digital Signage', desc: 'Real-time Display System', color: C.green, delay: 55 },
+  ];
+
   const metrics = [
     { icon: '⚡', value: '×2', label: 'Faster than traditional development' },
-    { icon: '🧠', value: '0', label: 'Prior knowledge of target stack required' },
     { icon: '🚀', value: '1 week', label: 'Prototype delivered to client' },
-    { icon: '📈', value: '~80%', label: 'Global completion at project handoff' },
+    { icon: '📈', value: '~80%', label: 'Completion at project handoff' },
+    { icon: '🧠', value: '0', label: 'Prior stack knowledge required' },
   ];
+
+  const bottomOpacity = fade(f, 60, 20);
+
   return (
     <AbsoluteFill style={{ background: C.bg, flexDirection: 'column', display: 'flex' }}>
-      <div style={{ flex: 1, padding: '60px 100px 0', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-        <div style={{ opacity: fade(f, 5), transform: `translateY(${interpolate(spr(f, 5), [0, 1], [30, 0])}px)`, marginBottom: 52 }}>
-          <div style={{ fontFamily: 'Arial Black, Arial, sans-serif', fontWeight: 900, fontSize: 68, color: C.white, lineHeight: 1.0, marginBottom: 12 }}>Results</div>
-          <div style={{ fontFamily: 'Arial, sans-serif', fontSize: 22, color: C.textMuted }}>Teatro Real · AI Native Methodology · NTT DATA EMEAL</div>
-        </div>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', gap: 24, marginBottom: 56 }}>
+      {/* Top bar */}
+      <div style={{ flexShrink: 0, padding: '28px 100px 0', opacity: fade(f, 3, 12) }}>
+        <SectionBar>AI NATIVE METHODOLOGY · RESULTS</SectionBar>
+      </div>
+
+      {/* Title — fixed at top */}
+      <div style={{ flexShrink: 0, padding: '16px 100px 0', opacity: fade(f, 5, 14), transform: `translateY(${interpolate(spr(f, 5), [0, 1], [20, 0])}px)` }}>
+        <div style={{ fontFamily: 'Arial Black, Arial, sans-serif', fontWeight: 900, fontSize: 48, color: C.white, lineHeight: 1.0, marginBottom: 6 }}>Teatro Real de Madrid</div>
+        <div style={{ fontFamily: 'Arial, sans-serif', fontSize: 18, color: C.textMuted }}>AI Native Methodology · NTT DATA EMEAL</div>
+      </div>
+
+      {/* Center content */}
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '0 100px', minHeight: 0 }}>
+
+        {/* Metrics row — closer to title */}
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', gap: 14, marginBottom: 52 }}>
           {metrics.map((m, i) => (
-            <div key={i} style={{ background: C.bgCard, borderRadius: 16, padding: '36px 20px', textAlign: 'center', border: `1px solid ${C.border}`, opacity: fade(f, 12 + i * 7), transform: `translateY(${interpolate(spr(f, 12 + i * 7), [0, 1], [32, 0])}px)` }}>
-              <div style={{ fontSize: 52, marginBottom: 16 }}>{m.icon}</div>
-              <div style={{ fontFamily: 'Arial Black, Arial, sans-serif', fontWeight: 900, fontSize: 48, color: C.cyan, marginBottom: 12 }}>{m.value}</div>
-              <div style={{ fontFamily: 'Arial, sans-serif', fontSize: 17, color: C.textMuted, lineHeight: 1.5 }}>{m.label}</div>
+            <div key={i} style={{ background: C.bgCard, borderRadius: 12, padding: '18px 16px', textAlign: 'center', border: `1px solid ${C.border}`, opacity: fade(f, 10 + i * 7), transform: `translateY(${interpolate(spr(f, 10 + i * 7), [0, 1], [28, 0])}px)` }}>
+              <div style={{ fontSize: 32, marginBottom: 8 }}>{m.icon}</div>
+              <div style={{ fontFamily: 'Arial Black, Arial, sans-serif', fontWeight: 900, fontSize: 38, color: C.cyan, marginBottom: 6 }}>{m.value}</div>
+              <div style={{ fontFamily: 'Arial, sans-serif', fontSize: 14, color: C.textMuted, lineHeight: 1.4 }}>{m.label}</div>
             </div>
           ))}
         </div>
-        <div style={{ borderLeft: `6px solid ${C.cyan}`, paddingLeft: 36, opacity: fade(f, 44), transform: `translateY(${interpolate(spr(f, 44), [0, 1], [20, 0])}px)` }}>
-          <div style={{ fontFamily: 'Arial, sans-serif', fontWeight: 700, fontSize: 36, color: C.white, fontStyle: 'italic', marginBottom: 10 }}>
-            "AI doesn't replace the team. It empowers it."
-          </div>
-          <div style={{ fontFamily: 'Arial, sans-serif', fontSize: 24, color: C.textMuted }}>when used with methodology.</div>
+
+        {/* Screenshots — staggered entrance */}
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 18 }}>
+          {screenshots.map((s, i) => {
+            const delay = 45 + i * 18;
+            const sc = sprSlow(f, delay);
+            const op = fade(f, delay, 20);
+            return (
+              <div key={i} style={{ display: 'flex', flexDirection: 'column', gap: 8, opacity: op, transform: `translateY(${interpolate(sc, [0, 1], [40, 0])}px) scale(${interpolate(sc, [0, 1], [0.94, 1])})` }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                  <span style={{ fontFamily: 'Arial Black, Arial, sans-serif', fontWeight: 900, fontSize: 15, color: s.color }}>{s.label}</span>
+                  <span style={{ fontFamily: 'Arial, sans-serif', fontSize: 13, color: C.textMuted }}>{s.desc}</span>
+                </div>
+                <div style={{ height: 230, borderRadius: 10, overflow: 'hidden', border: `2px solid ${s.color}66`, boxShadow: `0 0 ${interpolate(op, [0, 1], [0, 24])}px ${s.color}44` }}>
+                  <Img src={staticFile(s.file)} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top' }} />
+                </div>
+              </div>
+            );
+          })}
         </div>
+
       </div>
-      <div style={{ flexShrink: 0, padding: '0 100px 48px', display: 'flex', justifyContent: 'flex-end', opacity: fade(f, 5) }}>
-        <Logo height={70} />
+
+      {/* Bottom strip — same as other scenes */}
+      <div style={{ flexShrink: 0, padding: '8px 100px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', opacity: bottomOpacity }}>
+        <div style={{ flex: 1, display: 'flex', justifyContent: 'center' }}>
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: 16, background: 'rgba(0,151,207,0.12)', borderRadius: 12, padding: '16px 32px', border: `2px solid rgba(0,151,207,0.45)` }}>
+            <span style={{ fontSize: 22, flexShrink: 0 }}>💡</span>
+            <div style={{ fontFamily: 'Arial, sans-serif', fontSize: 17, color: C.white, lineHeight: 1.5 }}>
+              <strong style={{ color: C.cyan }}>"AI doesn't replace the team. It empowers it."</strong>
+              <span style={{ color: C.textMuted }}> — when used with methodology.</span>
+            </div>
+          </div>
+        </div>
+        <Logo height={60} />
       </div>
     </AbsoluteFill>
   );
@@ -1689,16 +1859,16 @@ export default function Main() {
   return (
     <AbsoluteFill>
       <Sequence from={0}    durationInFrames={150}><TitleScene /></Sequence>
-      <Sequence from={150}  durationInFrames={270}><ChallengeScene /></Sequence>
-      <Sequence from={420}  durationInFrames={600}><Step1Scene /></Sequence>
-      <Sequence from={1020} durationInFrames={510}><Step2Scene /></Sequence>
-      <Sequence from={1530} durationInFrames={480}><PrototypeScene /></Sequence>
-      <Sequence from={2010} durationInFrames={420}><Step3Scene /></Sequence>
-      <Sequence from={2430} durationInFrames={570}><Step4Scene /></Sequence>
-      <Sequence from={3000} durationInFrames={390}><Step5Scene /></Sequence>
-      <Sequence from={3390} durationInFrames={330}><Step6Scene /></Sequence>
-      <Sequence from={3720} durationInFrames={480}><Step7Scene /></Sequence>
-      <Sequence from={4200} durationInFrames={360}><ClosingScene /></Sequence>
+      <Sequence from={150}  durationInFrames={240}><ChallengeScene /></Sequence>
+      <Sequence from={390}  durationInFrames={360}><Step1Scene /></Sequence>
+      <Sequence from={750}  durationInFrames={360}><Step2Scene /></Sequence>
+      <Sequence from={1110} durationInFrames={330}><PrototypeScene /></Sequence>
+      <Sequence from={1440} durationInFrames={330}><Step3Scene /></Sequence>
+      <Sequence from={1770} durationInFrames={510}><Step4Scene /></Sequence>
+      <Sequence from={2280} durationInFrames={420}><Step5Scene /></Sequence>
+      <Sequence from={2700} durationInFrames={390}><Step6Scene /></Sequence>
+      <Sequence from={3090} durationInFrames={510}><Step7Scene /></Sequence>
+      <Sequence from={3600} durationInFrames={390}><ClosingScene /></Sequence>
     </AbsoluteFill>
   );
 }

@@ -34,3 +34,8 @@ npm-debug.log*
 *.png
 *.jpg
 *.jpeg
+
+# Allow Remotion public assets
+!remotion-project/public/*.png
+!remotion-project/public/*.jpg
+!remotion-project/public/*.jpeg

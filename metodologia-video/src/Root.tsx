@@ -8,7 +8,7 @@ export const Root: React.FC = () => {
       <Composition
         id="NativeAI-Metodologia-ES"
         component={Main}
-        durationInFrames={4500}
+        durationInFrames={4620}
         fps={30}
         width={1920}
         height={1080}
@@ -17,7 +17,7 @@ export const Root: React.FC = () => {
       <Composition
         id="NativeAI-Metodologia-EN"
         component={Main}
-        durationInFrames={4500}
+        durationInFrames={4620}
         fps={30}
         width={1920}
         height={1080}

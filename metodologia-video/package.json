@@ -1,0 +1,24 @@
+{
+  "name": "metodologia-video",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "preview": "remotion preview src/index.ts",
+    "render:es": "remotion render src/index.ts NativeAI-Metodologia-ES ../metodologia-nativeai-es.mp4",
+    "render:en": "remotion render src/index.ts NativeAI-Metodologia-EN ../metodologia-nativeai-en.mp4"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@remotion/cli": "^4.0.434",
+    "@remotion/player": "^4.0.434",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "remotion": "^4.0.434",
+    "typescript": "^5.9.3"
+  }
+}

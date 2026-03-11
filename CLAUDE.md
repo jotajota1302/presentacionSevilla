@@ -8,11 +8,11 @@ Remotion-based animated video project for NTT DATA EMEAL. Generates a bilingual 
 
 ## Commands
 
-All commands run from `remotion-project/`:
+All commands run from `teatro-real-project/`:
 
 ```bash
-cd remotion-project && npm run preview   # Launch interactive preview in browser
-cd remotion-project && npm run render    # Render to ../native-ai-video.mp4
+cd teatro-real-project && npm run preview   # Launch interactive preview in browser
+cd teatro-real-project && npm run render    # Render to ../native-ai-video.mp4
 ```
 
 No test suite or linter is configured.
@@ -34,9 +34,9 @@ No test suite or linter is configured.
 
 | File | Purpose |
 |------|---------|
-| `remotion-project/src/Root.tsx` | Composition definitions (4680 frames, 30fps, 1080p) |
-| `remotion-project/src/Main.tsx` | All scenes, components, animations |
-| `remotion-project/remotion.config.ts` | JPEG frame format, overwrite enabled |
+| `teatro-real-project/src/Root.tsx` | Composition definitions (4680 frames, 30fps, 1080p) |
+| `teatro-real-project/src/Main.tsx` | All scenes, components, animations |
+| `teatro-real-project/remotion.config.ts` | JPEG frame format, overwrite enabled |
 | `guion-video-nativeai.md` | Full storyboard/script with per-scene timing and narration |
 | `video-nativeai.tsx` | Earlier draft/alternative implementation (dark theme) |
 

@@ -62,7 +62,7 @@ const T = {
     s3Title: 'What is a Coding Agent?',
     s3Sub: 'A coding agent is not just an LLM. It is a model wrapped by 4 key pieces that we must build and tune.',
     s3ModelLabel: 'MODEL (LLM)',
-    s3ModelDesc: 'GPT · Claude · Gemini\nInterchangeable',
+    s3ModelDesc: 'GPT · Anthropic · Gemini\nInterchangeable',
     s3Components: [
       { icon: '🧠', title: 'Behavior Prompt', desc: 'Personality and rules that guide the agent' },
       { icon: '📋', title: 'Context', desc: 'Project info the model needs to understand' },
@@ -78,6 +78,7 @@ const T = {
     // Scene 4 - 3 Pillars
     s4Title: 'Building the Context',
     s4Sub: '3 pillars: define agents, tools and skills — extract functional and technical context — standardize team input to models',
+    s4Steps: ['Define Agents & Tools', 'Extract Context', 'Prompt Framework'],
     s4P1Title: 'Specialized Agents',
     s4P1Sub: 'We create, reuse and customize agents for each role. Each one has its own behavior prompt, specialized knowledge and tools.',
     s4P1Agents: [
@@ -100,7 +101,7 @@ const T = {
     s4P3Sub: 'Standardize how the team communicates with models. Manage PRD and project plan.',
     s4P3Steps: ['PRD / Project\nPlan', 'Requirement\n(Jira / Docs)', 'Template\n+ Context', 'Structured\nPrompt'],
     s4P3Result: 'Consistent, repeatable output across the whole team',
-    s4ConnectorText: 'Together they form the Native AI Methodology',
+    s4ConnectorText: 'Working on the input and context radically changes the output of coding agents',
     // Scene 5 - 5 Phases
     s5Title: 'Building the Harness: 5 Phases',
     s5Phases: ['Define\nAgents', 'Extract\nContext', 'Prompt\nFramework', 'Generate\n& Refine', 'Integrate\n& Validate'],
@@ -228,7 +229,7 @@ const T = {
     s3Title: '¿Qué es un Coding Agent?',
     s3Sub: 'Un coding agent no es solo un LLM. Es un modelo envuelto por 4 piezas clave que debemos construir y ajustar.',
     s3ModelLabel: 'MODELO (LLM)',
-    s3ModelDesc: 'GPT · Claude · Gemini\nIntercambiables',
+    s3ModelDesc: 'GPT · Anthropic · Gemini\nIntercambiables',
     s3Components: [
       { icon: '🧠', title: 'Prompt de Comportamiento', desc: 'Personalidad y reglas que guían al agente' },
       { icon: '📋', title: 'Contexto', desc: 'Información del proyecto que el modelo necesita' },
@@ -244,6 +245,7 @@ const T = {
     // Scene 4
     s4Title: 'Construyendo el Contexto',
     s4Sub: '3 pilares: definir agentes, tools y skills — extraer contexto funcional y técnico — estandarizar el input del equipo a los modelos',
+    s4Steps: ['Definir Agentes y Tools', 'Extraer Contexto', 'Framework de Prompts'],
     s4P1Title: 'Agentes Especializados',
     s4P1Sub: 'Creamos, reutilizamos y personalizamos agentes para cada rol. Cada uno tiene su propio prompt de comportamiento, conocimiento especializado y herramientas.',
     s4P1Agents: [
@@ -266,7 +268,7 @@ const T = {
     s4P3Sub: 'Estandarizar cómo el equipo se comunica con los modelos. Gestionar el PRD y plan de proyecto.',
     s4P3Steps: ['PRD / Plan\nde Proyecto', 'Requisito\n(Jira / Docs)', 'Plantilla\n+ Contexto', 'Prompt\nEstructurado'],
     s4P3Result: 'Output consistente y repetible en todo el equipo',
-    s4ConnectorText: 'Juntos forman la Metodología Native AI',
+    s4ConnectorText: 'Trabajar el input y el contexto cambia radicalmente la salida de los agentes de codificación',
     // Scene 5
     s5Title: 'Construyendo el Harness: 5 Fases',
     s5Phases: ['Definir\nAgentes', 'Extraer\nContexto', 'Framework\nPrompts', 'Generar\ny Refinar', 'Integrar\ny Validar'],
@@ -446,11 +448,11 @@ const ProblemScene: React.FC<{ lang: Lang }> = ({ lang }) => {
   const f = useCurrentFrame();
   const t = T[lang];
   return (
-    <AbsoluteFill style={{ background: C.bg, display: 'flex', flexDirection: 'column', padding: '50px 70px' }}>
+    <AbsoluteFill style={{ background: C.bg, display: 'flex', flexDirection: 'column', padding: '40px 70px' }}>
       {/* Title — frame 10 */}
-      <div style={{ opacity: fade(f, 10), transform: `translateY(${interpolate(spr(f, 10), [0, 1], [20, 0])}px)`, marginBottom: 30 }}>
-        <div style={{ fontFamily: 'Arial Black, Arial, sans-serif', fontWeight: 900, fontSize: 44, color: C.white }}>{t.s2Title}</div>
-        <div style={{ height: 4, width: interpolate(spr(f, 10), [0, 1], [0, 240]), background: C.cyan, marginTop: 12 }} />
+      <div style={{ opacity: fade(f, 10), transform: `translateY(${interpolate(spr(f, 10), [0, 1], [20, 0])}px)`, marginBottom: 10 }}>
+        <div style={{ fontFamily: 'Arial Black, Arial, sans-serif', fontWeight: 900, fontSize: 42, color: C.white }}>{t.s2Title}</div>
+        <div style={{ height: 4, width: interpolate(spr(f, 10), [0, 1], [0, 240]), background: C.cyan, marginTop: 10 }} />
       </div>
       <div style={{ display: 'flex', gap: 30, flex: 1, alignItems: 'stretch' }}>
         {/* Expectation — frame 40 emoji, 60 text, 80 sub */}
@@ -497,13 +499,13 @@ const HarnessScene: React.FC<{ lang: Lang }> = ({ lang }) => {
   const f = useCurrentFrame();
   const t = T[lang];
   return (
-    <AbsoluteFill style={{ background: C.bg, display: 'flex', flexDirection: 'column', padding: '30px 70px' }}>
+    <AbsoluteFill style={{ background: C.bg, display: 'flex', flexDirection: 'column', padding: '40px 70px' }}>
       {/* Title + subtitle */}
-      <div style={{ opacity: fade(f, 0), marginBottom: 6 }}>
+      <div style={{ opacity: fade(f, 0), marginBottom: 4 }}>
         <div style={{ fontFamily: 'Arial Black, Arial, sans-serif', fontWeight: 900, fontSize: 42, color: C.white }}>{t.s3Title}</div>
-        <div style={{ height: 4, width: 240, background: C.cyan, marginTop: 8 }} />
+        <div style={{ height: 4, width: interpolate(spr(f, 0), [0, 1], [0, 240]), background: C.cyan, marginTop: 10 }} />
       </div>
-      <div style={{ opacity: fade(f, 10), marginBottom: 12 }}>
+      <div style={{ opacity: fade(f, 10), marginBottom: 10 }}>
         <div style={{ fontFamily: 'Arial, sans-serif', fontSize: 22, color: C.textMuted, lineHeight: 1.3 }}>{t.s3Sub}</div>
       </div>
 
@@ -536,8 +538,8 @@ const HarnessScene: React.FC<{ lang: Lang }> = ({ lang }) => {
               display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
               zIndex: 2,
             }}>
-              <div style={{ fontFamily: 'Arial Black, Arial, sans-serif', fontWeight: 900, fontSize: 18, color: C.white }}>{t.s3ModelLabel}</div>
-              <div style={{ fontFamily: 'Arial, sans-serif', fontSize: 12, color: C.textDim, marginTop: 4, textAlign: 'center', whiteSpace: 'pre-line' }}>{t.s3ModelDesc}</div>
+              <div style={{ fontFamily: 'Arial Black, Arial, sans-serif', fontWeight: 900, fontSize: 20, color: C.white }}>{t.s3ModelLabel}</div>
+              <div style={{ fontFamily: 'Arial, sans-serif', fontSize: 14, color: C.textDim, marginTop: 4, textAlign: 'center', whiteSpace: 'pre-line' }}>{t.s3ModelDesc}</div>
             </div>
 
             {/* 4 component cards — 2 left, 2 right of model */}
@@ -621,9 +623,9 @@ const HarnessScene: React.FC<{ lang: Lang }> = ({ lang }) => {
                 boxShadow: `0 0 24px rgba(0,151,207,${rowGlow}), inset 3px 0 0 rgba(0,151,207,${borderGlow})`,
                 borderRadius: 4,
               }}>
-                <div style={{ width: 120, background: `rgba(26,49,88,${interpolate(rowAge, [0, 10], [0.4, 1], { extrapolateRight: 'clamp', extrapolateLeft: 'clamp' })})`, padding: '10px 12px', fontFamily: 'Arial, sans-serif', fontWeight: 700, fontSize: 16, color: C.cyan, display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center' }}>{(t.s3CompareLabels as string[])[i]}</div>
-                <div style={{ flex: 1, background: C.bgCard, padding: '10px 16px', fontFamily: 'Arial, sans-serif', fontSize: 17, color: C.textMuted, borderRight: `1px solid ${C.border}` }}>✗ {left}</div>
-                <div style={{ flex: 1, background: C.bgCard, padding: '10px 16px', fontFamily: 'Arial, sans-serif', fontSize: 17, color: C.cyan }}>✓ {(t.s3CompareRight as readonly string[])[i]}</div>
+                <div style={{ width: 130, background: `rgba(26,49,88,${interpolate(rowAge, [0, 10], [0.4, 1], { extrapolateRight: 'clamp', extrapolateLeft: 'clamp' })})`, padding: '10px 14px', fontFamily: 'Arial, sans-serif', fontWeight: 700, fontSize: 18, color: C.cyan, display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center' }}>{(t.s3CompareLabels as string[])[i]}</div>
+                <div style={{ flex: 1, background: C.bgCard, padding: '10px 16px', fontFamily: 'Arial, sans-serif', fontSize: 19, color: C.textMuted, borderRight: `1px solid ${C.border}` }}>✗ {left}</div>
+                <div style={{ flex: 1, background: C.bgCard, padding: '10px 16px', fontFamily: 'Arial, sans-serif', fontSize: 19, color: C.cyan }}>✓ {(t.s3CompareRight as readonly string[])[i]}</div>
               </div>
             );
           })}
@@ -649,32 +651,83 @@ const PillarsScene: React.FC<{ lang: Lang }> = ({ lang }) => {
   const agents = t.s4P1Agents as Agent[];
 
   return (
-    <AbsoluteFill style={{ background: C.bg, display: 'flex', flexDirection: 'column', padding: '40px 60px' }}>
+    <AbsoluteFill style={{ background: C.bg, display: 'flex', flexDirection: 'column', padding: '40px 70px' }}>
       {/* Title */}
-      <div style={{ opacity: fade(f, 10), marginBottom: 6 }}>
+      <div style={{ opacity: fade(f, 10), marginBottom: 14 }}>
         <div style={{ fontFamily: 'Arial Black, Arial, sans-serif', fontWeight: 900, fontSize: 42, color: C.white }}>{t.s4Title}</div>
-        <div style={{ height: 4, width: 240, background: C.cyan, marginTop: 8 }} />
-      </div>
-      <div style={{ opacity: fade(f, 25), marginBottom: 16 }}>
-        <div style={{ fontFamily: 'Arial, sans-serif', fontSize: 22, color: C.textMuted, lineHeight: 1.3 }}>{t.s4Sub}</div>
+        <div style={{ height: 4, width: interpolate(spr(f, 10), [0, 1], [0, 240]), background: C.cyan, marginTop: 10 }} />
       </div>
 
-      {/* 3 Pillars */}
-      <div style={{ display: 'flex', gap: 20, flex: 1, alignItems: 'stretch' }}>
-        {/* PILLAR 1 — Agents with mini prompt windows */}
-        <div style={{
-          flex: 1, opacity: fade(f, 50), transform: `translateY(${interpolate(spr(f, 50), [0, 1], [50, 0])}px)`,
-          background: C.bgCard, borderRadius: 16, borderTop: `4px solid ${pillarColors[0]}`,
-          padding: '24px 22px', display: 'flex', flexDirection: 'column',
-        }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 10 }}>
-            <div style={{ fontSize: 34 }}>{pillarIcons[0]}</div>
-            <div style={{ fontFamily: 'Arial, sans-serif', fontWeight: 700, fontSize: 26, color: C.white }}>{t.s4P1Title}</div>
+      {/* Animated stepper — above pillars, lights up as each appears */}
+      {(() => {
+        const stepperSteps = t.s4Steps as string[];
+        const stepDelays = [70, 140, 210];
+        const stepColors = pillarColors;
+        return (
+          <div style={{ marginBottom: 40 }}>
+            {/* Stepper aligned to pillar centers — same flex layout as pillars */}
+            <div style={{ display: 'flex', gap: 18, alignItems: 'center', position: 'relative' }}>
+              {stepperSteps.map((label, i) => {
+                const active = f >= stepDelays[i] + 15;
+                const stepOp = fade(f, stepDelays[i] + 15);
+                const circleScale = interpolate(spr(f, stepDelays[i] + 15), [0, 1], [0, 1]);
+                return (
+                  <div key={i} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 5 }}>
+                    <div style={{
+                      width: 38, height: 38, borderRadius: '50%',
+                      background: active ? stepColors[i] : 'transparent',
+                      border: `3px solid ${active ? stepColors[i] : C.border}`,
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      transform: `scale(${circleScale})`,
+                      boxShadow: active ? `0 0 14px ${stepColors[i]}60` : 'none',
+                    }}>
+                      <div style={{ fontFamily: 'Arial, sans-serif', fontWeight: 900, fontSize: 17, color: active ? C.white : C.textDim }}>{i + 1}</div>
+                    </div>
+                    <div style={{
+                      opacity: stepOp,
+                      fontFamily: 'Arial, sans-serif', fontWeight: active ? 700 : 400,
+                      fontSize: 17, color: active ? C.white : C.textDim, textAlign: 'center',
+                      whiteSpace: 'nowrap',
+                    }}>{label}</div>
+                  </div>
+                );
+              })}
+              {/* Connector lines between circles — drawn as absolute overlays */}
+              {[0, 1].map((i) => {
+                const active = f >= stepDelays[i + 1] + 15;
+                return (
+                  <div key={`line-${i}`} style={{
+                    position: 'absolute', top: 19, height: 3,
+                    left: `${((i + 1) * 100) / 3 - 8}%`, width: '16%',
+                    background: active
+                      ? `linear-gradient(90deg, ${stepColors[i]}, ${stepColors[i + 1]})`
+                      : C.border,
+                    opacity: fade(f, stepDelays[i + 1]),
+                    zIndex: 0,
+                  }} />
+                );
+              })}
+            </div>
           </div>
-          <div style={{ fontFamily: 'Arial, sans-serif', fontSize: 17, color: C.textMuted, marginBottom: 16, lineHeight: 1.3 }}>{t.s4P1Sub}</div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 8, flex: 1, justifyContent: 'center' }}>
+        );
+      })()}
+
+      {/* 3 Pillars — same height, fill space between stepper and badge */}
+      <div style={{ display: 'flex', gap: 18, flex: 1, alignItems: 'stretch', marginBottom: 14 }}>
+        {/* PILLAR 1 — Agents */}
+        <div style={{
+          flex: 1, opacity: fade(f, 70), transform: `translateY(${interpolate(spr(f, 70), [0, 1], [40, 0])}px)`,
+          background: C.bgCard, borderRadius: 14, borderTop: `4px solid ${pillarColors[0]}`,
+          padding: '20px 20px', display: 'flex', flexDirection: 'column',
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 12 }}>
+            <div style={{ fontSize: 24 }}>{pillarIcons[0]}</div>
+            <div style={{ fontFamily: 'Arial, sans-serif', fontWeight: 700, fontSize: 24, color: C.white }}>{t.s4P1Title}</div>
+          </div>
+          <div style={{ fontFamily: 'Arial, sans-serif', fontSize: 16, color: C.textMuted, marginBottom: 16, lineHeight: 1.3 }}>{t.s4P1Sub}</div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
             {agents.map((agent, i) => {
-              const agentDelay = 70 + i * 25;
+              const agentDelay = 90 + i * 25;
               const agentAge = Math.max(0, f - agentDelay);
               const glowAmt = interpolate(agentAge, [0, 10, 30], [0, 0.5, 0.08], { extrapolateRight: 'clamp', extrapolateLeft: 'clamp' });
               const promptShow = interpolate(agentAge, [0, 18, 28], [0, 0, 1], { extrapolateRight: 'clamp', extrapolateLeft: 'clamp' });
@@ -682,19 +735,19 @@ const PillarsScene: React.FC<{ lang: Lang }> = ({ lang }) => {
                 <div key={i} style={{
                   opacity: fade(f, agentDelay),
                   transform: `translateX(${interpolate(spr(f, agentDelay), [0, 1], [-30, 0])}px)`,
-                  background: C.bgCardAlt, border: `1px solid ${C.borderCyan}`, borderRadius: 10,
-                  padding: '10px 14px', display: 'flex', alignItems: 'center', gap: 10,
+                  background: C.bgCardAlt, border: `1px solid ${C.borderCyan}`, borderRadius: 8,
+                  padding: '8px 14px', display: 'flex', alignItems: 'center', gap: 10,
                   boxShadow: `0 0 16px rgba(0,151,207,${glowAmt})`,
                 }}>
-                  <div style={{ fontSize: 24, width: 32, textAlign: 'center', flexShrink: 0 }}>{agent.icon}</div>
+                  <div style={{ fontSize: 20, width: 26, textAlign: 'center', flexShrink: 0 }}>{agent.icon}</div>
                   <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{ fontFamily: 'Arial, sans-serif', fontWeight: 700, fontSize: 16, color: C.cyan }}>{agent.name}</div>
-                    <div style={{ fontFamily: 'Arial, sans-serif', fontSize: 12, color: C.textDim }}>{agent.spec}</div>
+                    <div style={{ fontFamily: 'Arial, sans-serif', fontWeight: 700, fontSize: 17, color: C.cyan }}>{agent.name}</div>
+                    <div style={{ fontFamily: 'Arial, sans-serif', fontSize: 13, color: C.textDim }}>{agent.spec}</div>
                   </div>
                   <div style={{
                     opacity: promptShow * 0.9, transform: `scale(${interpolate(promptShow, [0, 1], [0.8, 1])})`,
-                    background: C.codeBg, border: `1px solid ${C.borderCyan}`, borderRadius: 6,
-                    padding: '4px 10px', flexShrink: 0,
+                    background: C.codeBg, border: `1px solid ${C.borderCyan}`, borderRadius: 5,
+                    padding: '3px 8px', flexShrink: 0,
                   }}>
                     <div style={{ fontFamily: 'Consolas, monospace', fontSize: 10, color: C.cyan, whiteSpace: 'nowrap' }}>{`> ${agent.prompt}`}</div>
                   </div>
@@ -706,61 +759,60 @@ const PillarsScene: React.FC<{ lang: Lang }> = ({ lang }) => {
 
         {/* PILLAR 2 — Context Extraction */}
         <div style={{
-          flex: 1, opacity: fade(f, 120), transform: `translateY(${interpolate(spr(f, 120), [0, 1], [50, 0])}px)`,
-          background: C.bgCard, borderRadius: 16, borderTop: `4px solid ${pillarColors[1]}`,
-          padding: '24px 22px', display: 'flex', flexDirection: 'column',
+          flex: 1, opacity: fade(f, 140), transform: `translateY(${interpolate(spr(f, 140), [0, 1], [40, 0])}px)`,
+          background: C.bgCard, borderRadius: 14, borderTop: `4px solid ${pillarColors[1]}`,
+          padding: '20px 20px', display: 'flex', flexDirection: 'column',
         }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 10 }}>
-            <div style={{ fontSize: 34 }}>{pillarIcons[1]}</div>
-            <div style={{ fontFamily: 'Arial, sans-serif', fontWeight: 700, fontSize: 26, color: C.white }}>{t.s4P2Title}</div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 12 }}>
+            <div style={{ fontSize: 24 }}>{pillarIcons[1]}</div>
+            <div style={{ fontFamily: 'Arial, sans-serif', fontWeight: 700, fontSize: 24, color: C.white }}>{t.s4P2Title}</div>
           </div>
-          <div style={{ fontFamily: 'Arial, sans-serif', fontSize: 17, color: C.textMuted, marginBottom: 16, lineHeight: 1.3 }}>{t.s4P2Sub}</div>
-          {/* Two context types side by side */}
-          <div style={{ display: 'flex', gap: 10, marginBottom: 10 }}>
-            <div style={{ flex: 1, opacity: fade(f, 150), background: 'rgba(59,130,246,0.1)', border: `1px solid rgba(59,130,246,0.35)`, borderRadius: 10, padding: '14px 16px' }}>
-              <div style={{ fontFamily: 'Arial, sans-serif', fontWeight: 700, fontSize: 16, color: C.blue, marginBottom: 4 }}>{t.s4P2Func}</div>
-              <div style={{ fontFamily: 'Arial, sans-serif', fontSize: 14, color: C.textMuted, lineHeight: 1.3 }}>{t.s4P2FuncDesc}</div>
-            </div>
-            <div style={{ flex: 1, opacity: fade(f, 170), background: 'rgba(0,151,207,0.1)', border: `1px solid rgba(0,151,207,0.35)`, borderRadius: 10, padding: '14px 16px' }}>
-              <div style={{ fontFamily: 'Arial, sans-serif', fontWeight: 700, fontSize: 16, color: C.cyan, marginBottom: 4 }}>{t.s4P2Tech}</div>
-              <div style={{ fontFamily: 'Arial, sans-serif', fontSize: 14, color: C.textMuted, lineHeight: 1.3 }}>{t.s4P2TechDesc}</div>
-            </div>
+          <div style={{ fontFamily: 'Arial, sans-serif', fontSize: 16, color: C.textMuted, marginBottom: 16, lineHeight: 1.3 }}>{t.s4P2Sub}</div>
+          {/* Functional context */}
+          <div style={{ opacity: fade(f, 170), background: 'rgba(59,130,246,0.1)', border: `1px solid rgba(59,130,246,0.35)`, borderRadius: 10, padding: '12px 14px', marginBottom: 10 }}>
+            <div style={{ fontFamily: 'Arial, sans-serif', fontWeight: 700, fontSize: 17, color: C.blue, marginBottom: 4 }}>{t.s4P2Func}</div>
+            <div style={{ fontFamily: 'Arial, sans-serif', fontSize: 15, color: C.textMuted, lineHeight: 1.3 }}>{t.s4P2FuncDesc}</div>
+          </div>
+          {/* Technical context */}
+          <div style={{ opacity: fade(f, 190), background: 'rgba(0,151,207,0.1)', border: `1px solid rgba(0,151,207,0.35)`, borderRadius: 10, padding: '12px 14px', marginBottom: 14 }}>
+            <div style={{ fontFamily: 'Arial, sans-serif', fontWeight: 700, fontSize: 17, color: C.cyan, marginBottom: 4 }}>{t.s4P2Tech}</div>
+            <div style={{ fontFamily: 'Arial, sans-serif', fontSize: 15, color: C.textMuted, lineHeight: 1.3 }}>{t.s4P2TechDesc}</div>
           </div>
           {/* Sources */}
-          <div style={{ opacity: fade(f, 190), marginBottom: 8 }}>
-            <div style={{ fontFamily: 'Arial, sans-serif', fontWeight: 700, fontSize: 14, color: C.orange, marginBottom: 6 }}>{t.s4P2Sources}</div>
-            <div style={{ display: 'flex', flexWrap: 'wrap' as const, gap: 6 }}>
+          <div style={{ opacity: fade(f, 200), marginBottom: 12 }}>
+            <div style={{ fontFamily: 'Arial, sans-serif', fontWeight: 700, fontSize: 16, color: C.orange, marginBottom: 8 }}>{t.s4P2Sources}</div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
               {(t.s4P2SourceList as string[]).map((src, i) => (
-                <div key={i} style={{ opacity: fade(f, 200 + i * 12), background: 'rgba(243,156,18,0.1)', border: '1px solid rgba(243,156,18,0.3)', borderRadius: 6, padding: '5px 10px', fontFamily: 'Arial, sans-serif', fontSize: 13, color: C.orange }}>{src}</div>
+                <div key={i} style={{ opacity: fade(f, 210 + i * 12), background: 'rgba(243,156,18,0.1)', border: '1px solid rgba(243,156,18,0.3)', borderRadius: 8, padding: '8px 14px', fontFamily: 'Arial, sans-serif', fontSize: 15, color: C.orange }}>{src}</div>
               ))}
             </div>
           </div>
-          <div style={{ opacity: fade(f, 250), textAlign: 'center', background: C.bgCardAlt, borderRadius: 8, padding: '10px 14px', marginTop: 'auto' }}>
-            <div style={{ fontFamily: 'Arial, sans-serif', fontWeight: 700, fontSize: 15, color: C.green }}>{t.s4P2Arrow}</div>
+          <div style={{ opacity: fade(f, 260), textAlign: 'center', background: C.bgCardAlt, borderRadius: 8, padding: '10px 14px', marginTop: 'auto' }}>
+            <div style={{ fontFamily: 'Arial, sans-serif', fontWeight: 700, fontSize: 16, color: C.green }}>{t.s4P2Arrow}</div>
           </div>
         </div>
 
         {/* PILLAR 3 — Prompt Framework */}
         <div style={{
-          flex: 1, opacity: fade(f, 190), transform: `translateY(${interpolate(spr(f, 190), [0, 1], [50, 0])}px)`,
-          background: C.bgCard, borderRadius: 16, borderTop: `4px solid ${pillarColors[2]}`,
-          padding: '24px 22px', display: 'flex', flexDirection: 'column',
+          flex: 1, opacity: fade(f, 210), transform: `translateY(${interpolate(spr(f, 210), [0, 1], [40, 0])}px)`,
+          background: C.bgCard, borderRadius: 14, borderTop: `4px solid ${pillarColors[2]}`,
+          padding: '20px 20px', display: 'flex', flexDirection: 'column',
         }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 10 }}>
-            <div style={{ fontSize: 34 }}>{pillarIcons[2]}</div>
-            <div style={{ fontFamily: 'Arial, sans-serif', fontWeight: 700, fontSize: 26, color: C.white }}>{t.s4P3Title}</div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 12 }}>
+            <div style={{ fontSize: 24 }}>{pillarIcons[2]}</div>
+            <div style={{ fontFamily: 'Arial, sans-serif', fontWeight: 700, fontSize: 24, color: C.white }}>{t.s4P3Title}</div>
           </div>
-          <div style={{ fontFamily: 'Arial, sans-serif', fontSize: 17, color: C.textMuted, marginBottom: 16, lineHeight: 1.3 }}>{t.s4P3Sub}</div>
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4, flex: 1, justifyContent: 'center' }}>
+          <div style={{ fontFamily: 'Arial, sans-serif', fontSize: 16, color: C.textMuted, marginBottom: 16, lineHeight: 1.3 }}>{t.s4P3Sub}</div>
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
             {(t.s4P3Steps as string[]).map((step, i) => {
-              const stepDelay = 220 + i * 22;
+              const stepDelay = 240 + i * 22;
               const isLast = i === (t.s4P3Steps as string[]).length - 1;
               const stepAge = Math.max(0, f - stepDelay);
               const stepGlow = interpolate(stepAge, [0, 10, 30], [0, 0.5, 0.1], { extrapolateRight: 'clamp', extrapolateLeft: 'clamp' });
               return (
                 <React.Fragment key={i}>
                   {i > 0 && (
-                    <div style={{ opacity: fade(f, stepDelay - 8), color: C.cyan, fontSize: 22, lineHeight: 1 }}>↓</div>
+                    <div style={{ opacity: fade(f, stepDelay - 8), color: C.cyan, fontSize: 20, lineHeight: 1 }}>↓</div>
                   )}
                   <div style={{
                     opacity: fade(f, stepDelay),
@@ -770,20 +822,20 @@ const PillarsScene: React.FC<{ lang: Lang }> = ({ lang }) => {
                     borderRadius: 10, padding: '12px 20px', textAlign: 'center', width: '95%',
                     boxShadow: `0 0 14px rgba(0,151,207,${stepGlow})`,
                   }}>
-                    <div style={{ fontFamily: 'Arial, sans-serif', fontWeight: isLast ? 700 : 600, fontSize: 16, color: isLast ? C.cyan : C.white, whiteSpace: 'pre-line', lineHeight: 1.2 }}>{step}</div>
+                    <div style={{ fontFamily: 'Arial, sans-serif', fontWeight: isLast ? 700 : 600, fontSize: 17, color: isLast ? C.cyan : C.white, whiteSpace: 'pre-line', lineHeight: 1.2 }}>{step}</div>
                   </div>
                 </React.Fragment>
               );
             })}
           </div>
-          <div style={{ opacity: fade(f, 310), textAlign: 'center', background: C.bgCardAlt, borderRadius: 8, padding: '10px 14px', marginTop: 10 }}>
-            <div style={{ fontFamily: 'Arial, sans-serif', fontWeight: 700, fontSize: 15, color: C.green }}>{t.s4P3Result}</div>
+          <div style={{ opacity: fade(f, 320), textAlign: 'center', background: C.bgCardAlt, borderRadius: 8, padding: '10px 14px', marginTop: 'auto' }}>
+            <div style={{ fontFamily: 'Arial, sans-serif', fontWeight: 700, fontSize: 16, color: C.green }}>{t.s4P3Result}</div>
           </div>
         </div>
       </div>
 
-      {/* Bottom connector */}
-      <div style={{ opacity: fade(f, 300), marginTop: 16, background: C.navy, borderRadius: 8, padding: '14px 30px', textAlign: 'center', transform: `translateY(${interpolate(spr(f, 300), [0, 1], [15, 0])}px)` }}>
+      {/* Bottom badge — same style as scenes 2 & 3 */}
+      <div style={{ opacity: fade(f, 300), marginTop: 0, background: C.navy, borderRadius: 8, padding: '14px 30px', textAlign: 'center', transform: `translateY(${interpolate(spr(f, 300), [0, 1], [15, 0])}px)`, boxShadow: '0 0 20px rgba(0,36,93,0.5)' }}>
         <div style={{ fontFamily: 'Arial, sans-serif', fontWeight: 700, fontSize: 22, color: C.white }}>{t.s4ConnectorText}</div>
       </div>
     </AbsoluteFill>
